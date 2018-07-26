@@ -18,7 +18,8 @@ mcSensorHit::mcSensorHit():
 	      charge(0.0),
 	      energy(0.0),
 	      time(0.0),
-		  eDep(0.0)
+		  eDep(0.0),
+            eIn(0.0)
 {}
 
 
@@ -38,6 +39,7 @@ mcSensorHit::mcSensorHit(const mcSensorHit& right)
   momentum    = right.momentum;
   pos         = right.pos;
   eDep 		= right.eDep;
+    eIn       =right.eIn;
   
 }
 
@@ -53,6 +55,8 @@ const mcSensorHit& mcSensorHit::operator=(const mcSensorHit& right)
     momentum    = right.momentum;
     pos         = right.pos;
 	eDep 		= right.eDep;
+      eIn       =right.eIn;
+      
   }
   return *this;
 }
@@ -65,11 +69,11 @@ G4int mcSensorHit::operator==(const mcSensorHit& right) const
 }
 
 
-void mcSensorHit::Set(int copy, const G4Track* track,G4double eLoss)
+void mcSensorHit::Set(int copy, const G4Track* track,G4double eLoss, G4double valEIn)
 {
   copyNO   =  copy;
   eDep		= eLoss;
-
+  eIn      =  valEIn;
   trackID  =  track->GetTrackID();
   codePDG  =  track->GetDefinition()->GetPDGEncoding();
   charge   =  track->GetDefinition()->GetPDGCharge();

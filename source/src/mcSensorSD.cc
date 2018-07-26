@@ -9,12 +9,14 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
+#include <iostream>
+
 /////////////////////////////////////////////////////
 
 mcSensorSD::mcSensorSD(G4String name)
 :G4VSensitiveDetector(name)
 {
-  //4String HCname;
+  //G4String HCname;
   collectionName.insert("sensorCollection");
 
   //--- open file -----
@@ -57,12 +59,10 @@ G4bool mcSensorSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   // Sensitive to neutron only
   //if ( aTrack->GetDefinition()->GetPDGEncoding() != 2112) return false;
 
-  
   //Check Energy deposit
   G4double eLoss = aStep->GetTotalEnergyDeposit();
-  if (eLoss <= 0.0 ) return false;
-  G4double time = aTrack->GetGlobalTime(); 
-  
+  //if (eLoss <= 0.0 ) return false;
+  G4double time = aTrack->GetGlobalTime();
  
   G4int copyNO = aStep->GetPreStepPoint()->GetTouchableHandle()->GetCopyNumber();
   G4int NbHits = sensorCollection->entries();
@@ -80,24 +80,12 @@ G4bool mcSensorSD::ProcessHits(G4Step* aStep,G4TouchableHistory*)
   }
   
   mcSensorHit* newHit = new mcSensorHit();
-  newHit->Set(copyNO, aTrack, eLoss);
+    
+  G4double eIn = aStep->GetPreStepPoint()->GetKineticEnergy();
+
+    newHit->Set(copyNO, aTrack, eLoss, eIn);
   sensorCollection->insert( newHit );
 
- // G4int NbHits = sensorCollection->entries();
- // G4bool found = false;
- // for (G4int i=0; (i<NbHits) && (!found) ;i++) {
- //   found = (copyNO == (*sensorCollection)[i]->GetCopyNO() ) 
- //        && ( aTrack ->GetTrackID() == (*sensorCollection)[i]->GetTrackID() );
- // } 
- // if (!found) {
- //   mcSensorHit* newHit = new mcSensorHit();
- //   //newHit->Set(copyNO ,aTrack);
- //   newHit->Set(copyNO ,aTrack,eLoss);
- //   sensorCollection->insert( newHit );
- //   
- //   //newHit->Print();
- //   //newHit->Draw();
- // }
   return true;
 }
 
@@ -123,42 +111,24 @@ void mcSensorSD::EndOfEvent(G4HCofThisEvent* HCE)
   for (G4int i=0;i<NbHits;i++){
 	  mcSensorHit* hit = (*sensorCollection)[i];
 	  if (verboseLevel>1) hit->Print();
+      
 	  // output hits other than trigger counters
-	  G4int ch = hit->GetCopyNO();
 	  //if (hit->GetEdep() < eThreshold ) continue;
 	  if (isFirstHit) {
 		  isFirstHit = false;
 		  hasHit = true;
 	  }
-	  outFile << ch << " "
+	  outFile << hit->GetCopyNO() << " "
 		  << hit->GetTrackID() <<" " 
 		  << hit->GetPDGcode() <<" " 
-		  << hit->GetEnergy()/MeV  <<" " 
+		  << hit->GetEIn()/MeV  <<" "
 		  << hit->GetPos().x()/mm << " "
 		  << hit->GetPos().y()/mm << " "
 		  << hit->GetPos().z()/mm << " "
 		  << hit->GetTime()/ns << " "
-		  << hit->GetEdep()/MeV 
-		  << G4endl;
+		  << hit->GetEdep()/MeV << G4endl;
   }
 
-	  //for (G4int i=0;i<NbHits;i++){
-	  //  mcSensorHit* hit = (*sensorCollection)[i];
-	  //  
-	  //  if (verboseLevel>0) {
-  //    hit->Print();
-  //  }    
-  //  
-  //  outFile << hit->GetCopyNO() <<" "  // Sensor ditector #
-  //      << hit->GetTrackID() <<" " 
-  //      << hit->GetPDGcode() <<" " 
-  //      << hit->GetEnergy()/MeV  <<" " 
-  //      << hit->GetPos().x()/mm  <<" " 
-  //      << hit->GetPos().y()/mm  <<" " 
-  //      << hit->GetPos().z()/mm  <<" " 
-  //      << hit->GetTime()/ns  <<" " 
-  //      << G4endl;
-  //}
   
 }
 

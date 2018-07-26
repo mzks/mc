@@ -23,41 +23,24 @@
 
 #include <iostream>
 
-
 ////////////////////////////////////////////////////////////
 
 mcDetectorConstruction::mcDetectorConstruction()
-	:pSensorMaterial(0),vSensorThickness(0.),vSensorSize(0.),
-	vSensorArm(0.),defaultMaterial(0),
+	:defaultMaterial(0),sensorMaterial(0),
+    WorldRadius(100*cm),
 	solidWorld(0),logicWorld(0),physWorld(0),
-	solidSensor(0),logicSensor(0),physSensor(0),
-	magField(0), pUserLimits(0),
-	maxStep(100.0*cm),
-	mat_3He(0),mat_detector(0),mat_polyethylene(0),mat_boron(0),
-	solidAir(0),logicAir(0),physAir(0),
-	solidShield(0),logicShield(0),physShield(0)
+	solidSensor(0),logicSensor(0),physSensor(0),	magField(0),pUserLimits(0),maxStep(100.0*cm)
 {
 
 	// default parameter values of Sensor
-	vSensorThickness =  5 *mm;
-	vRockSize		=	1.0 * m;
-
-	vSensorSize      = 100.*cm;//UnUse
-	vSensorArm       = 200.*cm;//UnUse
 
 	// materials
 	DefineMaterials();
-	SetSensorMaterial("Herium3");
-
-	// World Size
-	WorldSizeYZ =  500.0 *cm;//Unuse
-	WorldSizeX = 100.0 * m;//Unuse
+	SetSensorMaterial("NaI");
 
 	// create commands for interactive definition of the calorimeter
 	detectorMessenger = new mcDetectorMessenger(this);
 
-	PEThickness = 5.0*cm;
-	BoronThickness = 0.5*cm;
 }
 
 /////////////////////////////////////////////////////////
@@ -72,7 +55,6 @@ mcDetectorConstruction::~mcDetectorConstruction()
 G4VPhysicalVolume* mcDetectorConstruction::Construct()
 {
 	// Clean old geometry, if any
-	//
 	G4GeometryManager::GetInstance()->OpenGeometry();
 	G4PhysicalVolumeStore::GetInstance()->Clean();
 	G4LogicalVolumeStore::GetInstance()->Clean();
@@ -81,14 +63,8 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 	//     
 	// World
 	//
-	//
-	//
-	WorldSizeX = 50*cm;
 
-	//solidWorld = new G4Box("World",				//its name
-	//WorldSizeX/2.0,WorldSizeX/2.0,WorldSizeX/2.0);	//its size
-	solidWorld = new G4Orb("World",WorldSizeX);
-
+	solidWorld = new G4Orb("World",WorldRadius);
 	logicWorld = new G4LogicalVolume(solidWorld,		//its solid
 			defaultMaterial,	//its material
 			"World");		//its name
@@ -101,50 +77,6 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 			false,			//no boolean operation
 			0);			//copy number
 
-	solidShield = new G4Box("Shield",30.0*cm/2.0,30.0*cm/2.0,63.0*cm/2.0);
-	logicShield = new G4LogicalVolume(solidShield, mat_polyethylene, "Shield");
-	physShield = new G4PVPlacement(0,G4ThreeVector(),logicShield,"Shield",logicWorld,false,1001);
-
-	solidAir = new G4Box("Air",20.0*cm/2.0,20.0*cm/2.0,53.0*cm/2.0);
-	logicAir = new G4LogicalVolume(solidAir, mat_air, "Air");
-	physAir = new G4PVPlacement(0,G4ThreeVector(),logicAir,"Air",logicShield,false,1000);
-
-
-	solidBoron = new G4Tubs("Boron",
-			0.0*cm,
-			9.09*cm+BoronThickness, //boron thickness 0.5 cm
-			25.5*cm+BoronThickness,
-			0,
-			CLHEP::twopi);
-	logicBoron = new G4LogicalVolume(solidBoron,
-			mat_boron,  // CAUTION
-			//mat_air, //Change materials
-			"Boron");
-	physBoron = new G4PVPlacement(0,G4ThreeVector(),logicBoron,"Boron",logicAir,false,203);
-
-	solidPolyethylene = new G4Tubs("Polyethylene",
-			0.0*cm,
-			9.09*cm,
-			25.5*cm,
-			0,
-			CLHEP::twopi);
-	logicPolyethylene = new G4LogicalVolume(solidPolyethylene,
-			mat_polyethylene, //Change materials
-			//mat_air,//CAUTION
-			"Polyethylene");
-	physPolyethylene = new G4PVPlacement(0,G4ThreeVector(),logicPolyethylene,"Polyethylene",logicBoron,false,200);
-
-	solidDetector = new G4Tubs("Detector",
-			0.0*cm,
-			2.59*cm,
-			19.00*cm,
-			0,
-			CLHEP::twopi);
-	logicDetector = new G4LogicalVolume(solidDetector,
-			mat_detector,
-			"Detector");
-	physDetector = new G4PVPlacement(0,G4ThreeVector(),logicDetector,"Detector",logicPolyethylene,false,201);
-
 
 	solidSensor = new G4Tubs("Sensor",
 			0.0*cm,
@@ -153,92 +85,11 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 			0,
 			CLHEP::twopi);
 	logicSensor = new G4LogicalVolume(solidSensor,
-			mat_3He	,
+			sensorMaterial,
 			"Sensor");
-	physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicDetector,false,202);
+	physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicWorld,false,202);
 
 
-
-
-	// Rock
-	//  solidRock = new G4Box("Rock",
-	//		  			vRockSize/2,vRockSize/2,vRockSize/2);
-	//
-	//  logicRock = new G4LogicalVolume(solidRock,
-	//		  							pSensorMaterial,
-	//									"Rock");
-	//  physRock  = new G4PVPlacement(0,
-	//		  		G4ThreeVector(),
-	//				logicRock,
-	//				"Rock",
-	//				logicWorld,
-	//				false,
-	//				100);
-	//  
-	//                               
-	// Traget
-	//  
-
-	//  solidSensor = new G4Box("Sensor",		//its name
-	//   		  vSensorThickness/2,vRockSize/2,vRockSize/2);//size
-	// 
-	// logicSensor = new G4LogicalVolume(solidSensor,	//its solid
-	//   			    pSensorMaterial,	//its material
-	//   			    "Sensor");       	//its name
-	// G4RotationMatrix matY = G4RotationMatrix();
-	// matY.rotateY(90.0*deg);
-	// G4RotationMatrix matZ = G4RotationMatrix();
-	// matZ.rotateZ(90.0*deg);
-
-	// sensors
-	//  physSensor = new G4PVPlacement(0,			//no rotation
-	//				 G4ThreeVector((WorldSizeX-vSensorThickness)/2,0,0),       //position
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 0);	        	//copy number
-	// 
-	//   physSensor = new G4PVPlacement(0,			//no rotation
-	//				 G4ThreeVector(-(WorldSizeX-vSensorThickness)/2,0,0),  //position
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 1);	        	//copy number
-	//
-	//   physSensor = new G4PVPlacement(
-	//		   		G4Transform3D(matZ, G4ThreeVector(0,(WorldSizeX-vSensorThickness)/2,0)),
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 2);	        	//copy number
-	//
-	//   physSensor = new G4PVPlacement(
-	//		   		G4Transform3D(matZ, G4ThreeVector(0,-(WorldSizeX-vSensorThickness)/2,0)),
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 3);	        	//copy number
-	//
-	//   physSensor = new G4PVPlacement(
-	//		   		G4Transform3D(matY, G4ThreeVector(0,0,(WorldSizeX-vSensorThickness)/2)),
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 4);	        	//copy number
-	//
-	//   physSensor = new G4PVPlacement(
-	//		   		G4Transform3D(matY, G4ThreeVector(0,0,-(WorldSizeX-vSensorThickness)/2)),
-	//				 logicSensor,   	//its logical volume
-	//				 "Sensor",	        //its name
-	//				 logicWorld,    	//its mother  volume
-	//				 false,  		//no boolean operation
-	//				 5);	        	//copy number
-	//
 	//------------------------------------------------ 
 	// Sensitive detectors
 	//------------------------------------------------ 
@@ -252,7 +103,7 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 	logicSensor->SetSensitiveDetector( aSensorSD );
 
 	// Set UserLimits
-	G4double maxTrkLen = 10.0*WorldSizeX;
+	G4double maxTrkLen = 10.0*WorldRadius;
 	G4double maxTime   = 1000.0 * ns;
 	pUserLimits = new G4UserLimits(maxStep, maxTrkLen, maxTime);
 	logicWorld->SetUserLimits(pUserLimits);
@@ -307,7 +158,10 @@ void mcDetectorConstruction::DefineMaterials()
 	G4Element* Ti = new G4Element("Titan",symbol="Ti" , z= 22., a= 47.87*g/mole);
 	G4Element* Mn = new G4Element("Manganese",symbol="Mn" , z= 25., a= 54.94*g/mole);
 	G4Element* Fe = new G4Element("Iron",symbol="Fe" , z= 26., a= 55.85*g/mole);
-
+    G4Element* Ni = new G4Element( "Nickel", "Ni", 28., 58.69*g/mole);
+    //G4Element* Mn = new G4Element( "Manganese", "Mn", 25., 54.93*g/mole);
+    G4Element* Cr = new G4Element( "Chromium", "Cr", 24., 51.996*g/mole);
+    G4Element* I = new G4Element( "Iodine", "I", 53., 126.9*g/mole);
 
 	//
 	// define an Element from isotopes, by relative abundance 
@@ -321,19 +175,13 @@ void mcDetectorConstruction::DefineMaterials()
 	U->AddIsotope(U5, abundance= 90.*perCent);
 	U->AddIsotope(U8, abundance= 10.*perCent);
 
-	//
 	// define simple materials
-	//
 
-	//new G4Material("Aluminium", z=13., a=26.98*g/mole, density=2.700*g/cm3);
 	new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
 	new G4Material("Lead"     , z=82., a= 207.19*g/mole, density= 11.35*g/cm3);
 	new G4Material("Tungsten" , z=74., a= 183.84*g/mole, density= 19.25*g/cm3);
-	//new G4Material("Iron" , z=26., a= 55.845*g/mole, density= 7.874*g/cm3);
 
-	//
 	// define a material from elements.   case 1: chemical molecule
-	//
 
 	G4Material* H2O = 
 		new G4Material("Water", density= 1.000*g/cm3, ncomponents=2);
@@ -358,9 +206,7 @@ void mcDetectorConstruction::DefineMaterials()
 	SiO2->AddElement(Si, natoms=1);
 	SiO2->AddElement(O , natoms=2);
 
-	//
 	// define a material from elements.   case 2: mixture by fractional mass
-	//
 
 	G4Material* Air = 
 		new G4Material("Air"  , density= 1.290*mg/cm3, ncomponents=2);
@@ -385,9 +231,7 @@ void mcDetectorConstruction::DefineMaterials()
 
 	//define for detector
 	// stailess SUS304
-	G4Element* Ni = new G4Element( "Nickel", "Ni", 28., 58.69*g/mole);
-	//G4Element* Mn = new G4Element( "Manganese", "Mn", 25., 54.93*g/mole);
-	G4Element* Cr = new G4Element( "Chromium", "Cr", 24., 51.996*g/mole);
+	
 	G4Material* sus304 = new G4Material(name="Sus304", density=8.03*g/cm3, ncomponents=5);
 	sus304->AddElement(Ni, 0.09);
 	sus304->AddElement(C, 0.005);
@@ -403,10 +247,10 @@ void mcDetectorConstruction::DefineMaterials()
 	G4Material* Herium3 = new G4Material(name="Herium3",density=1.34644166*mg/cm3,ncomponents=1,kStateGas,temperature=300.15*kelvin,pressure=10.*atmosphere);
 	Herium3->AddElement(He3, 1);
 
+    
 	//the follow definition from CANDLES MC
-
 	// Sillion rubber + B4C 40%
-	//   //  http://www.askcorp.co.jp/sanshin/work/engineering/pdf/material.pdf
+	// http://www.askcorp.co.jp/sanshin/work/engineering/pdf/material.pdf
 	//     //-------------------------------------------------//
 	const G4double R_B4C  = 40;    // target value, wt-%
 	//-------------------------------------------------//
@@ -435,7 +279,6 @@ void mcDetectorConstruction::DefineMaterials()
 
 	//define a material from elements and/or others materials (mixture of mixtures)
 
-
 	G4Material* Aerog = 
 		new G4Material("Aerogel", density= 0.200*g/cm3, ncomponents=3);
 	Aerog->AddMaterial(SiO2, fractionmass=62.5*perCent);
@@ -451,6 +294,11 @@ void mcDetectorConstruction::DefineMaterials()
 				kStateGas, 325.*kelvin, 2.*atmosphere);
 	CO2->AddElement(C, natoms=1);
 	CO2->AddElement(O, natoms=2);
+    
+    G4Material* NaI =
+    new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2);
+    NaI->AddElement(Na, natoms=1);
+    NaI->AddElement(I, natoms=1);
 
 	G4Material* steam = 
 		new G4Material("WaterSteam", density= 0.3*mg/cm3, ncomponents=1,
@@ -473,12 +321,8 @@ void mcDetectorConstruction::DefineMaterials()
 	G4cout << *(G4Material::GetMaterialTable()) << G4endl;
 
 	//default materials of the World
+    
 	defaultMaterial  = Vacuum;
-	mat_3He = Herium3;
-	mat_detector = sus304;
-	mat_polyethylene = polyethylene;
-	mat_boron = RubberB4C;
-    mat_air = Air;
 }
 
 ///////////////////////////////////////////////////////
@@ -505,7 +349,7 @@ void mcDetectorConstruction::SetSensorMaterial(G4String materialChoice)
 	// search the material by its name
 	G4Material* pttoMaterial = G4Material::GetMaterial(materialChoice);
 	if (pttoMaterial) {
-		pSensorMaterial = pttoMaterial;
+		sensorMaterial = pttoMaterial;
 		G4cout << " mcDetectorConstruction::SetSensorMaterial:  ";
 		G4cout << "Sensor material is " << materialChoice << G4endl;
 		UpdateGeometry();
@@ -516,51 +360,6 @@ void mcDetectorConstruction::SetSensorMaterial(G4String materialChoice)
 	}
 }
 
-//////////////////////////////////////////////////////////////
-
-void mcDetectorConstruction::SetSensorThickness(G4double val)
-{
-	if (2*val < vSensorArm) {
-		vSensorThickness = val;
-		G4cout << " mcDetectorConstruction::SetSensorThickness:  ";
-		G4cout << "Sensor thickness is " << val/mm << "mm" << G4endl;
-		UpdateGeometry();
-	}
-}
-
-//////////////////////////////////////////////////////////////
-
-void mcDetectorConstruction::SetSensorSize(G4double val)
-{
-	if (val<WorldSizeX) {
-		vSensorSize = val;
-		UpdateGeometry();
-	}
-}
-//////////////////////////////////////////////////////////////
-
-void mcDetectorConstruction::SetSensorLeverArm(G4double val)
-{
-	if (val+vSensorThickness<WorldSizeX) {
-		vSensorArm = val;
-		UpdateGeometry();
-	}
-}
-
-void mcDetectorConstruction::SetPESize(G4double val)
-{
-		PEThickness = val;
-		UpdateGeometry();
-}
-
-void mcDetectorConstruction::SetBoronSize(G4double val)
-{
-		BoronThickness = val;
-		UpdateGeometry();
-}
-
-
-///////////////////////////////////////////////////////////////////
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"

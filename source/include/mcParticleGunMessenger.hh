@@ -24,7 +24,6 @@ class mcParticleGunMessenger: public G4UImessenger
 	private:
 		mcParticleGun*		mcPG;
 		G4UIdirectory*			cmdDir;
-		//G4UIdirectory*			gunDir;
 		G4UIcmdWithAnInteger*		vtxCmd;
 		G4UIcmdWithAnInteger*		parCmd;
         G4UIcmdWithADoubleAndUnit*  eneCmd;

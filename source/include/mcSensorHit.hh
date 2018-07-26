@@ -26,7 +26,7 @@ class mcSensorHit : public G4VHit
 
   public:
   
-      void Set(int copy, const G4Track* track ,G4double eLoss);
+      void Set(int copy, const G4Track* track ,G4double eLoss, G4double valEIn);
       
       G4int GetCopyNO()             const  { return copyNO; };
       G4int GetTrackID()            const  { return trackID; };
@@ -38,6 +38,7 @@ class mcSensorHit : public G4VHit
       G4double GetTime()                 const  { return time; };      
 	  G4double GetEdep() const { return eDep;};
 	  void AddEdep(G4double val){ eDep += val;};
+    G4double GetEIn() const { return eIn;};
      
   private:
       G4int         copyNO;
@@ -49,6 +50,7 @@ class mcSensorHit : public G4VHit
       G4ThreeVector pos;
       G4double      time;
 	  G4double 		eDep;
+    G4double        eIn;
  };
 
 

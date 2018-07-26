@@ -24,17 +24,12 @@ class mcDetectorMessenger: public G4UImessenger
 
   private:
     mcDetectorConstruction* mcDetector;
-    
-    G4UIdirectory*             mcDir;
+    G4UIdirectory*             usrDir;
     G4UIdirectory*             detDir;
     G4UIcmdWithAString*        MaterialCmd;
-    G4UIcmdWithADoubleAndUnit* ThicknessCmd;
-    G4UIcmdWithADoubleAndUnit* SizeYZCmd;
-    G4UIcmdWithADoubleAndUnit* ArmCmd;
     G4UIcmdWithADoubleAndUnit* MaxStepCmd;
     G4UIcmdWithADoubleAndUnit* MagFieldCmd;
-    G4UIcmdWithADoubleAndUnit* PESizeCmd;
-    G4UIcmdWithADoubleAndUnit* BoronSizeCmd;
+
 };
 
 
