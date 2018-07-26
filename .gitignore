@@ -1,0 +1,11 @@
+build/*
+bin/*
+bench/*.out
+bench/G4History.macro
+bench/*.root
+bench/currentEvent.rndm
+bench/currentRun.rndm
+vis/*
+bench/.*
+.DS_Store
+*.bak
