@@ -1,18 +1,20 @@
 
 # change world parameter
-/usr/det/setField 1.0 tesla
+/usr/det/setField 0.0 tesla
 /usr/det/setMaxStep  1.0 cm
 
 #inactivate msc
 #/process/inactivate msc
 
+/
+
 /gun/position -10 0 0 cm
 /gun/direction 1 0 0
 
-/gun/particle gamma
-/gun/energy 1.27 MeV
+/gun/particle mu+
+/gun/energy 1.27 GeV
 
 /run/initialize
 
-/run/beamOn 100000
+/run/beamOn 1000
 
