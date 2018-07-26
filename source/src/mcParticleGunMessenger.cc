@@ -21,22 +21,22 @@ mcParticleGunMessenger::mcParticleGunMessenger(mcParticleGun* pg)
 	//gunDir = new G4UIdirectory("/gun/");
 	//gunDir->SetGuidance("UI commands for mc simulation");
 
-	cmdDir = new G4UIdirectory("/gun/mc/");
+	cmdDir = new G4UIdirectory("/gun/usr/");
 	cmdDir->SetGuidance("UI commands for primary generator");
 
-	vtxCmd = new G4UIcmdWithAnInteger("/gun/mc/vtx",this);
+	vtxCmd = new G4UIcmdWithAnInteger("/gun/usr/vtx",this);
 	vtxCmd->SetGuidance("Select vertex 0:User 1:Top 2:centre 3:Random flux");
 	vtxCmd->SetParameterName("vtx",false);
 	vtxCmd->SetRange("vtx >= 0 && vtx <= 3");
 	vtxCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-	parCmd = new G4UIcmdWithAnInteger("/gun/mc/particle",this);
+	parCmd = new G4UIcmdWithAnInteger("/gun/usr/particle",this);
 	parCmd->SetGuidance("Select particle 0:User 1:neutron 2:mu- 3:Random flux neutron 4:Real neutron spectrum 5:fission(Cf)");
 	parCmd->SetParameterName("part",false);
 	parCmd->SetRange("part >= 0 && part <= 5");
 	parCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
-	eneCmd = new G4UIcmdWithADoubleAndUnit("/gun/mc/energy",this);
+	eneCmd = new G4UIcmdWithADoubleAndUnit("/gun/usr/energy",this);
 	eneCmd->SetGuidance("set energy for neutron flux");
 	eneCmd->SetParameterName("ene",false);
 	eneCmd->SetRange("ene > 0.");
