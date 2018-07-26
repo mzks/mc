@@ -9,3 +9,9 @@ vis/*
 bench/.*
 .DS_Store
 *.bak
+
+CMakeCache.txt
+CMakeFiles/*
+CMakeScripts/*
+cmake_install.cmake
+mc.xcodeproj/*
