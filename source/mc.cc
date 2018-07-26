@@ -20,19 +20,15 @@
 #endif
 
 #include "G4UImanager.hh"
-#include "QGSP_BERT_HP.hh"
-
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
-
 #include "Randomize.hh"
-
 
 #ifdef G4UI_USE_XM
 #include "G4UIXm.hh"
 #endif
 
-
+#include "QGSP_BERT_HP.hh"
 
 int main(int argc,char** argv)
 {
@@ -44,15 +40,12 @@ int main(int argc,char** argv)
   }
 
   // Choose the Random engine
-  //
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
      
   // Construct the default run manager
-  //
   G4RunManager * runManager = new G4RunManager;
 
   // Set mandatory initialization classes
-  //
   mcDetectorConstruction* detector = new mcDetectorConstruction;
   runManager->SetUserInitialization(detector);
  
@@ -62,15 +55,14 @@ int main(int argc,char** argv)
   runManager->SetUserInitialization(physicsList);
 
   // Set user action classes
-  //
   G4VUserPrimaryGeneratorAction* gen_action = new mcPrimaryGeneratorAction(detector);
   runManager->SetUserAction(gen_action);
-  //
-  mcRunAction* run_action = new mcRunAction;  
-  runManager->SetUserAction(run_action);
-  //
-  mcEventAction* event_action = new mcEventAction(run_action);
-  runManager->SetUserAction(event_action);
+  
+  mcRunAction* run_action = new mcRunAction;
+    runManager->SetUserAction(run_action);
+  
+    mcEventAction* event_action = new mcEventAction(run_action);
+    runManager->SetUserAction(event_action);
  
   //mcSteppingAction* stepping_action = new mcSteppingAction();
   //runManager->SetUserAction(stepping_action);

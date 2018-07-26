@@ -6,12 +6,11 @@
 #inactivate msc
 #/process/inactivate msc
 
-# mu+ 10 GeV 
+# mu+ 10 GeV
 /gun/particle mu+
 /gun/energy 10.0 GeV
 
 /run/initialize
 
-/tracking/verbose 2
-/run/beamOn 1
+/run/beamOn 10000
 
