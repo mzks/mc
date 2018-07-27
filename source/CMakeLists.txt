@@ -4,6 +4,15 @@ cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
 project(mc)
 
 #----------------------------------------------------------------------------
+#Setting ROOT
+
+list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
+find_package(ROOT REQUIRED COMPONENTS MathCore RIO Hist Tree Net)
+
+include(${ROOT_USE_FILE})
+
+
+#----------------------------------------------------------------------------
 # Find Geant4 package, activating all available UI and Vis drivers by default
 # You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
 # to build a batch mode only executable
@@ -34,7 +43,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 
 #----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
-#
+add_definitions(${ROOT_CXX_FLAGS})
 add_executable(mc mc.cc ${sources} ${headers})
 target_link_libraries(mc ${Geant4_LIBRARIES})
 
