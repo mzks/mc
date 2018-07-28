@@ -8,8 +8,13 @@
 
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "mcAnalyzer.hh"
 
 #include <iostream>
+#include <vector>
+
+#include "TFile.h"
+#include "TTree.h"
 
 /////////////////////////////////////////////////////
 
@@ -25,6 +30,8 @@ mcSensorSD::mcSensorSD(G4String name)
 
   eThreshold = 10.0 * eV;
   tResolution= 300.0 * ns;
+    
+    
 }
 
 /////////////////////////////////////////////////////
@@ -32,6 +39,10 @@ mcSensorSD::mcSensorSD(G4String name)
 mcSensorSD::~mcSensorSD()
 { 
   outFile.close();
+}
+
+void mcSensorSD::SetAnalyzer(mcAnalyzer* analyzer_in){
+    analyzer = analyzer_in;
 }
 
 /////////////////////////////////////////////////////
@@ -108,6 +119,18 @@ void mcSensorSD::EndOfEvent(G4HCofThisEvent* HCE)
 
   G4bool isFirstHit = true;  
   G4bool hasHit=false;
+    
+    std::vector<G4double> x_out;
+    std::vector<G4double> y_out;
+    std::vector<G4double> z_out;
+    std::vector<G4double> time_out;
+    std::vector<G4double> eIn_out;
+    std::vector<G4double> eDep_out;
+    std::vector<G4int> trackID_out;
+    std::vector<G4int> copyNo_out;
+    std::vector<G4int> particleID_out;
+    
+
   for (G4int i=0;i<NbHits;i++){
 	  mcSensorHit* hit = (*sensorCollection)[i];
 	  if (verboseLevel>1) hit->Print();
@@ -127,9 +150,22 @@ void mcSensorSD::EndOfEvent(G4HCofThisEvent* HCE)
 		  << hit->GetPos().z()/mm << " "
 		  << hit->GetTime()/ns << " "
 		  << hit->GetEdep()/MeV << G4endl;
-  }
+      
+      x_out.push_back(hit->GetPos().x()/mm);
+      y_out.push_back(hit->GetPos().y()/mm);
+      z_out.push_back(hit->GetPos().z()/mm);
+      
+      time_out.push_back(hit->GetTime()/ns);
+      eIn_out.push_back(hit->GetEIn()/MeV);
+      eDep_out.push_back(hit->GetEdep()/MeV);
+      trackID_out.push_back(hit->GetTrackID());
+      copyNo_out.push_back(hit->GetCopyNO());
+      particleID_out.push_back(hit->GetPDGcode());
 
-  
+  }
+   
+    analyzer->Fill(NbHits,x_out,y_out,z_out,time_out,eIn_out,eDep_out,trackID_out,copyNo_out,particleID_out);
+
 }
 
 

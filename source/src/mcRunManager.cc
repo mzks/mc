@@ -12,11 +12,7 @@
 
 #include "mcRunManager.hh"
 
-#include "TH1D.h"
-#include "TTree.h"
-
-
 mcRunManager::mcRunManager() : G4RunManager()
 {
-    tree = new TTree("tree","tree");
+
 }

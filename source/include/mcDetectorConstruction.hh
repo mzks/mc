@@ -1,6 +1,7 @@
 #ifndef mcDetectorConstruction_h
 #define mcDetectorConstruction_h 1
 
+#include "mcAnalyzer.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "globals.hh"
 
@@ -19,7 +20,7 @@ class mcDetectorConstruction : public G4VUserDetectorConstruction
 {
   public:
   
-    mcDetectorConstruction();
+    mcDetectorConstruction(mcAnalyzer*);
    ~mcDetectorConstruction();
 
   public:
@@ -45,7 +46,8 @@ class mcDetectorConstruction : public G4VUserDetectorConstruction
      const G4VPhysicalVolume* GetphysiWorld() const {return physWorld;};           
      const G4VPhysicalVolume* GetSensor()     const {return physSensor;};
 
-	 
+	 mcAnalyzer* analyzer;
+    
   private:
      G4Material*        defaultMaterial;
      G4Material*        sensorMaterial;
@@ -67,6 +69,8 @@ class mcDetectorConstruction : public G4VUserDetectorConstruction
      G4UserLimits*      pUserLimits;    //pointer to the UserLimits
 	 G4double            maxStep;          // max step length
      mcDetectorMessenger* detectorMessenger;  //pointer to the Messenger
+    
+    
 
      void DefineMaterials();
 };

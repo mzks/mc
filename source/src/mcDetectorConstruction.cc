@@ -1,6 +1,7 @@
 #include "mcDetectorConstruction.hh"
 #include "mcDetectorMessenger.hh"
 #include "mcSensorSD.hh"
+#include "mcAnalyzer.hh"
 
 #include "G4Material.hh"
 #include "G4Box.hh"
@@ -25,7 +26,7 @@
 
 ////////////////////////////////////////////////////////////
 
-mcDetectorConstruction::mcDetectorConstruction()
+mcDetectorConstruction::mcDetectorConstruction(mcAnalyzer* analyzer_in)
 	:defaultMaterial(0),sensorMaterial(0),
     WorldRadius(100*cm),
 	solidWorld(0),logicWorld(0),physWorld(0),
@@ -36,10 +37,11 @@ mcDetectorConstruction::mcDetectorConstruction()
 
 	// materials
 	DefineMaterials();
-	SetSensorMaterial("NaI");
+	SetSensorMaterial("CarbonicGas");
 
 	// create commands for interactive definition of the calorimeter
 	detectorMessenger = new mcDetectorMessenger(this);
+    analyzer = analyzer_in;
 
 }
 
@@ -97,9 +99,11 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 	G4SDManager* SDman = G4SDManager::GetSDMpointer();
 	mcSensorSD* aSensorSD = (mcSensorSD*)SDman->FindSensitiveDetector( "mc/SensorSD");
 	if ( aSensorSD == 0){
-		aSensorSD = new mcSensorSD(  "mc/SensorSD" );
+		aSensorSD = new mcSensorSD(  "mc/SensorSD");
 		SDman->AddNewDetector( aSensorSD );
 	}
+    aSensorSD->SetAnalyzer(analyzer);
+    
 	logicSensor->SetSensitiveDetector( aSensorSD );
 
 	// Set UserLimits

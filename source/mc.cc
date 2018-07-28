@@ -12,6 +12,7 @@
 #include "mcEventAction.hh"
 #include "mcParticleGun.hh"
 #include "mcParticleGunMessenger.hh"
+#include "mcAnalyzer.hh"
 
 #include "mcRunManager.hh"
 
@@ -43,10 +44,14 @@ int main(int argc,char** argv)
   G4Random::setTheEngine(new CLHEP::RanecuEngine);
      
   // Construct the default run manager
-  G4RunManager * runManager = new G4RunManager;
+  mcRunManager * runManager = new mcRunManager;
+    
+    // Construct the analyzer
+  mcAnalyzer* analyzer = new mcAnalyzer();
+    analyzer->Init();
 
   // Set mandatory initialization classes
-  mcDetectorConstruction* detector = new mcDetectorConstruction;
+  mcDetectorConstruction* detector = new mcDetectorConstruction(analyzer);
   runManager->SetUserInitialization(detector);
  
   // Physics list
@@ -94,6 +99,8 @@ int main(int argc,char** argv)
     ui->SessionStart();
     delete ui;
   }
+    
+    analyzer->Terminate();
    
   // Job termination
   // Free the store: user actions, physics_list and detector_description are
@@ -101,6 +108,7 @@ int main(int argc,char** argv)
   // in the main() program !
   
   delete visManager;
+    delete analyzer;
   delete runManager;
 }
 
