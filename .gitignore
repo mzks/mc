@@ -15,3 +15,11 @@ CMakeFiles/*
 CMakeScripts/*
 cmake_install.cmake
 mc.xcodeproj/*
+mc.build/*
+
+DerivedData/*
+Debug/*
+cmake_install.cmake/*
+hand/*
+
+bench/calcTotalEdep.C
