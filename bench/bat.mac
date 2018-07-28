@@ -12,6 +12,8 @@
 /gun/particle mu+
 /gun/energy 1.27 GeV
 
+/usr/det/setMaterial NaI
+
 /run/initialize
 
 /run/beamOn 10000

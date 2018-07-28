@@ -26,7 +26,6 @@
 #endif
 
 #include "QGSP_BERT.hh"
-#include "TMath.h"
 #include <iostream>
 
 int main(int argc,char** argv)
@@ -37,8 +36,6 @@ int main(int argc,char** argv)
   if ( argc == 1 ) {
     ui = new G4UIExecutive(argc, argv);
   }
-    
-    std::cout << TMath::Tan(1.0) << std::endl;
 
   // Choose the Random engine
   G4Random::setTheEngine(new CLHEP::RanecuEngine);

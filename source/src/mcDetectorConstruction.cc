@@ -37,7 +37,7 @@ mcDetectorConstruction::mcDetectorConstruction(mcAnalyzer* analyzer_in)
 
 	// materials
 	DefineMaterials();
-	SetSensorMaterial("CarbonicGas");
+	SetSensorMaterial("NaI");
 
 	// create commands for interactive definition of the calorimeter
 	detectorMessenger = new mcDetectorMessenger(this);
@@ -89,7 +89,10 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
 	logicSensor = new G4LogicalVolume(solidSensor,
 			sensorMaterial,
 			"Sensor");
-	physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicWorld,false,202);
+	physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicWorld,false,1);
+    
+    
+    physSensor = new G4PVPlacement(0,G4ThreeVector(20*cm,0,0),logicSensor,"Sensor",logicWorld,false,2);
 
 
 	//------------------------------------------------ 
