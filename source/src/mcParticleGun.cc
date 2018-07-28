@@ -18,7 +18,7 @@
 #include <iomanip>
 #include <math.h>
 
-using namespace CLHEP;
+using CLHEP::RandFlat;
 
 mcParticleGun::mcParticleGun()
 	:G4ParticleGun(1),
