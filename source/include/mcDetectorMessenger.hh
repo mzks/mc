@@ -15,21 +15,21 @@ class G4UIcmdWithoutParameter;
 
 class mcDetectorMessenger: public G4UImessenger
 {
-  public:
+public:
     mcDetectorMessenger(mcDetectorConstruction* );
-   ~mcDetectorMessenger();
+    ~mcDetectorMessenger();
     
     void SetNewValue(G4UIcommand*, G4String);
-  G4String GetCurrentValue(G4UIcommand * command);
-
-  private:
+    G4String GetCurrentValue(G4UIcommand * command);
+    
+private:
     mcDetectorConstruction* mcDetector;
     G4UIdirectory*             usrDir;
     G4UIdirectory*             detDir;
     G4UIcmdWithAString*        MaterialCmd;
     G4UIcmdWithADoubleAndUnit* MaxStepCmd;
     G4UIcmdWithADoubleAndUnit* MagFieldCmd;
-
+    
 };
 
 

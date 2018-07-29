@@ -14,20 +14,20 @@ class G4UIcmdWithADoubleAndUnit;
 
 class mcParticleGunMessenger: public G4UImessenger
 {
-	public:
-		mcParticleGunMessenger();
-		explicit mcParticleGunMessenger(mcParticleGun*);
-		~mcParticleGunMessenger();
-
-		void SetNewValue(G4UIcommand*, G4String);
-		G4String GetCurrentValue(G4UIcommand* command);
-	private:
-		mcParticleGun*		mcPG;
-		G4UIdirectory*			cmdDir;
-		G4UIcmdWithAnInteger*		vtxCmd;
-		G4UIcmdWithAnInteger*		parCmd;
-        G4UIcmdWithADoubleAndUnit*  eneCmd;
-
+public:
+    mcParticleGunMessenger();
+    explicit mcParticleGunMessenger(mcParticleGun*);
+    ~mcParticleGunMessenger();
+    
+    void SetNewValue(G4UIcommand*, G4String);
+    G4String GetCurrentValue(G4UIcommand* command);
+private:
+    mcParticleGun*		mcPG;
+    G4UIdirectory*			cmdDir;
+    G4UIcmdWithAnInteger*		vtxCmd;
+    G4UIcmdWithAnInteger*		parCmd;
+    G4UIcmdWithADoubleAndUnit*  eneCmd;
+    
 };
 
 #endif

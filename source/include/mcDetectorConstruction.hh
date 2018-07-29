@@ -18,61 +18,59 @@ class mcDetectorMessenger;
 
 class mcDetectorConstruction : public G4VUserDetectorConstruction
 {
-  public:
-  
+public:
+    
     mcDetectorConstruction(mcAnalyzer*);
-   ~mcDetectorConstruction();
-
-  public:
-     
-     void SetSensorMaterial (G4String);
-     void SetMaxStep(G4double);
-     void SetMagField(G4double);
-     
-     G4VPhysicalVolume* Construct();
-
-     void UpdateGeometry();
-
-  public:
-  
-     G4double GetWorldRadius()  const    {return WorldRadius;};
-     
-     const G4Material* GetSensorMaterial()  const {return sensorMaterial;};
+    ~mcDetectorConstruction();
     
-     G4double    GetMaxStep()      const {return maxStep;};      
- 
-     G4double    GetFieldValue()      const {return fieldValue;};      
-     
-     const G4VPhysicalVolume* GetphysiWorld() const {return physWorld;};           
-     const G4VPhysicalVolume* GetSensor()     const {return physSensor;};
-
-	 mcAnalyzer* analyzer;
+public:
     
-  private:
-     G4Material*        defaultMaterial;
-     G4Material*        sensorMaterial;
+    void SetSensorMaterial (G4String);
+    void SetMaxStep(G4double);
+    void SetMagField(G4double);
     
-     G4double           WorldRadius;
-
-     G4Orb*             solidWorld;
-     G4LogicalVolume*   logicWorld;
-     G4VPhysicalVolume* physWorld;
-
-     G4Tubs*            solidSensor;
-     G4LogicalVolume*   logicSensor;
-     G4VPhysicalVolume* physSensor;
-
-
-     G4UniformMagField* magField;      //pointer to the magnetic field
-     G4double           fieldValue;
- 
-     G4UserLimits*      pUserLimits;    //pointer to the UserLimits
-	 G4double            maxStep;          // max step length
-     mcDetectorMessenger* detectorMessenger;  //pointer to the Messenger
+    G4VPhysicalVolume* Construct();
+    
+    void UpdateGeometry();
+    
+public:
+    
+    G4double GetWorldRadius()  const    {return WorldRadius;};
+    
+    const G4Material* GetSensorMaterial()  const {return sensorMaterial;};
+    
+    G4double    GetMaxStep()      const {return maxStep;};
+    
+    G4double    GetFieldValue()      const {return fieldValue;};
+    
+    const G4VPhysicalVolume* GetphysiWorld() const {return physWorld;};
+    const G4VPhysicalVolume* GetSensor()     const {return physSensor;};
+    
+    mcAnalyzer* analyzer;
+    
+private:
+    G4Material*        defaultMaterial;
+    G4Material*        sensorMaterial;
+    
+    G4double           WorldRadius;
+    
+    G4Orb*             solidWorld;
+    G4LogicalVolume*   logicWorld;
+    G4VPhysicalVolume* physWorld;
+    
+    G4Tubs*            solidSensor;
+    G4LogicalVolume*   logicSensor;
+    G4VPhysicalVolume* physSensor;
     
     
-
-     void DefineMaterials();
+    G4UniformMagField* magField;      //pointer to the magnetic field
+    G4double           fieldValue;
+    
+    G4UserLimits*      pUserLimits;    //pointer to the UserLimits
+    G4double            maxStep;          // max step length
+    mcDetectorMessenger* detectorMessenger;  //pointer to the Messenger
+    
+    void DefineMaterials();
 };
 
 #endif

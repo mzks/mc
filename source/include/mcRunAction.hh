@@ -11,15 +11,15 @@ class G4Run;
 
 class mcRunAction : public G4UserRunAction
 {
-  public:
+public:
     mcRunAction();
-   ~mcRunAction();
-
-  public:
+    ~mcRunAction();
+    
+public:
     void BeginOfRunAction(const G4Run*);
     void EndOfRunAction(const G4Run*);
     
-  private:
+private:
 };
 
 

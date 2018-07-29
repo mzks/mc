@@ -36,7 +36,7 @@ public:
               std::vector<G4int> buf8,   //TrackID
               std::vector<G4int> buf9,   //copyNo
               std::vector<G4int> buf10   //particleID
-              );
+    );
     void Terminate();
     
 private:

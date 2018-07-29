@@ -12,16 +12,16 @@ class mcDetectorConstruction;
 
 class mcPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
-  public:
+public:
     mcPrimaryGeneratorAction(const mcDetectorConstruction*);    
-   ~mcPrimaryGeneratorAction();
-
-  public:
+    ~mcPrimaryGeneratorAction();
+    
+public:
     void GeneratePrimaries(G4Event*);
-
+    
 private:
     G4ParticleGun*              particleGun;	  //pointer a to G4  class
-	G4ParticleTable*			particleTable;
+    G4ParticleTable*			particleTable;
     //const mcDetectorConstruction* mcDetector;  
 };
 

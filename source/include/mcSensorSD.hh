@@ -19,30 +19,30 @@ class G4HCofThisEvent;
 
 class mcSensorSD : public G4VSensitiveDetector
 {
-  public:
-   mcSensorSD(G4String);
-   ~mcSensorSD();
+public:
+    mcSensorSD(G4String);
+    ~mcSensorSD();
     
     mcAnalyzer* analyzer;
     
-   void Initialize(G4HCofThisEvent*);
-   G4bool ProcessHits(G4Step*, G4TouchableHistory*);
-   void EndOfEvent(G4HCofThisEvent*);
-
-   G4double GetThresholdEnergy() const {return eThreshold;}
-   G4double GetTimeResolution()  const {return tResolution;}
-
-   static const G4String& GetCollectionName() {return HCname;}
+    void Initialize(G4HCofThisEvent*);
+    G4bool ProcessHits(G4Step*, G4TouchableHistory*);
+    void EndOfEvent(G4HCofThisEvent*);
+    
+    G4double GetThresholdEnergy() const {return eThreshold;}
+    G4double GetTimeResolution()  const {return tResolution;}
+    
+    static const G4String& GetCollectionName() {return HCname;}
     void SetAnalyzer(mcAnalyzer*);
-  
-  private:
-   mcSensorHitsCollection* sensorCollection;
-   std::ofstream outFile;
-
-   G4double eThreshold;
-   G4double tResolution;
-
-   static const G4String HCname;
+    
+private:
+    mcSensorHitsCollection* sensorCollection;
+    std::ofstream outFile;
+    
+    G4double eThreshold;
+    G4double tResolution;
+    
+    static const G4String HCname;
     
 };
 

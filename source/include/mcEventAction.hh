@@ -10,21 +10,21 @@ class mcRunAction;
 
 class mcEventAction : public G4UserEventAction
 {
- public:
-   mcEventAction(mcRunAction*);
-  ~mcEventAction();
-
- public:
-   void  BeginOfEventAction(const G4Event*);
-   void  EndOfEventAction(const G4Event*);
+public:
+    mcEventAction(mcRunAction*);
+    ~mcEventAction();
+    
+public:
+    void  BeginOfEventAction(const G4Event*);
+    void  EndOfEventAction(const G4Event*);
     
     
- private:
-  mcRunAction* runAction;                          
-
+private:
+    mcRunAction* runAction;                          
+    
 };
 
 
 #endif
 
-    
+

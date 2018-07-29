@@ -8,7 +8,7 @@
 class mcRunManager : public G4RunManager {
 public:
     mcRunManager();
-  
+    
 };
 
 #endif

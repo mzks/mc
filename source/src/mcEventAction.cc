@@ -15,7 +15,7 @@
 
 mcEventAction::mcEventAction(mcRunAction* action)
 {
-  runAction = action;
+    runAction = action;
 }
 
 
@@ -31,10 +31,10 @@ void mcEventAction::BeginOfEventAction(const G4Event*)
 
 void mcEventAction::EndOfEventAction(const G4Event* evt)
 {
-  G4int evtNb = evt->GetEventID();   
-  if (evtNb%1000  == 0) {
-    G4cout << " Event #" << evtNb << G4endl;
-  }
+    G4int evtNb = evt->GetEventID();   
+    if (evtNb%1000  == 0) {
+        G4cout << " Event #" << evtNb << G4endl;
+    }
 }  
 
 

@@ -13,33 +13,33 @@
 #include "G4PhysicalConstants.hh"
 
 mcPrimaryGeneratorAction::mcPrimaryGeneratorAction(
-                           const mcDetectorConstruction* mcDC)
-  :particleTable(G4ParticleTable::GetParticleTable())
-    //,mcDetector(mcDC)
+                                                   const mcDetectorConstruction* mcDC)
+:particleTable(G4ParticleTable::GetParticleTable())
+//,mcDetector(mcDC)
 {
-	particleGun = new mcParticleGun();
-	G4ParticleDefinition* particle = particleTable->FindParticle("geantino");
-	particleGun->SetParticleDefinition(particle);
-	particleGun->SetParticleMomentumDirection(G4ThreeVector(1.0,0.0,0.0));
-	particleGun->SetParticleEnergy(electron_mass_c2);
-	particleGun->SetParticlePosition(G4ThreeVector(0.0,0.0,0.0));
-
-
+    particleGun = new mcParticleGun();
+    G4ParticleDefinition* particle = particleTable->FindParticle("geantino");
+    particleGun->SetParticleDefinition(particle);
+    particleGun->SetParticleMomentumDirection(G4ThreeVector(1.0,0.0,0.0));
+    particleGun->SetParticleEnergy(electron_mass_c2);
+    particleGun->SetParticlePosition(G4ThreeVector(0.0,0.0,0.0));
+    
+    
 }
 
 
 
 mcPrimaryGeneratorAction::~mcPrimaryGeneratorAction()
 {
-  delete particleGun;
+    delete particleGun;
 }
 
 
 
 void mcPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
-	particleGun->GeneratePrimaryVertex(anEvent);
-
+    particleGun->GeneratePrimaryVertex(anEvent);
+    
 }
 
 

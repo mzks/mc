@@ -7,26 +7,26 @@
 
 class mcPhysicsList: public G4VUserPhysicsList
 {
-  public:
+public:
     mcPhysicsList();
-   ~mcPhysicsList();
-
-  protected:
+    ~mcPhysicsList();
+    
+protected:
     // Construct particle and physics
     void ConstructParticle();
     void ConstructProcess();
- 
+    
     void SetCuts();
-
-   
-  protected:
+    
+    
+protected:
     // these methods Construct particles 
     void ConstructBosons();
     void ConstructLeptons();
     void ConstructMesons();
     void ConstructBaryons();
-
-  protected:
+    
+protected:
     // these methods Construct physics processes and register them
     void ConstructGeneral();
     void ConstructEM();
