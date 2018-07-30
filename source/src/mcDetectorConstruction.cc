@@ -39,8 +39,6 @@ magField(0),pUserLimits(0),maxStep(100.0*cm)
     
     // create commands for interactive definition of the calorimeter
     detectorMessenger = new mcDetectorMessenger(this);
-    
-    // make user analyzer
 }
 
 mcDetectorConstruction::~mcDetectorConstruction()
@@ -75,13 +73,13 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
                                   0);			     //copy number
     
     // Sensor
-    
     solidSensor = new G4Tubs("Sensor",0.0*cm,2.54*cm,18.95*cm,0,CLHEP::twopi);
     logicSensor = new G4LogicalVolume(solidSensor,sensorMaterial,"Sensor");
     
     physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicWorld,false,1);
     physSensor = new G4PVPlacement(0,G4ThreeVector(20*cm,0,0),logicSensor,"Sensor",logicWorld,false,2);
-    
+    physSensor = new G4PVPlacement(0,G4ThreeVector(40*cm,0,0),logicSensor,"Sensor",logicWorld,false,3);
+
     
     //------------------------------------------------
     // Sensitive detectors
@@ -95,7 +93,7 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
     }
     aSensorSD->SetAnalyzer(analyzer);
     
-    logicSensor->SetSensitiveDetector( aSensorSD );
+    logicSensor->SetSensitiveDetector(aSensorSD);
     
     // Set UserLimits
     G4double maxTrkLen = 10.0*WorldRadius;

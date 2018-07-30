@@ -9,8 +9,8 @@
 /gun/position -10 0 0 cm
 /gun/direction 1 0 0
 
-/gun/particle mu+
-/gun/energy 1.27 GeV
+/gun/particle gamma
+/gun/energy 1.27 MeV
 
 /usr/det/setMaterial NaI
 
