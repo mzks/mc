@@ -20,7 +20,7 @@ class mcDetectorConstruction : public G4VUserDetectorConstruction
 {
 public:
     
-    mcDetectorConstruction(mcAnalyzer*);
+    mcDetectorConstruction();
     ~mcDetectorConstruction();
     
 public:
@@ -46,7 +46,9 @@ public:
     const G4VPhysicalVolume* GetphysiWorld() const {return physWorld;};
     const G4VPhysicalVolume* GetSensor()     const {return physSensor;};
     
-    mcAnalyzer* analyzer;
+    void SetAnalyzer(mcAnalyzer*);
+    
+    
     
 private:
     G4Material*        defaultMaterial;
@@ -62,7 +64,6 @@ private:
     G4LogicalVolume*   logicSensor;
     G4VPhysicalVolume* physSensor;
     
-    
     G4UniformMagField* magField;      //pointer to the magnetic field
     G4double           fieldValue;
     
@@ -71,6 +72,8 @@ private:
     mcDetectorMessenger* detectorMessenger;  //pointer to the Messenger
     
     void DefineMaterials();
+    mcAnalyzer* analyzer;
+
 };
 
 #endif

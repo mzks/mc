@@ -45,10 +45,12 @@ int main(int argc,char** argv)
     
     // Construct the analyzer
     mcAnalyzer* analyzer = new mcAnalyzer();
+    analyzer->SetInit(true, "out.root");
     analyzer->Init();
     
     // Set mandatory initialization classes
-    mcDetectorConstruction* detector = new mcDetectorConstruction(analyzer);
+    mcDetectorConstruction* detector = new mcDetectorConstruction();
+    detector->SetAnalyzer(analyzer);
     runManager->SetUserInitialization(detector);
     
     // Physics list

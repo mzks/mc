@@ -13,8 +13,12 @@
 #include "G4Types.hh"
 
 #include <vector>
+#include <fstream>
+#include <iomanip>
+
 #include "TTree.h"
 #include "TFile.h"
+#include "TString.h"
 
 
 class mcAnalyzer
@@ -23,6 +27,9 @@ public:
     mcAnalyzer();
     ~mcAnalyzer();
     mcAnalyzer(const mcAnalyzer&);
+    
+    void SetInit(G4bool, TString);
+    
     
     TTree* getTree(){return tree;};
     void Init();
@@ -38,11 +45,14 @@ public:
               std::vector<G4int> buf10   //particleID
     );
     void Terminate();
-    
+    void SetFileName(TString);
 private:
     
     TTree* tree;
-    
+    TString filename;
+    G4bool isRoot;
+    std::ofstream outFile;
+
     G4int nHit;
     std::vector<G4double> x;
     std::vector<G4double> y;

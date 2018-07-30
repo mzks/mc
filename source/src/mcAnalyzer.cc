@@ -16,29 +16,38 @@
 
 mcAnalyzer::mcAnalyzer()
 {
-    tree = new TTree("tree","tree");
-    
 }
 
 mcAnalyzer::~mcAnalyzer(){
-    delete tree;
 }
 mcAnalyzer::mcAnalyzer(const mcAnalyzer &obj) {
     tree = obj.tree;
 }
+
+void mcAnalyzer::SetInit(G4bool isRootIn, TString filenameIn){
+    isRoot = isRootIn;
+    filename = filenameIn;
+}
 void mcAnalyzer::Init(){
     
-    tree->Branch("nHit",&nHit,"nHit/I");
-    tree->Branch("x",&x);
-    tree->Branch("y",&y);
-    tree->Branch("z",&z);
-    tree->Branch("time",&time);
-    tree->Branch("eIn",&eIn);
-    tree->Branch("eDep",&eDep);
-    tree->Branch("TrackID",&trackID);
-    tree->Branch("copyNo",&copyNo);
-    tree->Branch("particle",&particleID);
-    
+    if(isRoot == true){
+        tree = new TTree("tree","mc output");
+        tree->Branch("nHit",&nHit,"nHit/I");
+        tree->Branch("x",&x);
+        tree->Branch("y",&y);
+        tree->Branch("z",&z);
+        tree->Branch("time",&time);
+        tree->Branch("eIn",&eIn);
+        tree->Branch("eDep",&eDep);
+        tree->Branch("TrackID",&trackID);
+        tree->Branch("copyNo",&copyNo);
+        tree->Branch("particle",&particleID);
+    } else {
+        // ascii file
+        outFile.open(filename, std::ios::out);
+        outFile.setf( std::ios:: scientific, std::ios::floatfield );
+        outFile << std::setprecision(8);
+    }
 }
 
 void mcAnalyzer::Fill(int buf1,                     //nHit
@@ -64,23 +73,47 @@ void mcAnalyzer::Fill(int buf1,                     //nHit
     copyNo  = buf9;
     particleID = buf10;
     
-    tree->Fill();
-    
-    x.clear();
-    y.clear();
-    z.clear();
-    time.clear();
-    eIn.clear();
-    eDep.clear();
-    trackID.clear();
-    copyNo.clear();
-    particleID.clear();
+    if (isRoot == true){
+        tree->Fill();
+        
+        x.clear();
+        y.clear();
+        z.clear();
+        time.clear();
+        eIn.clear();
+        eDep.clear();
+        trackID.clear();
+        copyNo.clear();
+        particleID.clear();
+    } else {
+        outFile << nHit << std::endl;
+        for(int i=0;i<nHit;++i){
+            outFile << x.at(i)
+            << " "  << y.at(i)
+            << " "  << z.at(i)
+            << " "  << time.at(i)
+            << " "  << eIn.at(i)
+            << " "  << eDep.at(i)
+            << " "  << trackID.at(i)
+            << " "  << copyNo.at(i)
+            << " "  << particleID.at(i)
+            << std::endl;
+        }
+    }
 }
 
 void mcAnalyzer::Terminate(){
+    if (isRoot == true){
+        auto fout = new TFile(filename,"recreate");
+        tree->Write();
+        fout->Close();
+        delete tree;
+    } else {
+        outFile.close();
+    }
     
-    auto fout = new TFile("out.root","recreate");
-    tree->Write();
-    fout->Close();
-    
+}
+
+void mcAnalyzer::SetFileName(TString name){
+    filename = name;
 }

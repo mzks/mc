@@ -24,7 +24,7 @@
 
 #include <iostream>
 
-mcDetectorConstruction::mcDetectorConstruction(mcAnalyzer* analyzer_in)
+mcDetectorConstruction::mcDetectorConstruction()
 :defaultMaterial(0),sensorMaterial(0),
 WorldRadius(100*cm),
 solidWorld(0),logicWorld(0),physWorld(0),
@@ -41,8 +41,6 @@ magField(0),pUserLimits(0),maxStep(100.0*cm)
     detectorMessenger = new mcDetectorMessenger(this);
     
     // make user analyzer
-    analyzer = analyzer_in;
-    
 }
 
 mcDetectorConstruction::~mcDetectorConstruction()
@@ -378,5 +376,9 @@ void mcDetectorConstruction::SetMagField(G4double value)
 void mcDetectorConstruction::UpdateGeometry()
 {
     G4RunManager::GetRunManager()->DefineWorldVolume(Construct());
+}
+
+void mcDetectorConstruction::SetAnalyzer(mcAnalyzer * analyzer_in){
+    analyzer = analyzer_in;
 }
 

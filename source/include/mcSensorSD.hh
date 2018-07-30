@@ -5,9 +5,6 @@
 #include "mcSensorHit.hh"
 #include "mcAnalyzer.hh"
 
-
-#include <iomanip>
-#include <fstream>
 #include <vector>
 
 #include "TFile.h"
@@ -35,10 +32,9 @@ public:
     static const G4String& GetCollectionName() {return HCname;}
     void SetAnalyzer(mcAnalyzer*);
     
-private:
-    mcSensorHitsCollection* sensorCollection;
-    std::ofstream outFile;
     
+private:
+    mcSensorHitsCollection* sensorCollection;    
     G4double eThreshold;
     G4double tResolution;
     

@@ -12,8 +12,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 
-mcPrimaryGeneratorAction::mcPrimaryGeneratorAction(
-                                                   const mcDetectorConstruction* mcDC)
+mcPrimaryGeneratorAction::mcPrimaryGeneratorAction(const mcDetectorConstruction* mcDC)
 :particleTable(G4ParticleTable::GetParticleTable())
 //,mcDetector(mcDC)
 {

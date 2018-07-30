@@ -1,4 +1,3 @@
-
 #include "mcRunAction.hh"
 
 #include "G4Run.hh"
