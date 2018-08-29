@@ -17,19 +17,19 @@ for Positronium experiment, `$git checkout ps`.
 
 ### Run
 ```
-$mkdir build
-$cd build
-$cmake ../source && make install
-cd ../bench
+>mkdir build
+>cd build
+>cmake ../source && make install
+>cd ../bench
 ```
 GUI mode
 ```
-../bin/mc
+>../bin/mc
 
 ```
 
 Batch mode
 ```
-../bin/mc bat.mac
+>../bin/mc bat.mac
 
 ```
