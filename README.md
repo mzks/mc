@@ -11,7 +11,6 @@ This is an example of Geant4 simulation for experiment.
 ### Install
 ```
 $git clone https://github.com/mzks/mc
-
 ```
 for Positronium experiment, `$git checkout ps`.
 
@@ -25,11 +24,15 @@ for Positronium experiment, `$git checkout ps`.
 GUI mode
 ```
 >../bin/mc
-
 ```
 
 Batch mode
 ```
 >../bin/mc bat.mac
-
 ```
+
+## Requirement
+- Geant4.10.4
+- ROOT6
+- Qt
+
