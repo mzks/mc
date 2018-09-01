@@ -21,6 +21,8 @@ for Positronium experiment, `$git checkout ps`.
 >cmake ../source && make install
 >cd ../bench
 ```
+If you don't use macro as an argument, GUI and a prompt are opened.
+
 GUI mode
 ```
 >../bin/mc
@@ -34,5 +36,9 @@ Batch mode
 ## Requirement
 - Geant4.10.4
 - ROOT6
-- Qt
+- Qt (GUI mode)
+
+You can run easily, without installing ROOT and Geant4 using [virtual machine](https://wiki.kek.jp/display/geant4/Geant4+Virtual+Machine).
+When you use this virtual machine, you have to do `>source $ROOTSYS/bin/thisroot.sh` before running.
+
 
