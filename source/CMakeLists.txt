@@ -1,68 +1,28 @@
-#----------------------------------------------------------------------------
-# Setup the project
-cmake_minimum_required(VERSION 2.6 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.8)
+
 project(mc)
+file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
+file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
+include_directories(${PROJECT_SOURCE_DIR}/include)
+set(CMAKE_INSTALL_PREFIX ..)
 
-#----------------------------------------------------------------------------
-#Setting ROOT
-
+# Setting ROOT
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
-find_package(ROOT REQUIRED COMPONENTS MathCore RIO Hist Tree Net)
-
+find_package(ROOT CONFIG REQUIRED)
 include(${ROOT_USE_FILE})
 
-
-#----------------------------------------------------------------------------
-# Find Geant4 package, activating all available UI and Vis drivers by default
-# You can set WITH_GEANT4_UIVIS to OFF via the command line or ccmake/cmake-gui
-# to build a batch mode only executable
-#
+# Setting Geant4
 option(WITH_GEANT4_UIVIS "Build example with Geant4 UI and Vis drivers" ON)
 if(WITH_GEANT4_UIVIS)
   find_package(Geant4 REQUIRED ui_all vis_all)
 else()
   find_package(Geant4 REQUIRED)
 endif()
-
-#----------------------------------------------------------------------------
-# Setup Geant4 include directories and compile definitions
-#
 include(${Geant4_USE_FILE})
 
-#----------------------------------------------------------------------------
-# Setup include directory for this project
-#
-include_directories(${PROJECT_SOURCE_DIR}/include)
-
-#----------------------------------------------------------------------------
-# Locate sources and headers for this project
-# NB: headers are included so they will show up in IDEs
-#
-file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
-file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
-
-#----------------------------------------------------------------------------
 # Add the executable, and link it to the Geant4 libraries
 add_definitions(${ROOT_CXX_FLAGS})
 add_executable(mc mc.cc ${sources} ${headers})
-target_link_libraries(mc ${Geant4_LIBRARIES})
-target_link_libraries(mc ${ROOT_LIBRARIES})
+target_link_libraries(mc PRIVATE ROOT::MathCore ROOT::Hist ROOT::Tree ${Geant4_LIBRARIES})
 
-#----------------------------------------------------------------------------
-#Compiler option
-set(CMAKE_INSTALL_PREFIX "..")
-#set(CMAKE_CXX_FLAGS "-std=c++14 -Wall")
-
-
-#----------------------------------------------------------------------------
-# For internal Geant4 use - but has no effect if you build this
-# example standalone
-#
-add_custom_target(MC DEPENDS mc)
-
-#----------------------------------------------------------------------------
-# Install the executable to 'bin' directory under CMAKE_INSTALL_PREFIX
-#
 install(TARGETS mc DESTINATION bin)
-
-
