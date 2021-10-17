@@ -27,7 +27,8 @@ public:
     
     void SetSensorMaterial (G4String);
     void SetShieldMaterial (G4String);
-    void SetSensorSize(G4double);
+    void SetSensorRadius(G4double);
+    void SetSensorHeight(G4double);
     void SetShieldThickness(G4double);
     void SetMaxStep(G4double);
     void SetMagField(G4double);
@@ -42,14 +43,15 @@ public:
     
     const G4Material* GetSensorMaterial()  const {return sensorMaterial;};
     const G4Material* GetShieldMaterial()  const {return shieldMaterial;};
-    const double GetSensorSize() const {return sensorSize;};
+    const double GetSensorRadius() const {return sensorRadius;};
+    const double GetSensorHeight() const {return sensorHeight;};
     const double GetShieldThickness() const {return shieldThickness;};
 
     G4double    GetMaxStep()      const {return maxStep;};
     
     G4double    GetFieldValue()      const {return fieldValue;};
     
-    const G4VPhysicalVolume* GetphysiWorld() const {return physWorld;};
+    const G4VPhysicalVolume* GetphysWorld() const {return physWorld;};
     const G4VPhysicalVolume* GetSensor()     const {return physSensor;};
     
     void SetAnalyzer(mcAnalyzer*);
@@ -62,14 +64,15 @@ private:
     G4Material*        shieldMaterial;
 
     G4double           WorldRadius;
-    G4double           sensorSize;
+    G4double           sensorRadius;
+    G4double           sensorHeight;
     G4double           shieldThickness;
     
     G4Orb*             solidWorld;
     G4LogicalVolume*   logicWorld;
     G4VPhysicalVolume* physWorld;
     
-    G4Box*             solidSensor;
+    G4Tubs*            solidSensor;
     G4LogicalVolume*   logicSensor;
     G4VPhysicalVolume* physSensor;
 
