@@ -28,6 +28,8 @@ private:
     G4UIdirectory*             detDir;
     G4UIcmdWithAString*        MaterialCmd;
     G4UIcmdWithAString*        MaterialShieldCmd;
+    G4UIcmdWithADoubleAndUnit* SensorSizeCmd;
+    G4UIcmdWithADoubleAndUnit* ShieldThicknessCmd;
     G4UIcmdWithADoubleAndUnit* MaxStepCmd;
     G4UIcmdWithADoubleAndUnit* MagFieldCmd;
     

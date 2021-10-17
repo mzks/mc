@@ -26,7 +26,7 @@
 
 mcDetectorConstruction::mcDetectorConstruction()
 :defaultMaterial(0),sensorMaterial(0),shieldMaterial(0),
-WorldRadius(5.0*m),
+WorldRadius(5.0*m),sensorSize(10.0*cm),shieldThickness(20*cm),
 solidWorld(0),logicWorld(0),physWorld(0),
 solidSensor(0),logicSensor(0),physSensor(0),
 magField(0),pUserLimits(0),maxStep(100.0*cm)
@@ -74,14 +74,14 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
                                   0);			     //copy number
     
     // Sensor
-    solidSensor = new G4Box("Sensor", 10.0*cm, 10.0*cm, 10.0*cm);
+    solidSensor = new G4Box("Sensor", sensorSize/2.,sensorSize/2.,sensorSize/2.);
     logicSensor = new G4LogicalVolume(solidSensor,sensorMaterial,"Sensor");
     
     physSensor = new G4PVPlacement(0,G4ThreeVector(0, 0, 2.0*m),logicSensor,"Sensor",logicWorld,false,1);
     //physSensor = new G4PVPlacement(0,G4ThreeVector(20*cm,0,0),logicSensor,"Sensor",logicWorld,false,2);
     //physSensor = new G4PVPlacement(0,G4ThreeVector(40*cm,0,0),logicSensor,"Sensor",logicWorld,false,3);
 
-    solidShield = new G4Box("Shield", 1.0*m, 1.0*m, 30.0*cm);
+    solidShield = new G4Box("Shield", 1.0*m, 1.0*m, shieldThickness/2.);
     logicShield = new G4LogicalVolume(solidShield, shieldMaterial, "Shield");
     physShield =  new G4PVPlacement(0, G4ThreeVector(0, 0, 1.0*m), logicShield, "Shield", logicWorld, false, 101);
     
@@ -364,6 +364,17 @@ void mcDetectorConstruction::SetShieldMaterial(G4String materialChoice)
         G4cout << materialChoice << " is not in the Material Table.";
         G4cout <<G4endl;
     }
+}
+
+void mcDetectorConstruction::SetSensorSize(G4double size)
+{
+    sensorSize = size;
+    UpdateGeometry();
+}
+void mcDetectorConstruction::SetShieldThickness(G4double thickness)
+{
+    shieldThickness = thickness;
+    UpdateGeometry();
 }
 
 #include "G4FieldManager.hh"

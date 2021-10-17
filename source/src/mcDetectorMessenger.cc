@@ -27,6 +27,20 @@ mcDetectorMessenger::mcDetectorMessenger(mcDetectorConstruction* mcDet)
     MaterialShieldCmd->SetParameterName("choice",false);
     MaterialShieldCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
 
+    SensorSizeCmd = new G4UIcmdWithADoubleAndUnit("/usr/det/setSensorSize",this);
+    SensorSizeCmd->SetGuidance("Define Sensor size.");
+    SensorSizeCmd->SetParameterName("sensorsize", false);
+    SensorSizeCmd->SetRange("sensorsize>0.");
+    SensorSizeCmd->SetUnitCategory("Length");
+    SensorSizeCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
+    ShieldThicknessCmd = new G4UIcmdWithADoubleAndUnit("/usr/det/setShieldThickness",this);
+    ShieldThicknessCmd->SetGuidance("Define shield thickness.");
+    ShieldThicknessCmd->SetParameterName("thickness", false);
+    ShieldThicknessCmd->SetRange("thickness>0.");
+    ShieldThicknessCmd->SetUnitCategory("Length");
+    ShieldThicknessCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
     MagFieldCmd = new G4UIcmdWithADoubleAndUnit("/usr/det/setField",this);
     MagFieldCmd->SetGuidance("Define magnetic field.");
     MagFieldCmd->SetGuidance("Magnetic field will be in Z direction.");
@@ -47,6 +61,8 @@ mcDetectorMessenger::mcDetectorMessenger(mcDetectorConstruction* mcDet)
 mcDetectorMessenger::~mcDetectorMessenger()
 {
     delete MaterialCmd;
+    delete SensorSizeCmd;
+    delete ShieldThicknessCmd;
     delete MagFieldCmd;
     delete MaxStepCmd;  
     delete usrDir;
@@ -62,7 +78,10 @@ void mcDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
         mcDetector->SetShieldMaterial(newValue);
     } else if( command == MaxStepCmd ){
         mcDetector->SetMaxStep(MaxStepCmd->GetNewDoubleValue(newValue));
-        
+    } else if( command == SensorSizeCmd ){
+        mcDetector->SetSensorSize(SensorSizeCmd->GetNewDoubleValue(newValue));
+    } else if( command == ShieldThicknessCmd ){
+        mcDetector->SetShieldThickness(ShieldThicknessCmd->GetNewDoubleValue(newValue));
     } else if( command == MagFieldCmd ){
         mcDetector->SetMagField(MagFieldCmd->GetNewDoubleValue(newValue));
     }
@@ -77,6 +96,10 @@ G4String mcDetectorMessenger::GetCurrentValue(G4UIcommand * command)
         cv =  mcDetector->GetShieldMaterial()->GetName();
     } else if( command==MaxStepCmd ){
         cv =  MaxStepCmd->ConvertToString( mcDetector->GetMaxStep(),"mm");
+    } else if( command==SensorSizeCmd ){
+        cv =  SensorSizeCmd->ConvertToString( mcDetector->GetSensorSize(),"cm");
+    } else if( command==ShieldThicknessCmd ){
+        cv =  ShieldThicknessCmd->ConvertToString( mcDetector->GetShieldThickness(),"cm");
     } else if( command==MagFieldCmd ){
         cv =  MagFieldCmd->ConvertToString( mcDetector->GetFieldValue(),"tesla");
     }

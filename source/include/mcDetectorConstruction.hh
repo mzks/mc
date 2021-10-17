@@ -27,6 +27,8 @@ public:
     
     void SetSensorMaterial (G4String);
     void SetShieldMaterial (G4String);
+    void SetSensorSize(G4double);
+    void SetShieldThickness(G4double);
     void SetMaxStep(G4double);
     void SetMagField(G4double);
     
@@ -40,6 +42,8 @@ public:
     
     const G4Material* GetSensorMaterial()  const {return sensorMaterial;};
     const G4Material* GetShieldMaterial()  const {return shieldMaterial;};
+    const double GetSensorSize() const {return sensorSize;};
+    const double GetShieldThickness() const {return shieldThickness;};
 
     G4double    GetMaxStep()      const {return maxStep;};
     
@@ -58,6 +62,8 @@ private:
     G4Material*        shieldMaterial;
 
     G4double           WorldRadius;
+    G4double           sensorSize;
+    G4double           shieldThickness;
     
     G4Orb*             solidWorld;
     G4LogicalVolume*   logicWorld;
