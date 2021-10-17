@@ -21,7 +21,12 @@ mcDetectorMessenger::mcDetectorMessenger(mcDetectorConstruction* mcDet)
     MaterialCmd->SetGuidance("Select Material of the sensor");
     MaterialCmd->SetParameterName("choice",false);
     MaterialCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
-    
+
+    MaterialShieldCmd = new G4UIcmdWithAString("/usr/det/setShieldMaterial",this);
+    MaterialShieldCmd->SetGuidance("Select Material of the shield");
+    MaterialShieldCmd->SetParameterName("choice",false);
+    MaterialShieldCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
+
     MagFieldCmd = new G4UIcmdWithADoubleAndUnit("/usr/det/setField",this);
     MagFieldCmd->SetGuidance("Define magnetic field.");
     MagFieldCmd->SetGuidance("Magnetic field will be in Z direction.");
@@ -51,9 +56,10 @@ mcDetectorMessenger::~mcDetectorMessenger()
 
 void mcDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 { 
-    if( command == MaterialCmd ){
+    if( command == MaterialCmd ) {
         mcDetector->SetSensorMaterial(newValue);
-        
+    } else if (command == MaterialShieldCmd ){
+        mcDetector->SetShieldMaterial(newValue);
     } else if( command == MaxStepCmd ){
         mcDetector->SetMaxStep(MaxStepCmd->GetNewDoubleValue(newValue));
         
@@ -65,18 +71,15 @@ void mcDetectorMessenger::SetNewValue(G4UIcommand* command,G4String newValue)
 G4String mcDetectorMessenger::GetCurrentValue(G4UIcommand * command)
 {
     G4String cv;
-    
-    if( command==MaterialCmd ){
-        cv =  mcDetector->GetSensorMaterial()->GetName();
-        
+    if( command==MaterialCmd ) {
+        cv = mcDetector->GetSensorMaterial()->GetName();
+    } else if ( command==MaterialShieldCmd ){
+        cv =  mcDetector->GetShieldMaterial()->GetName();
     } else if( command==MaxStepCmd ){
         cv =  MaxStepCmd->ConvertToString( mcDetector->GetMaxStep(),"mm");
-        
     } else if( command==MagFieldCmd ){
         cv =  MagFieldCmd->ConvertToString( mcDetector->GetFieldValue(),"tesla");
-        
     }
-    
     return cv;
 }
 

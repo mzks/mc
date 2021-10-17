@@ -31,9 +31,9 @@ mcPG(pg)
     vtxCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
     
     parCmd = new G4UIcmdWithAnInteger("/gun/usr/particle",this);
-    parCmd->SetGuidance("Select particle 0:User 1:neutron 2:mu- 3:Random flux neutron 4:Real neutron spectrum 5:fission(Cf)");
+    parCmd->SetGuidance("Select particle 0:User 1:Random flux neutron");
     parCmd->SetParameterName("part",false);
-    parCmd->SetRange("part >= 0 && part <= 5");
+    parCmd->SetRange("part >= 0 && part <= 1");
     parCmd->AvailableForStates(G4State_PreInit,G4State_Idle);
     
     eneCmd = new G4UIcmdWithADoubleAndUnit("/gun/usr/energy",this);

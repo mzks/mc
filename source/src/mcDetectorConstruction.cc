@@ -25,8 +25,8 @@
 #include <iostream>
 
 mcDetectorConstruction::mcDetectorConstruction()
-:defaultMaterial(0),sensorMaterial(0),
-WorldRadius(100*cm),
+:defaultMaterial(0),sensorMaterial(0),shieldMaterial(0),
+WorldRadius(5.0*m),
 solidWorld(0),logicWorld(0),physWorld(0),
 solidSensor(0),logicSensor(0),physSensor(0),
 magField(0),pUserLimits(0),maxStep(100.0*cm)
@@ -36,7 +36,8 @@ magField(0),pUserLimits(0),maxStep(100.0*cm)
     DefineMaterials();
     
     SetSensorMaterial("NaI");
-    
+    SetShieldMaterial("Lead");
+
     // create commands for interactive definition of the calorimeter
     detectorMessenger = new mcDetectorMessenger(this);
 }
@@ -73,13 +74,16 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
                                   0);			     //copy number
     
     // Sensor
-    solidSensor = new G4Tubs("Sensor",0.0*cm,2.54*cm,18.95*cm,0,CLHEP::twopi);
+    solidSensor = new G4Box("Sensor", 10.0*cm, 10.0*cm, 10.0*cm);
     logicSensor = new G4LogicalVolume(solidSensor,sensorMaterial,"Sensor");
     
-    physSensor = new G4PVPlacement(0,G4ThreeVector(),logicSensor,"Sensor",logicWorld,false,1);
-    physSensor = new G4PVPlacement(0,G4ThreeVector(20*cm,0,0),logicSensor,"Sensor",logicWorld,false,2);
-    physSensor = new G4PVPlacement(0,G4ThreeVector(40*cm,0,0),logicSensor,"Sensor",logicWorld,false,3);
+    physSensor = new G4PVPlacement(0,G4ThreeVector(0, 0, 2.0*m),logicSensor,"Sensor",logicWorld,false,1);
+    //physSensor = new G4PVPlacement(0,G4ThreeVector(20*cm,0,0),logicSensor,"Sensor",logicWorld,false,2);
+    //physSensor = new G4PVPlacement(0,G4ThreeVector(40*cm,0,0),logicSensor,"Sensor",logicWorld,false,3);
 
+    solidShield = new G4Box("Shield", 1.0*m, 1.0*m, 30.0*cm);
+    logicShield = new G4LogicalVolume(solidShield, shieldMaterial, "Shield");
+    physShield =  new G4PVPlacement(0, G4ThreeVector(0, 0, 1.0*m), logicShield, "Shield", logicWorld, false, 101);
     
     //------------------------------------------------
     // Sensitive detectors
@@ -346,6 +350,21 @@ void mcDetectorConstruction::SetSensorMaterial(G4String materialChoice)
     }
 }
 
+void mcDetectorConstruction::SetShieldMaterial(G4String materialChoice)
+{
+    // search the material by its name
+    G4Material* pttoMaterial = G4Material::GetMaterial(materialChoice);
+    if (pttoMaterial) {
+        shieldMaterial = pttoMaterial;
+        G4cout << " mcDetectorConstruction::SetShileMaterial:  ";
+        G4cout << "Shield material is " << materialChoice << G4endl;
+        UpdateGeometry();
+    } else {
+        G4cout << " mcDetectorConstruction::SetShieldMaterial:  ";
+        G4cout << materialChoice << " is not in the Material Table.";
+        G4cout <<G4endl;
+    }
+}
 
 #include "G4FieldManager.hh"
 #include "G4TransportationManager.hh"

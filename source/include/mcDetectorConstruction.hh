@@ -26,6 +26,7 @@ public:
 public:
     
     void SetSensorMaterial (G4String);
+    void SetShieldMaterial (G4String);
     void SetMaxStep(G4double);
     void SetMagField(G4double);
     
@@ -38,7 +39,8 @@ public:
     G4double GetWorldRadius()  const    {return WorldRadius;};
     
     const G4Material* GetSensorMaterial()  const {return sensorMaterial;};
-    
+    const G4Material* GetShieldMaterial()  const {return shieldMaterial;};
+
     G4double    GetMaxStep()      const {return maxStep;};
     
     G4double    GetFieldValue()      const {return fieldValue;};
@@ -53,17 +55,22 @@ public:
 private:
     G4Material*        defaultMaterial;
     G4Material*        sensorMaterial;
-    
+    G4Material*        shieldMaterial;
+
     G4double           WorldRadius;
     
     G4Orb*             solidWorld;
     G4LogicalVolume*   logicWorld;
     G4VPhysicalVolume* physWorld;
     
-    G4Tubs*            solidSensor;
+    G4Box*             solidSensor;
     G4LogicalVolume*   logicSensor;
     G4VPhysicalVolume* physSensor;
-    
+
+    G4Box*             solidShield;
+    G4LogicalVolume*   logicShield;
+    G4VPhysicalVolume* physShield;
+
     G4UniformMagField* magField;      //pointer to the magnetic field
     G4double           fieldValue;
     

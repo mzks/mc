@@ -27,6 +27,7 @@ private:
     G4UIdirectory*             usrDir;
     G4UIdirectory*             detDir;
     G4UIcmdWithAString*        MaterialCmd;
+    G4UIcmdWithAString*        MaterialShieldCmd;
     G4UIcmdWithADoubleAndUnit* MaxStepCmd;
     G4UIcmdWithADoubleAndUnit* MagFieldCmd;
     

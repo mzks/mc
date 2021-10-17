@@ -40,28 +40,18 @@ public:
     G4double LogLogInterpolatorCalculateFission(G4double);
     
 private:
-    std::ifstream tableFile;
-    std::vector<long double> muonE;
-    std::vector<long double> muonFlux;
-    std::vector<long double> muonPDF;
-    
     std::ifstream tableFileSp;
     std::vector<long double> spE;
     std::vector<long double> spFlux;
     std::vector<long double> spPDF;
-    
-    std::ifstream tableFileFission;
-    std::vector<long double> fissionE;
-    std::vector<long double> fissionFlux;
-    std::vector<long double> fissionPDF;
-    
+
     G4ParticleTable*					particleTable;
     const mcDetectorConstraction*		mcDC;
     
     G4int positionFlag;
-    enum{ UserPos=0, Top, Centre,flux};
+    enum{ UserPos=0, Top, Centre, flux};
     G4int particleFlag;
-    enum{ User=0, Muon, Neutron,fluxNeutron,fluxNeutronSp,fission};
+    enum{ User=0, Table};
     G4double monoEnergy;
     
     mcParticleGunMessenger*	pMessenger;

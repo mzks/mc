@@ -17,13 +17,11 @@ mcPrimaryGeneratorAction::mcPrimaryGeneratorAction(const mcDetectorConstruction*
 //,mcDetector(mcDC)
 {
     particleGun = new mcParticleGun();
-    G4ParticleDefinition* particle = particleTable->FindParticle("geantino");
+    G4ParticleDefinition* particle = particleTable->FindParticle("e-");
     particleGun->SetParticleDefinition(particle);
     particleGun->SetParticleMomentumDirection(G4ThreeVector(1.0,0.0,0.0));
     particleGun->SetParticleEnergy(electron_mass_c2);
     particleGun->SetParticlePosition(G4ThreeVector(0.0,0.0,0.0));
-    
-    
 }
 
 
@@ -38,7 +36,6 @@ mcPrimaryGeneratorAction::~mcPrimaryGeneratorAction()
 void mcPrimaryGeneratorAction::GeneratePrimaries(G4Event* anEvent)
 {
     particleGun->GeneratePrimaryVertex(anEvent);
-    
 }
 
 
