@@ -4,7 +4,7 @@ project(mc)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 include_directories(${PROJECT_SOURCE_DIR}/include)
-set(CMAKE_INSTALL_PREFIX ..)
+set(CMAKE_INSTALL_PREFIX .)
 
 # Setting ROOT
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
