@@ -8,33 +8,31 @@ This is an example of Geant4 simulation for experiment.
 - Output for ROOT tree
 
 ## Usage
-### Install
+### Install & build
 ```
-$git clone https://github.com/mzks/mc
+> git clone https://github.com/mzks/mc
+> cd mc
+> cmake -S source -B build
+> cmake --build build
+> cmake --install build
 ```
-for Positronium experiment, `$git checkout ps`.
+Then, `bin` directory will be generated.
 
-### Run
-```
->mkdir build
->cd build
->cmake ../source && make install
->cd ../bench
-```
-If you don't use macro as an argument, GUI and a prompt are opened.
 
 GUI mode
 ```
+>cd bench
 >../bin/mc
 ```
 
 Batch mode
 ```
+>cd bench
 >../bin/mc bat.mac
 ```
 
 ## Requirement
-- Geant4.10.4
+- Geant4.10.6
 - ROOT6
 - Qt (GUI mode)
 
