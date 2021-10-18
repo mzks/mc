@@ -14,21 +14,18 @@ This is an example of Geant4 simulation for experiment.
 > cd mc
 > cmake -S source -B build
 > cmake --build build
-> cmake --install build
 ```
-Then, `bin` directory will be generated.
 
-
-GUI mode
+ - GUI mode
 ```
 >cd bench
->../bin/mc
+>../build/mc
 ```
 
-Batch mode
+ - Batch mode
 ```
 >cd bench
->../bin/mc bat.mac
+>../build/mc bat.mac
 ```
 
 ## Requirement
