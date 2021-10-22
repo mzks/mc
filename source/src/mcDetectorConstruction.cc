@@ -84,7 +84,13 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
     solidShield = new G4Box("Shield", 1.0*m, 1.0*m, shieldThickness/2.);
     logicShield = new G4LogicalVolume(solidShield, shieldMaterial, "Shield");
     physShield =  new G4PVPlacement(0, G4ThreeVector(0, 0, 1.0*m+shieldThickness/2.), logicShield, "Shield", logicWorld, false, 101);
-    
+
+    //add
+    //G4double length_target_to_quartz = 1.0 *m;
+    G4Box* new_solid = new G4Box("box", 0.5*m, 0.5*m, shieldThickness*2.);
+    G4LogicalVolume* new_logic = new G4LogicalVolume(new_solid, shieldMaterial, "box");
+    G4PVPlacement* newphys = new G4PVPlacement(0, G4ThreeVector(), new_logic, "box", logicWorld, false, 101);
+
     //------------------------------------------------
     // Sensitive detectors
     //------------------------------------------------
