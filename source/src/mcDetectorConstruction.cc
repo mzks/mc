@@ -106,7 +106,7 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
     logicWorld->SetUserLimits(pUserLimits);
     
     // Visualization attributes
-    logicWorld->SetVisAttributes (G4VisAttributes::Invisible);
+    logicWorld->SetVisAttributes (G4VisAttributes::GetInvisible());
     
     G4VisAttributes* simpleBoxVisAtt= new G4VisAttributes(G4Colour(0.0,1.0,1.0));
     simpleBoxVisAtt->SetVisibility(true);
