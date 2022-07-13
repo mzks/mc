@@ -20,9 +20,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    
+
     - name: Install dependencies
-      run: sudo apt-get install libxerces-c-dev
+      run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools qt5-default libgtest-dev libeigen3-dev
+
+    - name: Install ROOT
+      run: |
+        wget https://root.cern/download/$ROOT_VERSION.tar.gz
+        tar xf $ROOT_VERSION.tar.gz
+      env:
+        ROOT_VERSION: "root_v6.26.04.Linux-ubuntu22-x86_64-gcc11.2"
+
     - name: Install Geant4
       run: |
         wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
@@ -32,6 +40,7 @@ jobs:
     
     - name: Source
       run: |
+        source root/bin/thisroot.sh
         source ~/Geant4/bin/geant4.sh
 
     - name: Configure CMake
