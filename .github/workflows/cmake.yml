@@ -40,9 +40,8 @@ jobs:
     
     - name: Source
       run: |
-        ls root
-        pwd
-        env | grep root
+        echo $LD_LIBRARY_PATH
+        ls -lahtr ~/root/bin/thisroot.sh
         source ~/root/bin/thisroot.sh
         source ~/Geant4/bin/geant4.sh
 
