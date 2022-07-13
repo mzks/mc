@@ -28,7 +28,7 @@ jobs:
         wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
         tar xf $GEANT4_VERSION-binaries.tar.gz -C $HOME
       env:
-        GEANT4_VERSION: "geant4.11.00.p02"
+        GEANT4_VERSION: "geant4.11.0.p02"
     
     - name: Source
       run: |
