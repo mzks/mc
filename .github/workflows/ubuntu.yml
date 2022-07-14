@@ -26,8 +26,10 @@ jobs:
 
     - name: Install ROOT
       run: |
+        cd ~/.local
         wget https://root.cern/download/$ROOT_VERSION.tar.gz
-        tar xf $ROOT_VERSION.tar.gz -C $HOME
+        tar xf $ROOT_VERSION.tar.gz
+        cd
       env:
         ROOT_VERSION: "root_v6.26.04.Linux-ubuntu22-x86_64-gcc11.2"
 
@@ -40,11 +42,10 @@ jobs:
     
     - name: Source
       run: |
-        pwd
-        ls -lahtr $HOME
-        ls -lahtr $HOME/root
-        ls -lahtr $HOME/root/bin
-        source $HOME/root/bin/thisroot.sh
+        ls -lahtr ~/  
+        ls -lahtr ~/.loca/root
+        ls -lahtr ~/.local/root/bin
+        source ~/.local/root/bin/thisroot.sh
         source $HOME/Geant4/bin/geant4.sh
         echo "env"
         pwd
