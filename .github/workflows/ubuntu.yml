@@ -40,6 +40,10 @@ jobs:
     
     - name: Source
       run: |
+        pwd
+        ls -lahtr $HOME
+        ls -lahtr $HOME/root
+        ls -lahtr $HOME/root/bin
         source $HOME/root/bin/thisroot.sh
         source $HOME/Geant4/bin/geant4.sh
 
