@@ -26,24 +26,22 @@ jobs:
 
     - name: Install ROOT
       run: |
-        cd ~/.local
         wget https://root.cern/download/$ROOT_VERSION.tar.gz
-        tar xf $ROOT_VERSION.tar.gz
+        tar xf $ROOT_VERSION.tar.gz -C $HOME
       env:
         ROOT_VERSION: "root_v6.26.04.Linux-ubuntu22-x86_64-gcc11.2"
 
     - name: Install Geant4
       run: |
-        cd ~/.local
         wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
-        tar xf $GEANT4_VERSION-binaries.tar.gz
+        tar xf $GEANT4_VERSION-binaries.tar.gz -C $HOME
       env:
         GEANT4_VERSION: "geant4-v11.0.2"
     
     - name: Source
       run: |
-        source ~/.local/root/bin/thisroot.sh
-        source ~/.local/Geant4/bin/geant4.sh
+        source ~/root/bin/thisroot.sh
+        source ~/Geant4/bin/geant4.sh
 
     - name: Configure CMake
       # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
@@ -62,19 +60,19 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
-        source ~/.local/root/bin/thisroot.sh
-        source ~/.local/Geant4/bin/geant4.sh
-        pwd
-        echo "Check path"
-        env | grep G4
-        ls -lahtr ~/.local
-        ls -lahtr ~/.local/Geant4
-        ls -lahtr ~/.local/Geant4/share
-        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2
-        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data
-        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
-        echo "env"
-        env
-        head -n 20  ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
+        #source ~/.local/root/bin/thisroot.sh
+        #source ~/.local/Geant4/bin/geant4.sh
+        #pwd
+        #echo "Check path"
+        #env | grep G4
+        #ls -lahtr ~/.local
+        #ls -lahtr ~/.local/Geant4
+        #ls -lahtr ~/.local/Geant4/share
+        #ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2
+        #ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data
+        #ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
+        #echo "env"
+        #env
+        #head -n 20  ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
         ctest -C ${{env.BUILD_TYPE}} --verbose
       
