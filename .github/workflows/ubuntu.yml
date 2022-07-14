@@ -71,5 +71,6 @@ jobs:
         ls -lahtr ~/.local/Geant4/share
         ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2
         ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data
+        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
         ctest -C ${{env.BUILD_TYPE}} --verbose
       
