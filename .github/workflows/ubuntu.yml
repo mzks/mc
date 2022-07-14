@@ -43,7 +43,7 @@ jobs:
     - name: Source
       run: |
         ls -lahtr ~/  
-        ls -lahtr ~/.loca/root
+        ls -lahtr ~/.local/root
         ls -lahtr ~/.local/root/bin
         source ~/.local/root/bin/thisroot.sh
         source $HOME/Geant4/bin/geant4.sh
