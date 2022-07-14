@@ -64,6 +64,7 @@ jobs:
       run: |
         source ~/.local/root/bin/thisroot.sh
         source ~/.local/Geant4/bin/geant4.sh
+        pwd
         echo "Check path"
         env | grep G4
         ls -lahtr ~/.local
@@ -72,5 +73,8 @@ jobs:
         ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2
         ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data
         ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
+        echo "env"
+        env
+        head -n 20  ~/.local/Geant4/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3
         ctest -C ${{env.BUILD_TYPE}} --verbose
       
