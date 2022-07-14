@@ -43,10 +43,7 @@ jobs:
     
     - name: Source
       run: |
-        ls -lahtr ~/
-        ls -lahtr ~/.local
-        ls -lahtr ~/.local/root
-        ls -lahtr ~/.local/root/bin
+        g++ --version
         source ~/.local/root/bin/thisroot.sh
         source ~/.local/Geant4/bin/geant4.sh
 
