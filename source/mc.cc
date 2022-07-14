@@ -26,7 +26,6 @@
 #endif
 
 #include "QGSP_BERT.hh"
-#include "QGSP_BERT_HP.hh"
 #include <iostream>
 
 int main(int argc,char** argv)
@@ -55,7 +54,7 @@ int main(int argc,char** argv)
     runManager->SetUserInitialization(detector);
     
     // Physics list
-    G4VModularPhysicsList* physicsList = new QGSP_BERT_HP;
+    G4VModularPhysicsList* physicsList = new QGSP_BERT;
     physicsList->SetVerboseLevel(1);
     runManager->SetUserInitialization(physicsList);
     
