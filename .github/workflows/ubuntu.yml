@@ -24,6 +24,17 @@ jobs:
     - name: Install dependencies
       run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
 
+    - name: Install Geant4
+      run: |
+        wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
+        tar xf $GEANT4_VERSION-binaries.tar.gz -C $HOME
+      env:
+        GEANT4_VERSION: "geant4-v11.0.2"
+  
+    - name: Build application
+      run: |
+        source ~/Geant4/bin/geant4.sh
+
     - name: Install ROOT
       run: |
         cd ~/.local
@@ -32,17 +43,16 @@ jobs:
       env:
         ROOT_VERSION: "root_v6.26.04.Linux-ubuntu22-x86_64-gcc11.2"
 
-    - name: Install Geant4
-      run: |
-        wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
-        tar xf $GEANT4_VERSION-binaries.tar.gz -C $HOME
-      env:
-        GEANT4_VERSION: "geant4-v11.0.2"
-    
+          #    - name: Install Geant4
+          #      run: |
+          #        wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
+          #        tar xf $GEANT4_VERSION-binaries.tar.gz -C $HOME
+          #      env:
+          #    
     - name: Source
       run: |
         source ~/.local/root/bin/thisroot.sh
-        source ~/Geant4/bin/geant4.sh
+        #source ~/Geant4/bin/geant4.sh
         root --version
         env
         ls -lahtr ~/Geant4/bin
