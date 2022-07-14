@@ -26,3 +26,4 @@ add_executable(mc mc.cc ${sources} ${headers})
 target_link_libraries(mc PRIVATE ROOT::MathCore ROOT::Hist ROOT::Tree ${Geant4_LIBRARIES})
 
 install(TARGETS mc DESTINATION bin)
+
