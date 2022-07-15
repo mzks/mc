@@ -27,3 +27,6 @@ target_link_libraries(mc PRIVATE ROOT::MathCore ROOT::Hist ROOT::Tree ${Geant4_L
 
 install(TARGETS mc DESTINATION bin)
 
+
+enable_testing()
+add_test(NAME small_mc COMMAND ../bin/mc ../bench/run.mac)
