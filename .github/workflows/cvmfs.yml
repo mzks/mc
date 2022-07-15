@@ -23,10 +23,11 @@ jobs:
 
     - name: Configure CMake
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-      pwd
-      ls -lahtr /home/runner/work/mc
-      ls -lahtr /home/runner/work/mc/mc
-      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+      run: |
+        pwd
+        ls -lahtr /home/runner/work/mc
+        ls -lahtr /home/runner/work/mc/mc
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
