@@ -27,6 +27,7 @@ jobs:
         pwd
         ls -lahtr /home/runner/work/mc
         ls -lahtr /home/runner/work/mc/mc
+        echo ${{github.workspace}}
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
