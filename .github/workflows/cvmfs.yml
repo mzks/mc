@@ -16,7 +16,7 @@ jobs:
     - uses: cvmfs-contrib/github-action-cvmfs@v2
     - name: Load CernVM-FS
       run: |
-        /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/setup.sh
+        source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/setup.sh
         root --version
         echo "env"
         env
