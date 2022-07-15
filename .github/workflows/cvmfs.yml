@@ -15,6 +15,9 @@ jobs:
     steps:
     - uses: cvmfs-contrib/github-action-cvmfs@v2
 
+    - name: Install dependencies
+      run: sudo apt -y install  qtwebengine5-dev qtbase5-dev qttools5-dev-tools libgtest-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+
     - name: Load CernVM-FS
       run: |
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/setup.sh
