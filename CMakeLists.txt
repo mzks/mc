@@ -10,3 +10,6 @@ ENDIF()
 add_subdirectory(mc)
 add_custom_target(alltar DEPENDS source)
 
+
+## Tests
+add_test(NAME small_mc COMMAND ../bin/mc ../bench/run.mac)
