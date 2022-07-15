@@ -1,0 +1,18 @@
+name: Test on cvmfs
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+
+env:
+  BUILD_TYPE: RelWithDebInfo
+
+jobs:
+  ubuntu-minimal:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: cvmfs-contrib/github-action-cvmfs@v2
+    - name: Test CernVM-FS
+      run: ls /cvmfs/sft.cern.ch/
