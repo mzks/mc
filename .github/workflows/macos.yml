@@ -55,7 +55,28 @@ jobs:
           export G4ENSDFSTATEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3"
 
       - name: cmake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        run: |
+          source ~/.local/root/6.26.04/bin/thisroot.sh
+          export PATH="${PATH}:${HOME}/.local/geant4/11.0.2/bin:${HOME}/.local/root/6.26.04/bin"
+          export ROOTSYS="${HOME}/.local/root/6.26.04"
+          export LD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
+          export DYLD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
+          export SHLIB_PATH="${HOME}/.local/root/6.26.04/lib"
+          export LIBPATH="${HOME}/.local/root/6.26.04/lib"
+          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04"
+          export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
+          export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
+          export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
+          export G4LEVELGAMMADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/PhotonEvaporation5.7"
+          export G4RADIOACTIVEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RadioactiveDecay5.6"
+          export G4PARTICLEXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PARTICLEXS4.0"
+          export G4PIIDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PII1.3"
+          export G4REALSURFACEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RealSurface2.2"
+          export G4SAIDXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4SAIDDATA2.0"
+          export G4ABLADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ABLA3.1"
+          export G4INCLDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4INCL1.0"
+          export G4ENSDFSTATEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3"
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
@@ -68,5 +89,25 @@ jobs:
           # Execute tests defined by the CMake configuration.  
           # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
         run: |
+          source ~/.local/root/6.26.04/bin/thisroot.sh
+          export PATH="${PATH}:${HOME}/.local/geant4/11.0.2/bin:${HOME}/.local/root/6.26.04/bin"
+          export ROOTSYS="${HOME}/.local/root/6.26.04"
+          export LD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
+          export DYLD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
+          export SHLIB_PATH="${HOME}/.local/root/6.26.04/lib"
+          export LIBPATH="${HOME}/.local/root/6.26.04/lib"
+          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04"
+          export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
+          export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
+          export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
+          export G4LEVELGAMMADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/PhotonEvaporation5.7"
+          export G4RADIOACTIVEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RadioactiveDecay5.6"
+          export G4PARTICLEXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PARTICLEXS4.0"
+          export G4PIIDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PII1.3"
+          export G4REALSURFACEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RealSurface2.2"
+          export G4SAIDXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4SAIDDATA2.0"
+          export G4ABLADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ABLA3.1"
+          export G4INCLDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4INCL1.0"
+          export G4ENSDFSTATEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3"
           root --version
           ctest -C ${{env.BUILD_TYPE}} --verbose
