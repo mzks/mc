@@ -1,3 +1,6 @@
+/control/verbose 0
+/tracking/verbose 0
+/run/verbose 0
 
 # change world parameter
 /usr/det/setField 0.0 tesla
@@ -16,5 +19,5 @@
 
 /run/initialize
 
-/run/beamOn 10000
+/run/beamOn 1000
 
