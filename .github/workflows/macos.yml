@@ -21,8 +21,8 @@ jobs:
         
       - name: Install ROOT and Geant4
         run: |
-          wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/geant4.11.0.2.tar.gz
-          wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz
+          wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/geant4.11.0.2.tar.gz --quiet
+          wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz --quiet
           mkdir -p ~/.local/geant4
           mkdir -p ~/.local/root
           tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4 --checkpoint=10000
