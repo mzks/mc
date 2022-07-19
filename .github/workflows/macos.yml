@@ -77,7 +77,8 @@ jobs:
           export G4ABLADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ABLA3.1"
           export G4INCLDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4INCL1.0"
           export G4ENSDFSTATEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3"
-          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+          cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DXERCESC_ROOT_DIR=/opt/homebrew/Cellar/xerces-c/3.2.3 
+
 
       - name: Build
         run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
