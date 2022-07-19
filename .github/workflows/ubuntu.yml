@@ -14,7 +14,7 @@ env:
 
 jobs:
 
-  build:
+  ubuntu:
     # The CMake configure and build commands are platform agnostic and should work equally well on Windows or Mac.
     # You can convert this to a matrix build if you need cross-platform coverage.
     # See: https://docs.github.com/en/free-pro-team@latest/actions/learn-github-actions/managing-complex-workflows#using-a-build-matrix
@@ -22,6 +22,9 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Set up chromedriver
+      run: sudo apt update && wget "https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb" -P /tmp && sudo apt install -y "/tmp/google-chrome-stable_current_amd64.deb" -f
 
     - name: Install dependencies
       run: > 
