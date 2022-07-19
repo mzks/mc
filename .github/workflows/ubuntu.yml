@@ -24,7 +24,12 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Install dependencies
-      run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+      run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev \
+           libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev \
+           libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev \
+           libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev \
+           libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev \
+           qtchooser qt5-qmake qtbase5-dev-tools
 
     - name: Install ROOT
       run: |
