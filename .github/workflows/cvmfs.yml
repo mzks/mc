@@ -55,5 +55,5 @@ jobs:
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
         root --version
-        ctest -C ${{env.BUILD_TYPE}} --verbose
+        ctest -C ${{env.BUILD_TYPE}} --verbose --test-dir ${{github.workspace}}/build
       

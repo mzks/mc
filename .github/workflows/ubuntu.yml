@@ -72,5 +72,5 @@ jobs:
         source ~/.local/root/bin/thisroot.sh
         source ~/.local/Geant4/bin/geant4.sh
         root --version
-        ctest -C ${{env.BUILD_TYPE}} --verbose
+        ctest -C ${{env.BUILD_TYPE}} --verbose --test-dir ${{github.workspace}}/build
       
