@@ -25,8 +25,8 @@ jobs:
           wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz
           mkdir -p ~/.local/geant4
           mkdir -p ~/.local/root
-          tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4/11.0.2
-          tar xf root6.26.04.tar.gz -C ~/.local/root/6.26.04
+          tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4 --checkpoint=10000
+          tar xf root6.26.04.tar.gz -C ~/.local/root --checkpoint=10000
           source ~/.local/root/6.26.04/thisroot.sh
           export PATH=${PATH}:/Users/mzks/.local/geant4/11.0.2/bin
           export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
