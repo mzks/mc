@@ -20,6 +20,7 @@ jobs:
           brew install qt@5 gsl xerces-c
           echo 'export PATH="/usr/local/opt/qt@5/bin:$PATH"' >> /Users/runner/.bash_profile
           source /Users/runner/.bash_profile
+          export PATH=$(brew --prefix qt5)/bin:$PATH
           export LDFLAGS="-L/usr/local/opt/qt@5/lib"
           export CPPFLAGS="-I/usr/local/opt/qt@5/include"
           export PKG_CONFIG_PATH="/usr/local/opt/qt@5/lib/pkgconfig"
@@ -40,7 +41,7 @@ jobs:
           export DYLD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
           export SHLIB_PATH="${HOME}/.local/root/6.26.04/lib"
           export LIBPATH="${HOME}/.local/root/6.26.04/lib"
-          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04"
+          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04:`brew --prefix xerces-c`/bin"
           export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
           export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
           export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
@@ -63,7 +64,7 @@ jobs:
           export DYLD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
           export SHLIB_PATH="${HOME}/.local/root/6.26.04/lib"
           export LIBPATH="${HOME}/.local/root/6.26.04/lib"
-          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04"
+          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04:`brew --prefix xerces-c`/bin"
           export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
           export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
           export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
@@ -96,7 +97,7 @@ jobs:
           export DYLD_LIBRARY_PATH="${HOME}/.local/root/6.26.04/lib"
           export SHLIB_PATH="${HOME}/.local/root/6.26.04/lib"
           export LIBPATH="${HOME}/.local/root/6.26.04/lib"
-          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04"
+          export CMAKE_PREFIX_PATH="${HOME}/.local/root/6.26.04:`brew --prefix xerces-c`/bin"
           export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
           export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
           export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
