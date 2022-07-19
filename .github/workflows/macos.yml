@@ -11,29 +11,26 @@ env:
 
 jobs:
   macOS-minimal:
-    runs-on: macos-10.15
+    runs-on: macos-12
     steps:
-    - uses: cvmfs-contrib/github-action-cvmfs@v2
-      with:
-        cvmfs_repositories: 'sft.cern.ch'
-    - name: Test CernVM-FS
-      run: ls /Users/Shared/cvmfs/sft.cern.ch/
+
+	- name: Install ROOT and Geant4
+	  run: |
+	  	wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/geant4.11.0.2.tar.gz
+	  	wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz
+		mkdir -p ~/.local/geant4
+		mkdir -p ~/.local/root
+		tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4/11.0.2
+		tar xf root6.26.04.tar.gz -C ~/.local/root/6.26.04
 
         #    - name: Install dependencies
         #      run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libmotif-common libmotif-dev
-    - name: Load CernVM-FS
-      run: |
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/thisroot.sh
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/geant4.sh
-        env
 
     - uses: actions/checkout@v3
 
     - name: Configure CMake
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/thisroot.sh
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/geant4.sh
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
@@ -47,8 +44,6 @@ jobs:
       # Execute tests defined by the CMake configuration.  
       # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: |
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/thisroot.sh
-        source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-mac1015-clang120-opt/bin/geant4.sh
         root --version
         ctest -C ${{env.BUILD_TYPE}} --verbose
       
