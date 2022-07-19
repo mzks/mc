@@ -14,17 +14,32 @@ jobs:
     runs-on: macos-12
     steps:
 
-	- name: Install ROOT and Geant4
-	  run: |
-	  	wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/geant4.11.0.2.tar.gz
-	  	wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz
-		mkdir -p ~/.local/geant4
-		mkdir -p ~/.local/root
-		tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4/11.0.2
-		tar xf root6.26.04.tar.gz -C ~/.local/root/6.26.04
+      - name: Install dependencies
+        run: |
+          brew install qt@5 gsl xerces-c
 
-        #    - name: Install dependencies
-        #      run: sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev libssl-dev gfortran libpcre3-dev xlibmesa-glu-dev libglew-dev libftgl-dev libmysqlclient-dev libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools libmotif-common libmotif-dev
+      - name: Install ROOT and Geant4
+        run: |
+        wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/geant4.11.0.2.tar.gz
+        wget https://github.com/mzks/macos_root_geant4_binaries/releases/download/0.1/root6.26.04.tar.gz
+        mkdir -p ~/.local/geant4
+        mkdir -p ~/.local/root
+        tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4/11.0.2
+        tar xf root6.26.04.tar.gz -C ~/.local/root/6.26.04
+        source ~/.local/root/6.26.04/thisroot.sh
+        export PATH=$PATH:/Users/mzks/.local/geant4/11.0.2/bin
+        export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
+        export G4NEUTRONHPDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4NDL4.6"
+        export G4LEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4EMLOW8.0"
+        export G4LEVELGAMMADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/PhotonEvaporation5.7"
+        export G4RADIOACTIVEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RadioactiveDecay5.6"
+        export G4PARTICLEXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PARTICLEXS4.0"
+        export G4PIIDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4PII1.3"
+        export G4REALSURFACEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/RealSurface2.2"
+        export G4SAIDXSDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4SAIDDATA2.0"
+        export G4ABLADATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ABLA3.1"
+        export G4INCLDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4INCL1.0"
+        export G4ENSDFSTATEDATA="~/.local/geant4/11.0.2/share/Geant4-11.0.2/data/G4ENSDFSTATE2.3"
 
     - uses: actions/checkout@v3
 
