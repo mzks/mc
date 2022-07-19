@@ -5,6 +5,8 @@ on:
     branches: [ "master" ]
   pull_request:
     branches: [ "master" ]
+  schedule:
+    - cron: '45 5,17 * * *'
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -47,12 +49,10 @@ jobs:
         cp -r ~/.local/Geant4 /home/runner
 
     - name: Configure CMake
-      # Configure CMake in a 'build' subdirectory. `CMAKE_BUILD_TYPE` is only required if you are using a single-configuration generator such as make.
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Install
@@ -65,12 +65,6 @@ jobs:
       run: |
         source ~/.local/root/bin/thisroot.sh
         source ~/.local/Geant4/bin/geant4.sh
-        echo "Check path"
-        env | grep G4
-        ls -lahtr ~/.local
-        ls -lahtr ~/.local/Geant4
-        ls -lahtr ~/.local/Geant4/share
-        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2
-        ls -lahtr ~/.local/Geant4/share/Geant4-11.0.2/data
+        root --version
         ctest -C ${{env.BUILD_TYPE}} --verbose
       
