@@ -27,11 +27,7 @@ jobs:
           mkdir -p ~/.local/root
           tar xf geant4.11.0.2.tar.gz -C ~/.local/geant4
           tar xf root6.26.04.tar.gz -C ~/.local/root
-          ls -la ~/
-          ls -la ~/.local
-          ls -la ~/.local/root
-          ls -la ~/.local/root/6.26.04
-          ls -la ~/.local/root/6.26.04/bin
+
           source ~/.local/root/6.26.04/bin/thisroot.sh
           export PATH=${PATH}:/Users/mzks/.local/geant4/11.0.2/bin
           export G4PARTICLEHPDATA="~/.local/geant4/11.0.1/share/Geant4-11.0.1/data/G4TENDL1.4"
@@ -50,8 +46,7 @@ jobs:
 
    - name: Configure CMake
      # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
-     run: |
-       cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+     run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
    - name: Build
      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
