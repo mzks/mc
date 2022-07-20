@@ -7,6 +7,37 @@ IF (APPLE)
    SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 ENDIF()
 
+### --  Load header-only libraries ------------------------------- #
+include(FetchContent)
+
+# spdlog -- simple logger
+FetchContent_Declare(
+        spdlog
+        GIT_REPOSITORY https://github.com/gabime/spdlog.git
+        GIT_TAG        v1.x # This tag is like main
+)
+FetchContent_GetProperties(spdlog)
+if (NOT spdlog_POPULATED)
+    FetchContent_Populate(spdlog)
+    add_subdirectory(${spdlog_SOURCE_DIR} ${spdlog_BINARY_DIR})
+endif ()
+include_directories(${spdlog_SOURCE_DIR}/include)
+
+# argparse -- simple argument parser
+FetchContent_Declare(
+        argparse
+        GIT_REPOSITORY https://github.com/p-ranav/argparse.git
+        GIT_TAG        master
+)
+FetchContent_GetProperties(argparse)
+if (NOT argparse_POPULATED)
+    FetchContent_Populate(argparse)
+    add_subdirectory(${argparse_SOURCE_DIR} ${argparse_BINARY_DIR})
+endif ()
+include_directories(${argparse_SOURCE_DIR}/include)
+
+### -------------------------------------------------------------- #
+
 add_subdirectory(mc)
 add_custom_target(alltar DEPENDS source)
 
