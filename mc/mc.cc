@@ -2,7 +2,6 @@
 // mc.cc
 // Geant4 example for experiment
 // Author: Mizukoshi keita
-// 2018 July 25
 // ------------------------------------ //
 
 #include "mcDetectorConstruction.hh"
@@ -13,7 +12,6 @@
 #include "mcParticleGun.hh"
 #include "mcParticleGunMessenger.hh"
 #include "mcAnalyzer.hh"
-
 #include "mcRunManager.hh"
 
 #include "G4UImanager.hh"
@@ -27,39 +25,36 @@
 
 #include "QGSP_BERT.hh"
 #include <iostream>
+#include <string>
+#include <filesystem>
 
-#include "spdlog/spdlog.h"
+
+#include <spdlog/spdlog.h>
+#include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
-
 
 
 int main(int argc,char** argv)
 {
-    spdlog::info("Welcome to spdlog!");
-    spdlog::error("Some error message with arg: {}", 1);
-    
-    spdlog::warn("Easy padding in numbers like {:08d}", 12);
-    spdlog::critical("Support for int: {0:d};  hex: {0:x};  oct: {0:o}; bin: {0:b}", 42);
-    spdlog::info("Support for floats {:03.2f}", 1.23456);
-    spdlog::info("Positional args are {1} {0}..", "too", "supported");
-    spdlog::info("{:<30}", "left aligned");
+
+    spdlog::info("The mc has been started, a stopwatch is on, now.");
+    spdlog::stopwatch stopwatch;
+
 
     argparse::ArgumentParser program("mc");
 
 
-    // Detect interactive mode (if no arguments) and define UI session
-    //
     G4UIExecutive* ui = 0;
     if ( argc == 1 ) {
         ui = new G4UIExecutive(argc, argv);
+        spdlog::info("Mc works on batch mode.");
+    } else {
+        spdlog::info("Mc works on interactive mode.");
     }
     
-    // Choose the Random engine
     G4Random::setTheEngine(new CLHEP::RanecuEngine);
-    
-    // Construct the default run manager
     mcRunManager * runManager = new mcRunManager;
-    
+
     // Construct the analyzer
     mcAnalyzer* analyzer = new mcAnalyzer();
     analyzer->SetInit(true, "out.root");
@@ -126,5 +121,9 @@ int main(int argc,char** argv)
     delete visManager;
     delete analyzer;
     delete runManager;
-}
 
+    spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
+    spdlog::info("Size of output root file is {} MB.", std::filesystem::file_size("./out.root") * 1.e-6);
+
+    return 0;
+}

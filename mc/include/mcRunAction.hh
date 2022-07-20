@@ -18,6 +18,7 @@ public:
 public:
     void BeginOfRunAction(const G4Run*);
     void EndOfRunAction(const G4Run*);
+    G4int NbOfEventToBeProcessed = -1; // Before call of BeginOfRunAction, the value should be negative.
     
 private:
 };
