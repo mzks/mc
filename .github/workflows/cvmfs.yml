@@ -37,6 +37,8 @@ jobs:
     - name: Configure CMake
       # See https://cmake.org/cmake/help/latest/variable/CMAKE_BUILD_TYPE.html?highlight=cmake_build_type
       run: |
+        which git
+        git --version
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
