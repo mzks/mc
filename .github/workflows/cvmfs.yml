@@ -41,8 +41,7 @@ jobs:
         git --version
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
-        which git
-        git --version
+        PATH="/usr/bin/git:${PATH}" # use system git
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
