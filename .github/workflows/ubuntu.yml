@@ -23,6 +23,9 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
+    - name: apt update
+      run: sudo apt update
+
     - name: Install dependencies
       run: > 
            sudo apt -y install dpkg-dev cmake g++ gcc binutils libx11-dev libxft-dev libxext-dev
