@@ -2,9 +2,9 @@ name: Test on Ubuntu
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "main" ]
   schedule:
     - cron: '45 5,17 * * *'
 
@@ -35,7 +35,7 @@ jobs:
     - name: Install ROOT
       run: |
         cd ~/.local
-        wget https://root.cern/download/$ROOT_VERSION.tar.gz
+        wget https://root.cern/download/$ROOT_VERSION.tar.gz --quiet
         tar xf $ROOT_VERSION.tar.gz
       env:
         ROOT_VERSION: "root_v6.26.04.Linux-ubuntu22-x86_64-gcc11.2"
@@ -43,7 +43,7 @@ jobs:
     - name: Install Geant4
       run: |
         cd ~/.local
-        wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz
+        wget https://github.com/hahnjo/geant4-actions-binaries/releases/download/$GEANT4_VERSION/$GEANT4_VERSION-binaries.tar.gz --quiet
         tar xf $GEANT4_VERSION-binaries.tar.gz
       env:
         GEANT4_VERSION: "geant4-v11.0.2"

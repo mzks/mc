@@ -2,9 +2,9 @@ name: Test on cvmfs
 
 on:
   push:
-    branches: ["master"]
+    branches: ["main"]
   pull_request:
-    branches: ["master"]
+    branches: ["main"]
   schedule:
     - cron: '15 5,17 * * *'
 
@@ -24,7 +24,7 @@ jobs:
            libfftw3-dev libcfitsio-dev graphviz-dev libavahi-compat-libdnssd-dev libldap2-dev libxml2-dev
            libkrb5-dev libgsl0-dev qtwebengine5-dev cmake-curses-gui libxpm4 libxerces-c-dev libxpm-dev
            libxmu-dev libfreetype6-dev qtbase5-dev qttools5-dev-tools libgtest-dev libeigen3-dev qtbase5-dev
-           qtchooser qt5-qmake qtbase5-dev-tools libmotif-common libmotif-dev
+           qtchooser qt5-qmake qtbase5-dev-tools libmotif-common libmotif-dev libcurl4-openssl-dev
 
     - name: Load CernVM-FS
       run: |
@@ -39,7 +39,7 @@ jobs:
       run: |
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
-        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DGIT_EXECUTABLE=/usr/bin/git
 
     - name: Build
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}

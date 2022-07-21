@@ -4,6 +4,8 @@
 #include "G4UserEventAction.hh"
 #include "globals.hh"
 
+#include <spdlog/spdlog.h>
+
 class mcRunAction;
 
 
@@ -21,6 +23,7 @@ public:
     
 private:
     mcRunAction* runAction;                          
+    G4int NbOfEvents;
     
 };
 

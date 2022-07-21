@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.13)
 
 project(mc)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/src/*.cc)
