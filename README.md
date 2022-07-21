@@ -22,14 +22,12 @@ This is an example of Geant4 simulation for experiment.
 
  - GUI mode
 ```
-> cd mc/bench
-> ../../bin/mc
+> ./bin/mc -p bench -i
 ```
 
  - Batch mode
 ```
-> cd mc/bench
-> ../../bin/mc bat.mac
+> ./bin/mc -p bench -m run.mac
 ```
 
 ## Requirement

@@ -34,30 +34,49 @@
 #include <argparse/argparse.hpp>
 
 
-int main(int argc,char** argv)
-{
+int main(int argc, char** argv) {
 
     spdlog::info("The mc has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
 
-
     argparse::ArgumentParser program("mc");
+    program.add_argument("-m", "--macro").default_value(std::string("run.mac")).help("set macro filename for batch mode");
+    program.add_argument("-o", "--output").default_value(std::string("mc.root")).help("output file name with .root");
+    program.add_argument("-i", "--interactive").default_value(false).implicit_value(true).help("run as interactive mode, not batch");
+    program.add_argument("-s", "--seed").default_value(0).scan<'i', int>().help("run as interactive mode, not batch");
+    program.add_argument("-p", "--path-to-macro").default_value(std::string(".:bench")).help("set macro search path with colon-separated list");
+    program.add_argument("-a", "--ascii").default_value(false).implicit_value(true).help("Output with ascii file, not root");
+    try {
+        program.parse_args(argc, argv);
+    }
+    catch (const std::runtime_error& err) {
+        spdlog::error("Your arguments is not match. See --help.");
+        spdlog::error(err.what());
+        G4cout << program.help().str() << G4endl;
+        std::exit(1);
+    }
 
+    auto outFileName = program.get<std::string>("--output");
+    spdlog::info("Output file will be generate as {}.", outFileName);
 
-    G4UIExecutive* ui = 0;
-    if ( argc == 1 ) {
+    G4UIExecutive* ui = nullptr;
+    if (program["--interactive"] == true) {
         ui = new G4UIExecutive(argc, argv);
-        spdlog::info("Mc works on batch mode.");
-    } else {
         spdlog::info("Mc works on interactive mode.");
+    } else {
+        spdlog::info("Mc works on batch mode.");
     }
     
     G4Random::setTheEngine(new CLHEP::RanecuEngine);
+    G4int seed = program.get<int>("seed");
+    G4Random::setTheSeed(seed);
+    spdlog::info("Set seed {}.", seed);
+
     mcRunManager * runManager = new mcRunManager;
 
     // Construct the analyzer
     mcAnalyzer* analyzer = new mcAnalyzer();
-    analyzer->SetInit(true, "out.root");
+    analyzer->SetInit(program["--ascii"] == false, outFileName);
     analyzer->Init();
     
     // Set mandatory initialization classes
@@ -83,11 +102,7 @@ int main(int argc,char** argv)
     //mcSteppingAction* stepping_action = new mcSteppingAction();
     //runManager->SetUserAction(stepping_action);
     
-    //Initialize G4 kernel
-    //runManager->Initialize();
-    
     // Initialize visualization
-    //
     G4VisManager* visManager = new G4VisExecutive;
     // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
     // G4VisManager* visManager = new G4VisExecutive("Quiet");
@@ -97,11 +112,11 @@ int main(int argc,char** argv)
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
     
     // Process macro or start UI session
-    //
+    UImanager->ApplyCommand("/control/macroPath " + program.get<std::string>("--path-to-macro"));
     if ( ! ui ) {
         // batch mode
         G4String command = "/control/execute ";
-        G4String fileName = argv[1];
+        G4String fileName = program.get<std::string>("--macro");
         UImanager->ApplyCommand(command+fileName);
     }
     else {
@@ -117,13 +132,12 @@ int main(int argc,char** argv)
     // Free the store: user actions, physics_list and detector_description are
     // owned and deleted by the run manager, so they should not be deleted
     // in the main() program !
-    
     delete visManager;
     delete analyzer;
     delete runManager;
 
     spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
-    spdlog::info("Size of output root file is {} MB.", std::filesystem::file_size("./out.root") * 1.e-6);
+    spdlog::info("Size of output root file is {:.1} MB.", std::filesystem::file_size(program.get<std::string>("--output")) * 1.e-6);
 
     return 0;
 }

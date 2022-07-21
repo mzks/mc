@@ -3,21 +3,23 @@
 /run/verbose 0
 
 # change world parameter
+/usr/det/setMaterial NaI
+/usr/det/setShieldMaterial Water
+/usr/det/setSensorRadius 10 cm
+/usr/det/setSensorHeight 20 cm
+/usr/det/setShieldThickness 1 cm
 /usr/det/setField 0.0 tesla
 /usr/det/setMaxStep  1.0 cm
 
 #inactivate msc
 #/process/inactivate msc
 
-/gun/position -10 0 0 cm
-/gun/direction 1 0 0
+/gun/position 0 0 0 m
+/gun/direction 0 0 1
 
 /gun/particle gamma
-/gun/energy 1.27 MeV
-
-/usr/det/setMaterial NaI
+/gun/energy 511 keV
 
 /run/initialize
 
 /run/beamOn 100000
-

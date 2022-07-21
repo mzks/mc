@@ -25,3 +25,8 @@ hand/*
 bench/calcTotalEdep.C
 
 Testing
+
+.idea
+cmake-build-debug
+include
+lib

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.13)
 enable_testing()
 
 project(MC)
@@ -39,9 +39,11 @@ include_directories(${argparse_SOURCE_DIR}/include)
 ### -------------------------------------------------------------- #
 
 add_subdirectory(mc)
+add_subdirectory(analysis)
+
 add_custom_target(alltar DEPENDS source)
 
 
 ## Tests
-add_test(NAME small_mc COMMAND ../bin/mc ../bench/run.mac)
-add_test(NAME batch_mc COMMAND ../bin/mc ../bench/bat.mac)
+add_test(NAME small_mc COMMAND ../bin/mc -m ../bench/run.mac)
+add_test(NAME batch_mc COMMAND ../bin/mc -m ../bench/bat.mac)
