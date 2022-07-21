@@ -45,5 +45,6 @@ add_custom_target(alltar DEPENDS source)
 
 
 ## Tests
-add_test(NAME small_mc COMMAND ../bin/mc -m ../bench/run.mac)
-add_test(NAME batch_mc COMMAND ../bin/mc -m ../bench/bat.mac)
+add_test(NAME small_mc COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small.root)
+add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root)
+add_test(NAME mcProcessing COMMAND ../bin/mcProcessing -i mc.root -o processed.root)
