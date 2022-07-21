@@ -15,7 +15,11 @@
 #include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
+#include <common.hh>
+
 int main(int argc, char** argv){
+
+    std::cout << test_variable << std::endl;
 
 
     argparse::ArgumentParser program("mc");

@@ -38,6 +38,9 @@ include_directories(${argparse_SOURCE_DIR}/include)
 
 ### -------------------------------------------------------------- #
 
+add_subdirectory(common)
+include_directories(common)
+
 add_subdirectory(mc)
 add_subdirectory(analysis)
 
