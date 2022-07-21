@@ -1,10 +1,10 @@
 # mc - Geant4 example
 
 
-[![Test on Ubuntu](https://github.com/mzks/mc/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/ubuntu.yml)
-[![Test on cvmfs](https://github.com/mzks/mc/actions/workflows/cvmfs.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/cvmfs.yml)
+[![Ubuntu 22.04](https://github.com/mzks/mc/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/ubuntu.yml)
+[![CVMFS](https://github.com/mzks/mc/actions/workflows/cvmfs.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/cvmfs.yml)
 
-This is an example of Geant4 simulation for experiment.
+This is an example of Geant4 simulation and data processing for physics experiment.
 
 ## Features
 
@@ -33,9 +33,8 @@ This is an example of Geant4 simulation for experiment.
 ## Requirement
 - Geant4.11
 - ROOT6
-- Qt (for GUI mode)
+- Qt (for interactive mode)
 
 You can run easily, without installing ROOT and Geant4 using [virtual machine](https://wiki.kek.jp/display/geant4/Geant4+Virtual+Machine).
 When you use this virtual machine, you have to do `source $ROOTSYS/bin/thisroot.sh` before running.
-
 
