@@ -19,7 +19,7 @@
 
 int main(int argc, char** argv){
 
-    std::cout << test_variable << std::endl;
+    std::cout << GIT_SHA1 << std::endl;
 
 
     argparse::ArgumentParser program("mc");
