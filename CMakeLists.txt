@@ -41,19 +41,10 @@ include_directories(${argparse_SOURCE_DIR}/include)
 add_subdirectory(common)
 include_directories(common)
 
-#add_custom_command( OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/common.hh
-#                    WORKING_DIRECTORY ${WORKING_DIRECTORY} ERROR_QUIET)
-                #add_custom_target(alltar
-                #    COMMAND ${CMAKE_COMMAND}
-                #    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/common.hh
-                #    -Dinput_file=${CMAKE_CURRENT_SOURCE_DIR}/common/common.hh.in
-                #    -Doutput_file=${CMAKE_CURRENT_BINARY_DIR}/common/common.hh
-                #    -P ${CMAKE_CURRENT_SOURCE_DIR}/common/CMakeLists.txt)
-
 add_subdirectory(mc)
 add_subdirectory(analysis)
 
-add_custom_target(alltar DEPENDS source)
+add_custom_target(alltar DEPENDS common mc analysis)
 
 
 ## Tests
