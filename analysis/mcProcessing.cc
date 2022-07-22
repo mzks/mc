@@ -26,7 +26,9 @@
 
 int main(int argc, char** argv){
 
-    spdlog::info("GIT_SHA1 is {}.", GIT_SHA1);
+    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
+    spdlog::info("Git date is {}.", GIT_DATE);
+    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
 
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
@@ -96,8 +98,8 @@ int main(int argc, char** argv){
     outTree->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
     outTree->Branch("particle", &particle);
 
-    ULong64_t nEntries = inTree->GetEntries();
 
+    ULong64_t nEntries = inTree->GetEntries();
 
     // Event loop
     for(ULong64_t iEntry=0; iEntry<nEntries; ++iEntry){
@@ -119,6 +121,12 @@ int main(int argc, char** argv){
 
         outTree->Fill();
     }
+
+    // Make histograms
+    outTree->Draw("TotalEnergyDeposit>>hist_TotalEnergyDeposit");
+    auto hist_TotalEnergyDeposit = dynamic_cast<TH1*>(gROOT->FindObject("hist_TotalEnergyDeposit"));
+    hist_TotalEnergyDeposit->Write();
+
     outTree->Write();
     outFile->Close();
 
