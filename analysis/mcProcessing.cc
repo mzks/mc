@@ -33,6 +33,7 @@ int main(int argc, char** argv){
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
     program.add_argument("-o", "--output").default_value(std::string("processed.root")).help("output file name with .root");
+    program.add_argument("-c", "--clone").default_value(false).implicit_value(true).help("clone input tree to output file");
     try {
         program.parse_args(argc, argv);
     }
@@ -62,9 +63,11 @@ int main(int argc, char** argv){
     auto outFile = TFile::Open(TString(outFileName), "RECREATE");
     auto processed = new TTree("processed", "processed");
 
+    auto input_filename = new TNamed("input_filename", inFileName);
     auto git_sha1 = new TNamed("git_sha1", gitinfo("GIT_SHA1"));
     auto git_date = new TNamed("git_date", gitinfo("GIT_DATE"));
     auto git_subject = new TNamed("git_subject", gitinfo("GIT_COMMIT_SUBJECT"));
+    input_filename->Write();
     git_sha1->Write();
     git_date->Write();
     git_subject->Write();
@@ -91,13 +94,20 @@ int main(int argc, char** argv){
 
         processed->Fill();
     }
+    processed->Write();
 
     // Make histograms
     processed->Draw("TotalEnergyDeposit>>hist_TotalEnergyDeposit");
     auto hist_TotalEnergyDeposit = dynamic_cast<TH1*>(gROOT->FindObject("hist_TotalEnergyDeposit"));
     hist_TotalEnergyDeposit->Write();
 
-    processed->Write();
+    // Clone input tree
+    if (program["--clone"] == true) {
+        spdlog::info("Clone tree to output file");
+        auto new_tree = tree->CloneTree();
+        new_tree->Write();
+    }
+
     outFile->Close();
 
     spdlog::info("The processing has been finished, it took {:.3} seconds.", stopwatch);
