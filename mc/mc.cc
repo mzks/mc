@@ -37,6 +37,7 @@
 
 int main(int argc, char** argv) {
 
+    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
     if(GIT_SHA1.find("dirty") != 0){
         spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
     }
