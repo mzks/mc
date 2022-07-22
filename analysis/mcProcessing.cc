@@ -48,15 +48,7 @@ int main(int argc, char** argv){
 
     spdlog::info("The processing has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
-
-    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
-    if(GIT_SHA1.find("dirty") != 0){
-        spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
-    }
-    spdlog::info("Git date is {}.", GIT_DATE);
-    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
-    spdlog::info("Input file is {}.", inFileName);
-    spdlog::info("Output file will be generate as {}.", outFileName);
+    gitinfo();
 
     // Load input tree (tree)
     auto inFile = TFile::Open(TString(inFileName));
@@ -70,9 +62,9 @@ int main(int argc, char** argv){
     auto outFile = TFile::Open(TString(outFileName), "RECREATE");
     auto processed = new TTree("processed", "processed");
 
-    auto git_sha1 = new TNamed("git_sha1", GIT_SHA1);
-    auto git_date = new TNamed("git_date", GIT_DATE);
-    auto git_subject = new TNamed("git_subject", GIT_COMMIT_SUBJECT);
+    auto git_sha1 = new TNamed("git_sha1", gitinfo("GIT_SHA1"));
+    auto git_date = new TNamed("git_date", gitinfo("GIT_DATE"));
+    auto git_subject = new TNamed("git_subject", gitinfo("GIT_COMMIT_SUBJECT"));
     git_sha1->Write();
     git_date->Write();
     git_subject->Write();

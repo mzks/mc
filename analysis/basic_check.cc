@@ -44,11 +44,7 @@ int main(int argc, char** argv){
 
     spdlog::info("The basic_check has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
-
-    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
-    spdlog::info("Git date is {}.", GIT_DATE);
-    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
-    spdlog::info("Input file is {}.", inFileName);
+    gitinfo();
 
     // Load input tree (processed)
     auto inFile = TFile::Open(TString(inFileName));
