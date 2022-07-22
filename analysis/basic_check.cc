@@ -3,6 +3,11 @@
 // Check basic produced data
 // Require: "processed" TTree
 // ---------------------------------- //
+#include <spdlog/spdlog.h>
+#include <spdlog/stopwatch.h>
+
+#include <common.hh>
+#include <smart_loop_logger.hh>
 
 #include <vector>
 #include <string>
@@ -19,17 +24,12 @@
 #include <TParameter.h>
 #include <TText.h>
 
-#include <spdlog/spdlog.h>
-#include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
-#include <common.hh>
-#include <smart_loop_logger.hh>
-
-int main(int argc, char** argv){
-
+int main(int argc, char** argv) {
     argparse::ArgumentParser program("mc");
-    program.add_argument("-i", "--input").default_value(std::string("processed.root")).help("input mc filename including processed TTree with .root");
+    program.add_argument("-i", "--input").default_value(std::string("processed.root"))
+        .help("input mc filename including processed TTree with .root");
     try {
         program.parse_args(argc, argv);
     }
