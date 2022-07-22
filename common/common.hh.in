@@ -1,0 +1,28 @@
+#pragma once
+
+#include <string>
+#include <spdlog/spdlog.h>
+
+static std::string gitinfo(std::string type="") {
+
+    const std::string GIT_SHA1 = "@GIT_SHA1@";
+    const std::string GIT_DATE = "@GIT_DATE@";
+    const std::string GIT_COMMIT_SUBJECT = "@GIT_COMMIT_SUBJECT@";
+
+    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
+    if (GIT_SHA1.find("dirty") != std::string::npos) {
+        spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
+    }
+    spdlog::info("Git date is {}.", GIT_DATE);
+    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
+
+    if (type==""){
+        return "";
+    } else if (type == "GIT_SHA1"){
+        return GIT_SHA1;
+    } else if (type == "GIT_DATE"){
+        return GIT_DATE;
+    } else if (type == "GIT_COMMIT_SUBJECT"){
+        return GIT_COMMIT_SUBJECT;
+    }
+}

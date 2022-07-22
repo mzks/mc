@@ -28,14 +28,16 @@
 #include <string>
 #include <filesystem>
 
-
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
+#include <common.hh>
+
 
 int main(int argc, char** argv) {
 
+    gitinfo();
     spdlog::info("The mc has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
 

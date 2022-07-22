@@ -38,13 +38,17 @@ include_directories(${argparse_SOURCE_DIR}/include)
 
 ### -------------------------------------------------------------- #
 
+add_subdirectory(common)
+include_directories(common)
+
 add_subdirectory(mc)
 add_subdirectory(analysis)
 
-add_custom_target(alltar DEPENDS source)
+add_custom_target(alltar DEPENDS common mc analysis)
 
 
 ## Tests
 add_test(NAME small_mc COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small.root)
 add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root)
 add_test(NAME mcProcessing COMMAND ../bin/mcProcessing -i mc.root -o processed.root)
+add_test(NAME basic_check COMMAND ../bin/basic_check -i processed.root)
