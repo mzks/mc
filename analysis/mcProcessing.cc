@@ -19,7 +19,7 @@
 
 int main(int argc, char** argv){
 
-    std::cout << GIT_SHA1 << std::endl;
+    spdlog::info("GIT_SHA1 is {}.", GIT_SHA1);
 
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
@@ -46,7 +46,7 @@ int main(int argc, char** argv){
     auto inFile = TFile::Open(TString(inFileName));
     if (inFile == nullptr) {spdlog::error("No such file, {}.", inFileName); std::exit(1);}
     auto inTree = dynamic_cast<TTree*>(inFile->Get("tree"));
-    if (inTree == nullptr) {spdlog::error("No "tree" in file"); std::exit(1);}
+    if (inTree == nullptr) {spdlog::error("No 'tree' in file"); std::exit(1);}
 
     Int_t           nHit;
     std::vector<double>  *x = 0;
@@ -86,9 +86,7 @@ int main(int argc, char** argv){
     auto outTree = new TTree("processed", "processed");
 
     Double_t TotalEnergyDeposit;
-    Double_t Debug;
     outTree->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
-    outTree->Branch("Debug", &Debug, "Debug/D");
     outTree->Branch("particle", &particle);
 
     ULong64_t nEntries = inTree->GetEntries();
@@ -106,7 +104,6 @@ int main(int argc, char** argv){
 
         // Initialize variables
         TotalEnergyDeposit = 0.;
-        Debug = 4.;
 
         // Make new variables
         for(size_t i=0; i<eDep->size(); ++i){
