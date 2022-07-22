@@ -9,14 +9,13 @@ static std::string gitinfo(std::string type="") {
     const std::string GIT_DATE = "@GIT_DATE@";
     const std::string GIT_COMMIT_SUBJECT = "@GIT_COMMIT_SUBJECT@";
 
-    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
-    if (GIT_SHA1.find("dirty") != std::string::npos) {
-        spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
-    }
-    spdlog::info("Git date is {}.", GIT_DATE);
-    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
-
     if (type==""){
+        spdlog::info("Git SHA1 is {}.", GIT_SHA1);
+        if (GIT_SHA1.find("dirty") != std::string::npos) {
+            spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
+        }
+        spdlog::info("Git date is {}.", GIT_DATE);
+        spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
         return "";
     } else if (type == "GIT_SHA1"){
         return GIT_SHA1;
@@ -24,5 +23,8 @@ static std::string gitinfo(std::string type="") {
         return GIT_DATE;
     } else if (type == "GIT_COMMIT_SUBJECT"){
         return GIT_COMMIT_SUBJECT;
+    } else  {
+        spdlog::warn("{}, No such option in gitinfo. The gitinfo argument options are empty, 'GIT_SHA1', 'GIT_DATE', or 'GIT_COMMIT_SUBJECT'.", type);
+        return ""
     }
 }
