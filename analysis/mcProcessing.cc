@@ -44,7 +44,9 @@ int main(int argc, char** argv){
 
     // Load input tree (tree)
     auto inFile = TFile::Open(TString(inFileName));
+    if (inFile == nullptr) {spdlog::error("No such file, {}.", inFileName); std::exit(1);}
     auto inTree = dynamic_cast<TTree*>(inFile->Get("tree"));
+    if (inTree == nullptr) {spdlog::error("No "tree" in file"); std::exit(1);}
 
     Int_t           nHit;
     std::vector<double>  *x = 0;
