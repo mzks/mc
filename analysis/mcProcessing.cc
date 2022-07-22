@@ -1,3 +1,10 @@
+// ---------------------------------- //
+// mcProcessing.cc
+// processes MC generated data
+// Require: "tree"
+// ---------------------------------- //
+
+
 #include <TROOT.h>
 #include <TDirectory.h>
 #include <TObject.h>
