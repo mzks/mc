@@ -3,9 +3,12 @@
 // processes MC generated data
 // Require: "tree" TTree
 // Output : root file including 
-// "processed" TTree
+//          "processed" TTree
 // ---------------------------------- //
 
+#include <vector>
+#include <string>
+#include <filesystem>
 
 #include <TROOT.h>
 #include <TDirectory.h>
@@ -18,10 +21,6 @@
 #include <TParameter.h>
 #include <TText.h>
 
-#include <vector>
-#include <string>
-#include <filesystem>
-
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
@@ -29,10 +28,6 @@
 #include <common.hh>
 
 int main(int argc, char** argv){
-
-    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
-    spdlog::info("Git date is {}.", GIT_DATE);
-    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
 
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
@@ -49,11 +44,15 @@ int main(int argc, char** argv){
 
     auto inFileName = program.get<std::string>("--input");
     auto outFileName = program.get<std::string>("--output");
-    spdlog::info("Input file is {}.", inFileName);
-    spdlog::info("Output file will be generate as {}.", outFileName);
 
     spdlog::info("The processing has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
+
+    spdlog::info("Git SHA1 is {}.", GIT_SHA1);
+    spdlog::info("Git date is {}.", GIT_DATE);
+    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
+    spdlog::info("Input file is {}.", inFileName);
+    spdlog::info("Output file will be generate as {}.", outFileName);
 
     // Load input tree (tree)
     auto inFile = TFile::Open(TString(inFileName));

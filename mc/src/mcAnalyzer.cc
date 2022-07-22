@@ -14,6 +14,8 @@
 #include "TTree.h"
 #include "TFile.h"
 
+#include "common.hh"
+
 mcAnalyzer::mcAnalyzer()
 {
 }
@@ -31,6 +33,14 @@ void mcAnalyzer::SetInit(G4bool isRootIn, TString filenameIn){
 void mcAnalyzer::Init(){
     
     if(isRoot == true){
+        fout = new TFile(filename,"recreate");
+        auto git_sha1 = new TNamed("git_sha1", GIT_SHA1);
+        auto git_date = new TNamed("git_date", GIT_DATE);
+        auto git_subject = new TNamed("git_subject", GIT_COMMIT_SUBJECT);
+        git_sha1->Write();
+        git_date->Write();
+        git_subject->Write();
+
         tree = new TTree("tree","mc output");
         tree->Branch("nHit",&nHit,"nHit/I");
         tree->Branch("x",&x);
@@ -104,10 +114,8 @@ void mcAnalyzer::Fill(int buf1,                     //nHit
 
 void mcAnalyzer::Terminate(){
     if (isRoot == true){
-        auto fout = new TFile(filename,"recreate");
         tree->Write();
         fout->Close();
-        delete tree;
     } else {
         outFile.close();
     }

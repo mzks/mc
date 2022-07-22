@@ -47,7 +47,8 @@ public:
     void Terminate();
     void SetFileName(TString);
 private:
-    
+
+    TFile* fout;
     TTree* tree;
     TString filename;
     G4bool isRoot;
