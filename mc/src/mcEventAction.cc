@@ -36,7 +36,7 @@ void mcEventAction::EndOfEventAction(const G4Event* evt)
     NbOfEvents = runAction->NbOfEventToBeProcessed;
     if (NbOfEvents <= 0) spdlog::error("No events to be processed.");
 
-    G4int evtNb = evt->GetEventID();
+    G4long evtNb = evt->GetEventID();
     smart_loop_logger(NbOfEvents, evtNb);
 }  
 
