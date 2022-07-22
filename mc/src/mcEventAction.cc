@@ -12,6 +12,8 @@
 #include "Randomize.hh"
 #include <iomanip>
 
+#include <smart_loop_logger.hh>
+
 
 mcEventAction::mcEventAction(mcRunAction* action)
 {
@@ -35,14 +37,7 @@ void mcEventAction::EndOfEventAction(const G4Event* evt)
     if (NbOfEvents <= 0) spdlog::error("No events to be processed.");
 
     G4int evtNb = evt->GetEventID();
-    if (evtNb == 0) {
-        spdlog::info("Initial event 0 has been done.");
-        return;
-    }
-    // Display each 10%
-    if ((100 * evtNb / NbOfEvents % 10 == 0) && ((100 * evtNb / NbOfEvents) != (100 * (evtNb-1) / NbOfEvents))) {
-        spdlog::info("{:d} percent events ({:d}) have been done.", 100 * (evtNb+1) / NbOfEvents, evtNb);
-    }
+    smart_loop_logger(NbOfEvents, evtNb);
 }  
 
 

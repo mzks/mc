@@ -24,6 +24,7 @@
 #include <argparse/argparse.hpp>
 
 #include <common.hh>
+#include <smart_loop_logger.hh>
 
 int main(int argc, char** argv){
 

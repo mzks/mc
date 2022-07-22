@@ -26,6 +26,7 @@
 #include <argparse/argparse.hpp>
 
 #include <common.hh>
+#include <smart_loop_logger.hh>
 
 int main(int argc, char** argv){
 
@@ -83,12 +84,7 @@ int main(int argc, char** argv){
     // Event loop
     for(ULong64_t iEntry=0; iEntry<nEntries; ++iEntry){
         tree->GetEntry(iEntry);
-
-        // Display log at each 10% processing
-        if (iEntry == 0) spdlog::info("Initial event 0 has been done.");
-        if ((100 * iEntry / nEntries % 10 == 0) && ((100 * iEntry / nEntries) != (100 * (iEntry-1) / nEntries))) {
-            spdlog::info("{:d} percent events ({:d}) have been done.", 100 * (iEntry) / nEntries, iEntry);
-        }
+        smart_loop_logger(nEntries, iEntry);
 
         // Initialize variables
         TotalEnergyDeposit = 0.;
