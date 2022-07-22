@@ -42,12 +42,24 @@ int main(int argc, char** argv) {
     spdlog::stopwatch stopwatch;
 
     argparse::ArgumentParser program("mc");
-    program.add_argument("-m", "--macro").default_value(std::string("run.mac")).help("set macro filename for batch mode");
-    program.add_argument("-o", "--output").default_value(std::string("mc.root")).help("output file name with .root");
-    program.add_argument("-i", "--interactive").default_value(false).implicit_value(true).help("run as interactive mode, not batch");
-    program.add_argument("-s", "--seed").default_value(0).scan<'i', int>().help("run as interactive mode, not batch");
-    program.add_argument("-p", "--path-to-macro").default_value(std::string(".:bench")).help("set macro search path with colon-separated list");
-    program.add_argument("-a", "--ascii").default_value(false).implicit_value(true).help("Output with ascii file, not root");
+    program.add_argument("-m", "--macro")
+        .default_value(std::string("run.mac"))
+        .help("set macro filename for batch mode");
+    program.add_argument("-o", "--output")
+        .default_value(std::string("mc.root"))
+        .help("output file name with .root");
+    program.add_argument("-i", "--interactive")
+        .default_value(false).implicit_value(true)
+        .help("run as interactive mode, not batch");
+    program.add_argument("-s", "--seed")
+        .default_value(0).scan<'i', int>()
+        .help("run as interactive mode, not batch");
+    program.add_argument("-p", "--path-to-macro")
+        .default_value(std::string(".:bench"))
+        .help("set macro search path with colon-separated list");
+    program.add_argument("-a", "--ascii")
+        .default_value(false).implicit_value(true)
+        .help("Output with ascii file, not root");
     try {
         program.parse_args(argc, argv);
     }
@@ -70,19 +82,19 @@ int main(int argc, char** argv) {
     }
     
     G4Random::setTheEngine(new CLHEP::RanecuEngine);
-    G4int seed = program.get<int>("seed");
+    auto seed = program.get<int>("seed");
     G4Random::setTheSeed(seed);
     spdlog::info("Set seed {}.", seed);
 
-    mcRunManager * runManager = new mcRunManager;
+    auto * runManager = new mcRunManager;
 
     // Construct the analyzer
-    mcAnalyzer* analyzer = new mcAnalyzer();
+    auto* analyzer = new mcAnalyzer();
     analyzer->SetInit(program["--ascii"] == false, outFileName);
     analyzer->Init();
     
     // Set mandatory initialization classes
-    mcDetectorConstruction* detector = new mcDetectorConstruction();
+    auto* detector = new mcDetectorConstruction();
     detector->SetAnalyzer(analyzer);
     runManager->SetUserInitialization(detector);
     
@@ -95,14 +107,14 @@ int main(int argc, char** argv) {
     G4VUserPrimaryGeneratorAction* gen_action = new mcPrimaryGeneratorAction(detector);
     runManager->SetUserAction(gen_action);
     
-    mcRunAction* run_action = new mcRunAction;
+    auto* run_action = new mcRunAction;
     runManager->SetUserAction(run_action);
     
-    mcEventAction* event_action = new mcEventAction(run_action);
+    auto* event_action = new mcEventAction(run_action);
     runManager->SetUserAction(event_action);
     
-    //mcSteppingAction* stepping_action = new mcSteppingAction();
-    //runManager->SetUserAction(stepping_action);
+    // auto* stepping_action = new mcSteppingAction();
+    // runManager->SetUserAction(stepping_action);
     
     // Initialize visualization
     G4VisManager* visManager = new G4VisExecutive;
@@ -115,13 +127,12 @@ int main(int argc, char** argv) {
     
     // Process macro or start UI session
     UImanager->ApplyCommand("/control/macroPath " + program.get<std::string>("--path-to-macro"));
-    if ( ! ui ) {
+    if (!ui) {
         // batch mode
         G4String command = "/control/execute ";
         G4String fileName = program.get<std::string>("--macro");
         UImanager->ApplyCommand(command+fileName);
-    }
-    else {
+    } else {
         // interactive mode
         UImanager->ApplyCommand("/control/execute init_vis.mac");
         ui->SessionStart();
@@ -139,7 +150,7 @@ int main(int argc, char** argv) {
     delete runManager;
 
     spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
-    spdlog::info("Size of output root file is {:.1} MB.", std::filesystem::file_size(program.get<std::string>("--output")) * 1.e-6);
+    spdlog::info("Size of output root file is {:.0} MB.", std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
 
     return 0;
 }

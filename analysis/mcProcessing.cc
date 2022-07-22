@@ -2,9 +2,14 @@
 // mcProcessing.cc
 // processes MC generated data
 // Require: "tree" TTree
-// Output : root file including 
+// Output : root file including
 //          "processed" TTree
 // ---------------------------------- //
+#include <spdlog/spdlog.h>
+#include <spdlog/stopwatch.h>
+
+#include <common.hh>
+#include <smart_loop_logger.hh>
 
 #include <vector>
 #include <string>
@@ -21,15 +26,9 @@
 #include <TParameter.h>
 #include <TText.h>
 
-#include <spdlog/spdlog.h>
-#include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
-#include <common.hh>
-#include <smart_loop_logger.hh>
-
-int main(int argc, char** argv){
-
+int main(int argc, char** argv) {
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
     program.add_argument("-o", "--output").default_value(std::string("processed.root")).help("output file name with .root");
@@ -73,14 +72,14 @@ int main(int argc, char** argv){
     git_subject->Write();
 
     Double_t TotalEnergyDeposit;
-    processed->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
+    processed->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D");
     processed->Branch("particle", &particle);
 
 
     ULong64_t nEntries = tree->GetEntries();
 
     // Event loop
-    for(ULong64_t iEntry=0; iEntry<nEntries; ++iEntry){
+    for (ULong64_t iEntry=0; iEntry < nEntries; ++iEntry) {
         tree->GetEntry(iEntry);
         smart_loop_logger(nEntries, iEntry);
 
@@ -88,7 +87,7 @@ int main(int argc, char** argv){
         TotalEnergyDeposit = 0.;
 
         // Make new variables
-        for(size_t i=0; i<eDep->size(); ++i){
+        for (size_t i=0; i < eDep->size(); ++i) {
             TotalEnergyDeposit += eDep->at(i);
         }
 
