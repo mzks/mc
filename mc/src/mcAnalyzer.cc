@@ -14,6 +14,8 @@
 #include "TTree.h"
 #include "TFile.h"
 
+#include <spdlog/spdlog.h>
+
 #include "common.hh"
 
 mcAnalyzer::mcAnalyzer()

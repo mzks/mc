@@ -28,13 +28,20 @@
 #include <string>
 #include <filesystem>
 
-
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
+#include <common.hh>
+
 
 int main(int argc, char** argv) {
+
+    if(GIT_SHA1.find("dirty") != 0){
+        spdlog::warn("The sources have not been committed. Changes in your working directory will not be saved.");
+    }
+    spdlog::info("Git date is {}.", GIT_DATE);
+    spdlog::info("Git commit subject is {}.", GIT_COMMIT_SUBJECT);
 
     spdlog::info("The mc has been started, a stopwatch is on, now.");
     spdlog::stopwatch stopwatch;
