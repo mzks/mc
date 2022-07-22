@@ -1,15 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(common)
-
 add_custom_target(common)
-
-#add_custom_command(TARGET ${PROJECT_NAME}
-#  PRE_BUILD
-#  COMMAND "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=40 --dirty
-#  WORKING_DIRECTORY ${WORKING_DIRECTORY}
-#  OUTPUT_VARIABLE GIT_SHA1
-#  ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 execute_process(COMMAND
   "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=40 --dirty

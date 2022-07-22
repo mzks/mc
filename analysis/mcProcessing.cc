@@ -57,45 +57,14 @@ int main(int argc, char** argv){
     // Load input tree (tree)
     auto inFile = TFile::Open(TString(inFileName));
     if (inFile == nullptr) {spdlog::error("No such file, {}.", inFileName); std::exit(1);}
-    auto inTree = dynamic_cast<TTree*>(inFile->Get("tree"));
-    if (inTree == nullptr) {spdlog::error("No 'tree' in file"); std::exit(1);}
+    auto tree = dynamic_cast<TTree*>(inFile->Get("tree"));
+    if (tree == nullptr) {spdlog::error("No 'tree' in file"); std::exit(1);}
 
-    Int_t           nHit;
-    std::vector<double>  *x = 0;
-    std::vector<double>  *y = 0;
-    std::vector<double>  *z = 0;
-    std::vector<double>  *time = 0;
-    std::vector<double>  *eIn = 0;
-    std::vector<double>  *eDep = 0;
-    std::vector<int>     *TrackID = 0;
-    std::vector<int>     *copyNo = 0;
-    std::vector<int>     *particle = 0;
-
-    TBranch        *b_nHit;
-    TBranch        *b_x;
-    TBranch        *b_y;
-    TBranch        *b_z;
-    TBranch        *b_time;
-    TBranch        *b_eIn;
-    TBranch        *b_eDep;
-    TBranch        *b_TrackID;
-    TBranch        *b_copyNo;
-    TBranch        *b_particle;
-
-    inTree->SetBranchAddress("nHit", &nHit, &b_nHit);
-    inTree->SetBranchAddress("x", &x, &b_x);
-    inTree->SetBranchAddress("y", &y, &b_y);
-    inTree->SetBranchAddress("z", &z, &b_z);
-    inTree->SetBranchAddress("time", &time, &b_time);
-    inTree->SetBranchAddress("eIn", &eIn, &b_eIn);
-    inTree->SetBranchAddress("eDep", &eDep, &b_eDep);
-    inTree->SetBranchAddress("TrackID", &TrackID, &b_TrackID);
-    inTree->SetBranchAddress("copyNo", &copyNo, &b_copyNo);
-    inTree->SetBranchAddress("particle", &particle, &b_particle);
+    #include "branches_tree.hh"
 
     // make new tree (processed)
     auto outFile = TFile::Open(TString(outFileName), "RECREATE");
-    auto outTree = new TTree("processed", "processed");
+    auto processed = new TTree("processed", "processed");
 
     auto git_sha1 = new TNamed("git_sha1", GIT_SHA1);
     auto git_date = new TNamed("git_date", GIT_DATE);
@@ -105,15 +74,15 @@ int main(int argc, char** argv){
     git_subject->Write();
 
     Double_t TotalEnergyDeposit;
-    outTree->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
-    outTree->Branch("particle", &particle);
+    processed->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
+    processed->Branch("particle", &particle);
 
 
-    ULong64_t nEntries = inTree->GetEntries();
+    ULong64_t nEntries = tree->GetEntries();
 
     // Event loop
     for(ULong64_t iEntry=0; iEntry<nEntries; ++iEntry){
-        inTree->GetEntry(iEntry);
+        tree->GetEntry(iEntry);
 
         // Display log at each 10% processing
         if (iEntry == 0) spdlog::info("Initial event 0 has been done.");
@@ -129,15 +98,15 @@ int main(int argc, char** argv){
             TotalEnergyDeposit += eDep->at(i);
         }
 
-        outTree->Fill();
+        processed->Fill();
     }
 
     // Make histograms
-    outTree->Draw("TotalEnergyDeposit>>hist_TotalEnergyDeposit");
+    processed->Draw("TotalEnergyDeposit>>hist_TotalEnergyDeposit");
     auto hist_TotalEnergyDeposit = dynamic_cast<TH1*>(gROOT->FindObject("hist_TotalEnergyDeposit"));
     hist_TotalEnergyDeposit->Write();
 
-    outTree->Write();
+    processed->Write();
     outFile->Close();
 
     spdlog::info("The processing has been finished, it took {:.3} seconds.", stopwatch);
