@@ -25,6 +25,6 @@ static std::string gitinfo(std::string type="") {
         return GIT_COMMIT_SUBJECT;
     } else  {
         spdlog::warn("{}, No such option in gitinfo. The gitinfo argument options are empty, 'GIT_SHA1', 'GIT_DATE', or 'GIT_COMMIT_SUBJECT'.", type);
-        return ""
+        return "";
     }
 }
