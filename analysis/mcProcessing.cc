@@ -21,7 +21,6 @@ int main(int argc, char** argv){
 
     std::cout << GIT_SHA1 << std::endl;
 
-
     argparse::ArgumentParser program("mc");
     program.add_argument("-i", "--input").default_value(std::string("mc.root")).help("input mc filename with .root");
     program.add_argument("-o", "--output").default_value(std::string("processed.root")).help("output file name with .root");
