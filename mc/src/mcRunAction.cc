@@ -19,7 +19,7 @@ void mcRunAction::BeginOfRunAction(const G4Run* aRun)
     spdlog::info("Run {:d} start.", aRun->GetRunID());
 
     //inform the runManager to save random number seed
-    G4RunManager::GetRunManager()->SetRandomNumberStore(true);
+    G4RunManager::GetRunManager()->SetRandomNumberStore(false);
 
     NbOfEventToBeProcessed = aRun->GetNumberOfEventToBeProcessed();
     spdlog::info("{:d} events to be processed.", NbOfEventToBeProcessed);

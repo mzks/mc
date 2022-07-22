@@ -5,14 +5,18 @@
 //  Created by Mizukoshi Keita on 2018/07/28.
 //
 
-#include "mcAnalyzer.hh"
+#include <vector>
+
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4Types.hh"
+#include "Randomize.hh"
 
-#include <vector>
 #include "TTree.h"
 #include "TFile.h"
+#include "TParameter.h"
+
+#include "mcAnalyzer.hh"
 
 #include <spdlog/spdlog.h>
 
@@ -42,6 +46,9 @@ void mcAnalyzer::Init(){
         git_sha1->Write();
         git_date->Write();
         git_subject->Write();
+
+        auto seed = new TParameter<Long_t>("seed", G4Random::getTheSeed());
+        seed->Write();
 
         tree = new TTree("tree","mc output");
         tree->Branch("nHit",&nHit,"nHit/I");
