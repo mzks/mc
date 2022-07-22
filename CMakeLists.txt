@@ -41,6 +41,14 @@ include_directories(${argparse_SOURCE_DIR}/include)
 add_subdirectory(common)
 include_directories(common)
 
+add_custom_target(version_target
+    COMMAND ${CMAKE_COMMAND}
+    OUTPUT ${CMAKE_CURRENT_SOURCE_DIR}/common/common.hh
+    -Dinput_file=${CMAKE_CURRENT_SOURCE_DIR}/common/common.hh.in
+    -Doutput_file=${CMAKE_CURRENT_BINARY_DIR}/common/common.hh
+    -P ${CMAKE_CURRENT_SOURCE_DIR}/configure_version.cmake
+    )
+
 add_subdirectory(mc)
 add_subdirectory(analysis)
 
