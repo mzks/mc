@@ -1,7 +1,9 @@
 // ---------------------------------- //
 // mcProcessing.cc
 // processes MC generated data
-// Require: "tree"
+// Require: "tree" TTree
+// Output : root file including 
+// "processed" TTree
 // ---------------------------------- //
 
 
@@ -13,6 +15,8 @@
 #include <TFile.h>
 #include <TH1D.h>
 #include <TString.h>
+#include <TParameter.h>
+#include <TText.h>
 
 #include <vector>
 #include <string>
@@ -93,6 +97,13 @@ int main(int argc, char** argv){
     // make new tree (processed)
     auto outFile = TFile::Open(TString(outFileName), "RECREATE");
     auto outTree = new TTree("processed", "processed");
+
+    auto git_sha1 = new TNamed("git_sha1", GIT_SHA1);
+    auto git_date = new TNamed("git_date", GIT_DATE);
+    auto git_subject = new TNamed("git_subject", GIT_COMMIT_SUBJECT);
+    git_sha1->Write();
+    git_date->Write();
+    git_subject->Write();
 
     Double_t TotalEnergyDeposit;
     outTree->Branch("TotalEnergyDeposit", &TotalEnergyDeposit, "TotalEnergyDeposit/D" );
