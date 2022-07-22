@@ -12,7 +12,7 @@ env:
   BUILD_TYPE: Release
 
 jobs:
-  ubuntu-minimal:
+  CVMFS on Ubuntu:
     runs-on: ubuntu-22.04
     steps:
     - uses: cvmfs-contrib/github-action-cvmfs@v2
