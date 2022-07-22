@@ -11,6 +11,11 @@ endif()
 
 project(MC)
 
+find_package(Git)
+if(NOT Git_FOUND)
+  message("Git not found")
+endif()
+
 IF (APPLE)
    SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 ENDIF()
