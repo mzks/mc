@@ -23,7 +23,7 @@ add_test(NAME small_mc COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small.root
 add_test(NAME small_mc2 COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small2.root)
 add_test(NAME reproducibility COMMAND ../bin/reproducibility -i mc_small.root -j mc_small2.root -t tree)
 add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root -k)
-add_test(NAME exists_macro COMMAND ls ../bench/mc_macro.txt)
+add_test(NAME exists_macro COMMAND ls ./mc_macro.txt)
 add_test(NAME run_batch_again COMMAND ../bin/mc -p ../bench -m mc_macro.txt -o mc_repro.root -k)
 add_test(NAME reproducibility_macro COMMAND ../bin/reproducibility -i mc.root -j mc_repro.root -t tree)
 add_test(NAME mcProcessing COMMAND ../bin/mcProcessing -i mc.root -o processed.root --clone)
