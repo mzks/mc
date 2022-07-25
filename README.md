@@ -10,6 +10,7 @@ This is an example of Geant4 simulation and data processing for physics experime
 
 - Prepare materials
 - Output for ROOT tree
+- Track git hash
 
 ## Usage
 ### Install & build

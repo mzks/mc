@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.13)
 
 project(common)
-add_custom_target(common)
+
+find_package(Git)
+if(NOT Git_FOUND)
+  message("Git not found")
+endif()
 
 execute_process(COMMAND
   "${GIT_EXECUTABLE}" describe --match=NeVeRmAtCh --always --abbrev=40 --dirty
@@ -22,7 +26,7 @@ execute_process(COMMAND
   ERROR_QUIET OUTPUT_STRIP_TRAILING_WHITESPACE)
 
 # generate common.hh
-configure_file("${CMAKE_CURRENT_SOURCE_DIR}/common.hh.in" "${CMAKE_CURRENT_SOURCE_DIR}/common.hh" @ONLY)
+configure_file("${CMAKE_CURRENT_SOURCE_DIR}/common.hh.in" "${CMAKE_BINARY_DIR}/common.hh" @ONLY)
 
 list(APPEND SOURCES "${CMAKE_CURRENT_SOURCE_DIR}/common.hh")
 
