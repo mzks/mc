@@ -21,6 +21,7 @@ add_definitions(${ROOT_CXX_FLAGS})
 add_executable(mcProcessing mcProcessing.cc)
 add_executable(basic_check basic_check.cc)
 add_executable(reproducibility reproducibility.cc)
+
 target_link_libraries(mcProcessing ${ROOT_LIBRARIES})
 target_link_libraries(basic_check ${ROOT_LIBRARIES})
 target_link_libraries(reproducibility ${ROOT_LIBRARIES})
@@ -29,6 +30,7 @@ add_subdirectory(../common common)
 include_directories(../common)
 target_include_directories(mcProcessing PUBLIC "${CMAKE_BINARY_DIR}") 
 target_include_directories(basic_check PUBLIC "${CMAKE_BINARY_DIR}") 
+target_include_directories(reproducibility PUBLIC "${CMAKE_BINARY_DIR}") 
 
 ### --  Load header-only libraries ------------------------------- #
 include(FetchContent)
