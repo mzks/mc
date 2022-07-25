@@ -17,6 +17,7 @@ add_subdirectory(analysis)
 
 add_custom_target(alltar DEPENDS mc analysis)
 
+
 ## Tests
 add_test(NAME small_mc COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small.root)
 add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root)

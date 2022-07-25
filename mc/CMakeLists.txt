@@ -10,6 +10,7 @@ file(GLOB headers ${PROJECT_SOURCE_DIR}/include/*.hh)
 include_directories(${PROJECT_SOURCE_DIR}/include)
 set(CMAKE_INSTALL_PREFIX .)
 
+
 # Setting ROOT
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})
 find_package(ROOT CONFIG REQUIRED)
@@ -28,6 +29,7 @@ include(${Geant4_USE_FILE})
 add_definitions(${ROOT_CXX_FLAGS})
 add_executable(mc mc.cc ${sources} ${headers})
 target_link_libraries(mc PRIVATE ROOT::MathCore ROOT::Hist ROOT::Tree ${Geant4_LIBRARIES})
+target_compile_options(mc PRIVATE -Wall -Wno-unused-variable -Wno-ignored-qualifiers -Wno-unused-but-set-variable)
 
 # load common directory
 add_subdirectory(../common common)
