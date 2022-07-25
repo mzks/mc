@@ -16,10 +16,13 @@ add_definitions(${ROOT_CXX_FLAGS})
 
 add_executable(mcProcessing mcProcessing.cc)
 add_executable(basic_check basic_check.cc)
+add_executable(reproducibility reproducibility.cc)
 target_link_libraries(mcProcessing ${ROOT_LIBRARIES})
 target_link_libraries(basic_check ${ROOT_LIBRARIES})
+target_link_libraries(reproducibility ${ROOT_LIBRARIES})
 
 
 install(TARGETS mcProcessing DESTINATION bin)
 install(TARGETS basic_check DESTINATION bin)
+install(TARGETS reproducibility DESTINATION bin)
 

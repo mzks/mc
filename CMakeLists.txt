@@ -62,6 +62,8 @@ add_custom_target(alltar DEPENDS common mc analysis)
 
 ## Tests
 add_test(NAME small_mc COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small.root)
+add_test(NAME small_mc2 COMMAND ../bin/mc -p ../bench -m run.mac -o mc_small2.root)
+add_test(NAME reproducibility COMMAND ../bin/reproducibility -i mc_small.root -j mc_small2.root -t tree)
 add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root)
 add_test(NAME mcProcessing COMMAND ../bin/mcProcessing -i mc.root -o processed.root --clone)
 add_test(NAME basic_check COMMAND ../bin/basic_check -i processed.root)
