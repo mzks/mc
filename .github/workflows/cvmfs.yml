@@ -33,6 +33,7 @@ jobs:
       run: |
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
+        source /cvmfs/sft.cern.ch/lcg/releases/LCG_102/spdlog/1.9.2/x86_64-ubuntu2204-gcc11-opt/spdlog-env.sh
         env
 
     - uses: actions/checkout@v3
@@ -42,6 +43,7 @@ jobs:
       run: |
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
+        source /cvmfs/sft.cern.ch/lcg/releases/LCG_102/spdlog/1.9.2/x86_64-ubuntu2204-gcc11-opt/spdlog-env.sh
         cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}} -DGIT_EXECUTABLE=/usr/bin/git
 
     - name: Build
@@ -57,6 +59,7 @@ jobs:
       run: |
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/thisroot.sh
         source /cvmfs/sft.cern.ch/lcg/views/LCG_102/x86_64-ubuntu2204-gcc11-opt/bin/geant4.sh
+        source /cvmfs/sft.cern.ch/lcg/releases/LCG_102/spdlog/1.9.2/x86_64-ubuntu2204-gcc11-opt/spdlog-env.sh
         root --version
         ctest -C ${{env.BUILD_TYPE}} --verbose --test-dir ${{github.workspace}}/build
       
