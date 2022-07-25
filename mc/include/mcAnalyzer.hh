@@ -11,6 +11,7 @@
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
 #include "G4Types.hh"
+#include "G4String.hh"
 
 #include <vector>
 #include <fstream>
@@ -46,6 +47,7 @@ public:
     );
     void Terminate();
     void SetFileName(TString);
+    void SetG4VersionString(G4String st) {G4VersionString = st;};
 private:
 
     TFile* fout;
@@ -64,6 +66,7 @@ private:
     std::vector<G4int> trackID;
     std::vector<G4int> copyNo;
     std::vector<G4int> particleID;
+    G4String G4VersionString = "";
     
 };
 

@@ -91,6 +91,7 @@ int main(int argc, char** argv) {
     // Construct the analyzer
     auto* analyzer = new mcAnalyzer();
     analyzer->SetInit(program["--ascii"] == false, outFileName);
+    analyzer->SetG4VersionString(runManager->GetVersionString());
     analyzer->Init();
     
     // Set mandatory initialization classes
@@ -150,7 +151,9 @@ int main(int argc, char** argv) {
     delete runManager;
 
     spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
-    spdlog::info("Size of output root file is {:.0} MB.", std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
+    spdlog::info("Output file was generate as {}.", outFileName);
+    spdlog::info("Size of output root file is {:.0} MB.",
+                 std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
 
     return 0;
 }
