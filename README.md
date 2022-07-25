@@ -8,33 +8,47 @@ This is an example of Geant4 simulation and data processing for physics experime
 
 ## Features
 
-- Prepare materials
-- Output for ROOT tree
+- Prepared physics, materials, primary generators
+- Output as ROOT TTree
+- Human friendly logger
+- Data pocessing examples
 - Track git hash
+- Basic tests
 
 ## Usage
+
+## Requirement
+- Geant4 11.0
+- ROOT 6
+- Qt (for interactive mode)
+
 ### Install & build
 ```
 > git clone https://github.com/mzks/mc
-> cmake -S mc -B build
+> cd mc
+> cmake -B build
 > cmake --build build
 > cmake --install build --prefix .
 ```
+or, `./make.sh` on the `mc`
 
- - GUI mode
+### Run MC
+
+ - GUI interactive mode
 ```
-> ./bin/mc -p bench -i
+> ./bin/mc -i
 ```
 
  - Batch mode
 ```
-> ./bin/mc -p bench -m run.mac
+> ./bin/mc -m run.mac
 ```
 
-## Requirement
-- Geant4.11
-- ROOT6
-- Qt (for interactive mode)
+### Run processing
+```
+> ./bin/mcProcessing -i mc.root -o processed.root --clone
+```
+
 
 You can run easily, without installing ROOT and Geant4 using [virtual machine](https://wiki.kek.jp/display/geant4/Geant4+Virtual+Machine).
 When you use this virtual machine, you have to do `source $ROOTSYS/bin/thisroot.sh` before running.
