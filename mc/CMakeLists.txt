@@ -29,7 +29,7 @@ include(${Geant4_USE_FILE})
 add_definitions(${ROOT_CXX_FLAGS})
 add_executable(mc mc.cc ${sources} ${headers})
 target_link_libraries(mc PRIVATE ROOT::MathCore ROOT::Hist ROOT::Tree ${Geant4_LIBRARIES})
-target_compile_options(mc PRIVATE -Wall -Wno-unused-variable -Wno-ignored-qualifiers -Wno-unused-but-set-variable)
+target_compile_options(mc PRIVATE -Wall -Wno-unused-variable -Wno-ignored-qualifiers -Wno-unused-but-set-variable -Wno-shadow -Wno-unused-parameter)
 
 # load common directory
 add_subdirectory(../common common)

@@ -7,4 +7,4 @@ cmake --build build -j
 cmake --install build --prefix .
 
 cd build
-ctest --verbose
+ctest --output-on-failure
