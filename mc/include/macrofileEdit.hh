@@ -4,6 +4,10 @@
 #ifndef MC_MACROFILEEDIT_H
 #define MC_MACROFILEEDIT_H
 
+#include <TString.h>
+#include <TFile.h>
+#include <TNamed.h>
+
 #include <string>
 #include <fstream>
 #include <filesystem>
@@ -42,6 +46,22 @@ void EditMacroFile(const std::string& filename){
     ifs.close();
     ofs.close();
     std::filesystem::rename(outfilename, filename);
+}
+
+void SaveMacroToRoot(TString RootFileName, std::string filename){
+  std::ifstream ifs(filename);
+  if (!ifs) {
+    spdlog::error("Cannot open the file, {}", filename);
+    std::exit(1);
+  }
+  std::string str((std::istreambuf_iterator<char>(ifs)), std::istreambuf_iterator<char>());
+  ifs.close();
+
+  auto f = TFile::Open(RootFileName, "UPDATE");
+  auto commands = new TNamed("commands", str);
+  commands->Write();
+  f->Write();
+  f->Close();
 }
 
 

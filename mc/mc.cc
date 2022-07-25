@@ -57,9 +57,12 @@ int main(int argc, char** argv) {
     program.add_argument("-a", "--ascii")
         .default_value(false).implicit_value(true)
         .help("Output with ascii file, not root");
-  program.add_argument("-k", "--keep-history")
-      .default_value(false).implicit_value(true)
-      .help("Make a file to keep command list");
+    program.add_argument("-k", "--keep-history")
+        .default_value(false).implicit_value(true)
+        .help("Make a file to keep command list");
+    program.add_argument("-r", "--root-include-macro")
+        .default_value(false).implicit_value(true)
+        .help("Store command list to root file");
     try {
         program.parse_args(argc, argv);
     }
@@ -129,16 +132,15 @@ int main(int argc, char** argv) {
 
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
-    std::string history_filename = "macros.txt";
-    if (program["--keep-history"] == true) {
-      std::string::size_type pos;
-      if((pos = outFileName.find_last_of(".")) != std::string::npos) {
-        history_filename = outFileName.substr(0, pos) + "_macro.txt";
-      }
-      UImanager->StoreHistory(history_filename.c_str());
-    }
 
-  // Process macro or start UI session
+    std::string history_filename = "macros.txt";
+    std::string::size_type pos;
+    if((pos = outFileName.find_last_of(".")) != std::string::npos) {
+      history_filename = outFileName.substr(0, pos) + "_macro.txt";
+    }
+    UImanager->StoreHistory(history_filename.c_str());
+
+    // Process macro or start UI session
     UImanager->ApplyCommand("/control/macroPath " + program.get<std::string>("--path-to-macro"));
     if (!ui) {
         // batch mode
@@ -163,10 +165,16 @@ int main(int argc, char** argv) {
     delete runManager;
 
     spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
+    if (program["--root-include-macro"] == true && program["--ascii"] == false) {
+      SaveMacroToRoot(outFileName, history_filename);
+      spdlog::info("Executed commands saved in root file");
+    }
     if (program["--keep-history"] == true) {
       EditMacroFile(history_filename);
       spdlog::info("Executed commands saved at {}.", history_filename);
     }
+    if (program["--keep-history"] == false) std::filesystem::remove(history_filename);
+
     spdlog::info("Output file was generate as {}.", outFileName);
     spdlog::info("Size of output root file is {:.0} MB.",
                  std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
