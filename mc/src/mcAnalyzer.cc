@@ -44,10 +44,12 @@ void mcAnalyzer::Init(){
         auto git_date = new TNamed("git_date", gitinfo("GIT_DATE"));
         auto git_subject = new TNamed("git_subject", gitinfo("GIT_COMMIT_SUBJECT"));
         auto G4Version = new TNamed("G4Version", G4VersionString);
+        auto ROOTVersion = new TNamed("ROOTVersion", gROOT->GetVersion());
         git_sha1->Write();
         git_date->Write();
         git_subject->Write();
         G4Version->Write();
+        ROOTVersion->Write();
 
         auto seed = new TParameter<Long_t>("seed", G4Random::getTheSeed());
         seed->Write();

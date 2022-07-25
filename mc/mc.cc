@@ -13,6 +13,7 @@
 #include "mcParticleGunMessenger.hh"
 #include "mcAnalyzer.hh"
 #include "mcRunManager.hh"
+#include "macrofileEdit.hh"
 
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
@@ -37,10 +38,6 @@
 
 int main(int argc, char** argv) {
 
-    gitinfo();
-    spdlog::info("The mc has been started, a stopwatch is on, now.");
-    spdlog::stopwatch stopwatch;
-
     argparse::ArgumentParser program("mc");
     program.add_argument("-m", "--macro")
         .default_value(std::string("run.mac"))
@@ -60,6 +57,9 @@ int main(int argc, char** argv) {
     program.add_argument("-a", "--ascii")
         .default_value(false).implicit_value(true)
         .help("Output with ascii file, not root");
+  program.add_argument("-k", "--keep-history")
+      .default_value(false).implicit_value(true)
+      .help("Make a file to keep command list");
     try {
         program.parse_args(argc, argv);
     }
@@ -69,6 +69,10 @@ int main(int argc, char** argv) {
         G4cout << program.help().str() << G4endl;
         std::exit(1);
     }
+    gitinfo();
+    spdlog::info("The mc has been started, a stopwatch is on, now.");
+    spdlog::stopwatch stopwatch;
+
 
     auto outFileName = program.get<std::string>("--output");
     spdlog::info("Output file will be generate as {}.", outFileName);
@@ -80,7 +84,7 @@ int main(int argc, char** argv) {
     } else {
         spdlog::info("Mc works on batch mode.");
     }
-    
+
     G4Random::setTheEngine(new CLHEP::RanecuEngine);
     auto seed = program.get<int>("seed");
     G4Random::setTheSeed(seed);
@@ -93,40 +97,48 @@ int main(int argc, char** argv) {
     analyzer->SetInit(program["--ascii"] == false, outFileName);
     analyzer->SetG4VersionString(runManager->GetVersionString());
     analyzer->Init();
-    
+
     // Set mandatory initialization classes
     auto* detector = new mcDetectorConstruction();
     detector->SetAnalyzer(analyzer);
     runManager->SetUserInitialization(detector);
-    
+
     // Physics list
     G4VModularPhysicsList* physicsList = new QGSP_BERT;
     physicsList->SetVerboseLevel(1);
     runManager->SetUserInitialization(physicsList);
-    
+
     // Set user action classes
     G4VUserPrimaryGeneratorAction* gen_action = new mcPrimaryGeneratorAction(detector);
     runManager->SetUserAction(gen_action);
-    
+
     auto* run_action = new mcRunAction;
     runManager->SetUserAction(run_action);
-    
+
     auto* event_action = new mcEventAction(run_action);
     runManager->SetUserAction(event_action);
-    
+
     // auto* stepping_action = new mcSteppingAction();
     // runManager->SetUserAction(stepping_action);
-    
+
     // Initialize visualization
     G4VisManager* visManager = new G4VisExecutive;
     // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
     // G4VisManager* visManager = new G4VisExecutive("Quiet");
     visManager->Initialize();
-    
+
     // Get the pointer to the User Interface manager
     G4UImanager* UImanager = G4UImanager::GetUIpointer();
-    
-    // Process macro or start UI session
+    std::string history_filename = "macros.txt";
+    if (program["--keep-history"] == true) {
+      std::string::size_type pos;
+      if((pos = outFileName.find_last_of(".")) != std::string::npos) {
+        history_filename = outFileName.substr(0, pos) + "_macro.txt";
+      }
+      UImanager->StoreHistory(history_filename.c_str());
+    }
+
+  // Process macro or start UI session
     UImanager->ApplyCommand("/control/macroPath " + program.get<std::string>("--path-to-macro"));
     if (!ui) {
         // batch mode
@@ -139,9 +151,9 @@ int main(int argc, char** argv) {
         ui->SessionStart();
         delete ui;
     }
-    
+
     analyzer->Terminate();
-    
+
     // Job termination
     // Free the store: user actions, physics_list and detector_description are
     // owned and deleted by the run manager, so they should not be deleted
@@ -151,6 +163,10 @@ int main(int argc, char** argv) {
     delete runManager;
 
     spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
+    if (program["--keep-history"] == true) {
+      EditMacroFile(history_filename);
+      spdlog::info("Executed commands saved at {}.", history_filename);
+    }
     spdlog::info("Output file was generate as {}.", outFileName);
     spdlog::info("Size of output root file is {:.0} MB.",
                  std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
