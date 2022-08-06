@@ -2,7 +2,6 @@
 
 
 [![Ubuntu 22.04](https://github.com/mzks/mc/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/ubuntu.yml)
-[![CVMFS](https://github.com/mzks/mc/actions/workflows/cvmfs.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/cvmfs.yml)
 
 This is an example of Geant4 simulation and data processing for physics experiment.
 
