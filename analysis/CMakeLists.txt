@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.13)
 
+set(CMAKE_CXX_STANDARD 17)
+
 IF (APPLE)
    SET(CMAKE_INSTALL_RPATH_USE_LINK_PATH ON)
 ENDIF()
@@ -8,7 +10,6 @@ project(analysis)
 file(GLOB sources ${PROJECT_SOURCE_DIR}/*.cc)
 file(GLOB headers ${PROJECT_SOURCE_DIR}/*.hh)
 include_directories(${PROJECT_SOURCE_DIR}/include)
-set(CMAKE_INSTALL_PREFIX .)
 
 # Setting ROOT
 list(APPEND CMAKE_PREFIX_PATH $ENV{ROOTSYS})

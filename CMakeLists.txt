@@ -11,6 +11,8 @@ endif()
 
 project(MC)
 
+set(CMAKE_INSTALL_PREFIX .)
+
 add_subdirectory(mc)
 add_subdirectory(analysis)
 # add your project here
@@ -25,9 +27,9 @@ add_test(NAME reproducibility COMMAND ../bin/reproducibility -i mc_small.root -j
 add_test(NAME dump1 COMMAND sh -c "../bin/dump.sh mc_small.root >> dump1.txt")
 add_test(NAME dump2 COMMAND sh -c "../bin/dump.sh mc_small2.root >> dump2.txt")
 add_test(NAME dump_tree_diff COMMAND diff dump1.txt dump2.txt)
-add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root -k) # a bit more production
+add_test(NAME batch_mc COMMAND ../bin/mc -p ../bench -m bat.mac -o mc.root -k -s 1) # a bit more production
 add_test(NAME exists_macro COMMAND ls ./mc_macro.txt) # generated macro exists
-add_test(NAME run_batch_again COMMAND ../bin/mc -p ../bench -m mc_macro.txt -o mc_repro.root -k -r) # run with generated macro
+add_test(NAME run_batch_again COMMAND ../bin/mc -p ../bench -m mc_macro.txt -o mc_repro.root -k -r -s 1) # run with generated macro
 add_test(NAME reproducibility_macro COMMAND ../bin/reproducibility -i mc.root -j mc_repro.root -t tree) # check again
 add_test(NAME mcProcessing COMMAND ../bin/mcProcessing -i mc.root -o processed.root --clone) # Processing
 add_test(NAME basic_check COMMAND ../bin/basic_check -i processed.root) # basic check for processing tree
