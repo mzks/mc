@@ -52,7 +52,7 @@ int main(int argc, char** argv) {
         .default_value(0).scan<'i', int>()
         .help("run as interactive mode, not batch");
     program.add_argument("-p", "--path-to-macro")
-        .default_value(std::string(".:bench"))
+        .default_value(std::string(".:bench:../bench"))
         .help("set macro search path with colon-separated list");
     program.add_argument("-a", "--ascii")
         .default_value(false).implicit_value(true)
