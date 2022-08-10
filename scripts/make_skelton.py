@@ -1,40 +1,56 @@
+import argparse
 import ROOT
 
-filename = "./mc.root"
-treename = "tree"
-df = ROOT.RDataFrame("tree", filename)
+parser = argparse.ArgumentParser()
+parser.add_argument('-f', '--file', nargs="*", default=['mc.root'], help='Filename(s) including TTree')
+parser.add_argument('-t', '--tree', nargs="*", default=['tree'], help='TTree name(s)')
+args = parser.parse_args()
+filenames = args.file
+treenames = args.tree
+
+
+if len(filenames) != len(treenames):
+    print('File and Tree are not match.')
+    exit(-1)
+n_targets = len(treenames);
 
 f = open('new_analysis.C', 'w')
 
 f.write('''
-// ------------------------------ //
+// --------------------------------------- //
 // new_analysis.C 
 // generated with make_skelton.py
-// Usage : root -l new_analysis.C
-// ------------------------------ //
+// Usage : root -l -b -q new_analysis.C
+// --------------------------------------- //
 
 #include <iostream>
 ''')
-f.write('int new_analysis(TString filename="' + filename + '"){\n')
-f.write('    auto f = TFile::Open(filename);\n')
-f.write('    auto '+ treename +' = f->Get<TTree>("'+treename+'");\n')
-f.write('    ULong64_t n_entries = '+ treename +'->GetEntries();\n')
-f.write('''
-    std::cout << "Entries : " << n_entries << std::endl;
+f.write('int new_analysis(')
+for i in range(n_targets):
+    f.write('TString filename'+str(i)+'="' + filenames[i] + '"' + (',' if i != n_targets-1 else ''))
+f.write('){\n')
 
-''')
+for i in range(n_targets):
+    f.write('    auto f'+str(i)+' = TFile::Open(filename'+str(i)+');\n')
+    f.write('    auto '+ treenames[i] +' = f'+str(i)+'->Get<TTree>("'+treenames[i]+'");\n')
 
+f.write('    ULong64_t n_entries = '+ treenames[0] +'->GetEntries();\n')
+f.write('    std::cout << "Entries : " << n_entries << std::endl;\n')
 
-for name in df.GetColumnNames():
-    bn = str(name)
-    c_type = df.GetColumnType(bn)
-    c_type = c_type.replace("ROOT::VecOps::RVec", "std::vector")
-    if c_type.find('vector') == -1:
-        f.write('    ' + c_type + ' ' + bn + ' = 0;' + '\n')
-    else:
-        f.write('    ' + c_type + ' *' + bn + ' = nullptr;' + '\n')
-    f.write('    ' + 'TBranch *b_' + bn + ';' + '\n')
-    f.write('    ' + treename + '->SetBranchAddress("' + bn + '", &' + bn + ', &b_' + bn + ');' + '\n')
+f.write('\n\n')
+for i in range(n_targets):
+    df = ROOT.RDataFrame(treenames[i], filenames[i])
+
+    for name in df.GetColumnNames():
+        bn = str(name)
+        c_type = df.GetColumnType(bn)
+        c_type = c_type.replace("ROOT::VecOps::RVec", "std::vector")
+        if c_type.find('vector') == -1:
+            f.write('    ' + c_type + ' ' + bn + ' = 0;' + '\n')
+        else:
+            f.write('    ' + c_type + ' *' + bn + ' = nullptr;' + '\n')
+        f.write('    ' + 'TBranch *b_' + bn + ';' + '\n')
+        f.write('    ' + treenames[i] + '->SetBranchAddress("' + bn + '", &' + bn + ', &b_' + bn + ');' + '\n')
 
 
 f.write('''
@@ -55,7 +71,8 @@ f.write('''
 
     for(ULong64_t i_entry=0; i_entry<n_entries; ++i_entry){
     ''')
-f.write('        ' + treename + '->GetEntry(i_entry);\n')
+for i in range(n_targets):
+    f.write('        ' + treenames[i] + '->GetEntry(i_entry);\n')
 
 f.write('''
         // if (your_cut) continue;
