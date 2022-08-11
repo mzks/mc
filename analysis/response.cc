@@ -25,6 +25,8 @@
 #include <TParameter.h>
 #include <TText.h>
 #include <TRandom.h>
+#include <TBrowser.h>
+#include <TCanvas.h>
 
 #include <argparse/argparse.hpp>
 
@@ -84,6 +86,13 @@ int main(int argc, char** argv) {
           .Define("trigger_time", calc_trigger_time, {"time"})
           .Define("real_energy", calc_smearing, {"total_energy"})
         ;
+
+    // TRICK: Show progress
+    auto n_entries = *df_new.Count();
+    auto h = df_new.Histo1D("real_energy");
+    h.OnPartialResult(n_entries/100, [&](TH1D &h_) {smart_loop_logger(n_entries, h_.GetEntries());});
+    *h; // run loop here
+
     df_new.Snapshot("response", "response.root",
                     {"total_energy", "r", "trigger_time", "real_energy"});
 

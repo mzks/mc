@@ -41,6 +41,11 @@ target_include_directories(dump PUBLIC "${CMAKE_BINARY_DIR}")
 
 
 ### --  Load header-only libraries ------------------------------- #
+find_package(Git)
+if(NOT Git_FOUND)
+  message("Git not found")
+endif()
+
 include(FetchContent)
 
 # spdlog -- simple logger
