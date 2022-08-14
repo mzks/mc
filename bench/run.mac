@@ -20,10 +20,10 @@
 /mcgun/selectGunAction pg
 /gun/usr/vtx 0
 /gun/usr/particle 0
-/gun/particle gamma
-/gun/usr/energy 1 MeV
 /gun/direction 0 0 1
 /gun/position 0 0 0 m
+/gun/particle gamma
+/gun/energy 1 MeV
 
 ## Option 2 : GeneralParticleSource
 #/mcgun/selectGunAction gps

@@ -1,4 +1,3 @@
-
 #ifndef mcPrimaryGeneratorAction_h
 #define mcPrimaryGeneratorAction_h 1
 
@@ -6,13 +5,13 @@
 #include "globals.hh"
 #include "G4VUserDetectorConstruction.hh"
 #include "G4GeneralParticleSource.hh"
+#include "mcPrimaryGeneratorMessenger.hh"
 
 class G4ParticleGun;
 class G4ParticleTable;
 class G4GeneralParticleSource;
 class G4Event;
 class mcDetectorConstruction;
-class mcPrimaryGeneratorMessenger;
 
 class mcPrimaryGeneratorAction : public G4VUserPrimaryGeneratorAction
 {
