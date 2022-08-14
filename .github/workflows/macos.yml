@@ -1,0 +1,36 @@
+name: Test on MacOS
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  schedule:
+    - cron: '45 * * * *'
+
+env:
+  # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
+  BUILD_TYPE: Release
+
+jobs:
+
+  build:
+    runs-on: MacOS
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+
+    - name: Build
+      run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
+
+    - name: Install
+      run: cmake --install ${{github.workspace}}/build --prefix ${{github.workspace}}
+
+    - name: Test
+      working-directory: ${{github.workspace}}/build
+      run: |
+        ctest -C ${{env.BUILD_TYPE}} --verbose --test-dir ${{github.workspace}}/build
+      

@@ -2,6 +2,7 @@
 
 
 [![Ubuntu 22.04](https://github.com/mzks/mc/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/ubuntu.yml)
+[![Mac with M1](https://github.com/mzks/mc/actions/workflows/macos.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/macos.yml)
 
 This is an example of Geant4 simulation and data processing for physics experiment.
 
