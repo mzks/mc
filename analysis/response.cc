@@ -87,15 +87,16 @@ int main(int argc, char** argv) {
           .Define("real_energy", calc_smearing, {"total_energy"})
         ;
 
-    // TRICK: Show progress
-    auto n_entries = *df_new.Count();
-    auto h = df_new.Histo1D("real_energy");
-    h.OnPartialResult(n_entries/100, [&](TH1D &h_) {smart_loop_logger(n_entries, h_.GetEntries());});
-    *h; // run loop here
+    // TRICK: Show progress log not exactly correct
+    auto n_entries = tree->GetEntries();
+    df_new.Count().OnPartialResult(n_entries/1000, // each 0.1 percent,
+                               [&n_entries](auto c) {smart_loop_logger(n_entries, c);});
 
+    spdlog::info("Process start.");
     df_new.Snapshot("response", "response.root",
                     {"total_energy", "r", "trigger_time", "real_energy"});
 
+    df_new.Describe();
 
     auto outFile = TFile::Open(TString(outFileName), "UPDATE");
     auto input_filename = new TNamed("input_filename", inFileName);
