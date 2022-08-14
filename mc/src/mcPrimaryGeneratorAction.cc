@@ -1,4 +1,5 @@
 #include "mcPrimaryGeneratorAction.hh"
+#include "mcPrimaryGeneratorMessenger.hh"
 #include "mcParticleGun.hh"
 #include "mcDetectorConstruction.hh"
 
