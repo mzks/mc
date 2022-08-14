@@ -1,0 +1,41 @@
+/control/verbose 1
+/tracking/verbose 1
+/run/verbose 1
+
+# change world parameter
+/usr/det/setMaterial NaI
+/usr/det/setShieldMaterial Water
+/usr/det/setSensorRadius 10 cm
+/usr/det/setSensorHeight 20 cm
+/usr/det/setShieldThickness 1 cm
+/usr/det/setField 0.0 tesla
+/usr/det/setMaxStep  1.0 cm
+
+#inactivate msc
+#/process/inactivate msc
+
+## Primary Particles
+
+# Option 1 : (mc) ParticleGun
+/mcgun/selectGunAction pg
+/gun/usr/vtx 0
+/gun/usr/particle 0
+/gun/particle gamma
+/gun/usr/energy 1 MeV
+/gun/direction 0 0 1
+/gun/position 0 0 0 m
+
+## Option 2 : GeneralParticleSource
+#/mcgun/selectGunAction gps
+#/gps/particle alpha
+#/gps/direction 1 1 0
+#/gps/position 1 0 0 m
+#/gps/energy 100 keV
+#/gps/number 10
+
+## Option 3: custom primary generator
+## Defined at mcPrimaryGeneratorAction::GenerateCustom
+#/mcgun/selectGunAction custom
+
+/run/initialize
+/run/beamOn 100
