@@ -112,7 +112,7 @@ int main(int argc, char** argv) {
     runManager->SetUserInitialization(physicsList);
 
     // Set user action classes
-    G4VUserPrimaryGeneratorAction* gen_action = new mcPrimaryGeneratorAction(detector);
+    G4VUserPrimaryGeneratorAction* gen_action = new mcPrimaryGeneratorAction();
     runManager->SetUserAction(gen_action);
 
     auto* run_action = new mcRunAction;
