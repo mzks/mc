@@ -20,11 +20,13 @@ include(${ROOT_USE_FILE})
 add_definitions(${ROOT_CXX_FLAGS})
 
 add_executable(mcProcessing mcProcessing.cc)
+add_executable(response response.cc)
 add_executable(basic_check basic_check.cc)
 add_executable(reproducibility reproducibility.cc)
 add_executable(dump dump.cc)
 
 target_link_libraries(mcProcessing ${ROOT_LIBRARIES})
+target_link_libraries(response ${ROOT_LIBRARIES})
 target_link_libraries(basic_check ${ROOT_LIBRARIES})
 target_link_libraries(reproducibility ${ROOT_LIBRARIES})
 target_link_libraries(dump ${ROOT_LIBRARIES})
@@ -32,12 +34,18 @@ target_link_libraries(dump ${ROOT_LIBRARIES})
 add_subdirectory(../common common)
 include_directories(../common)
 target_include_directories(mcProcessing PUBLIC "${CMAKE_BINARY_DIR}") 
+target_include_directories(response PUBLIC "${CMAKE_BINARY_DIR}") 
 target_include_directories(basic_check PUBLIC "${CMAKE_BINARY_DIR}") 
 target_include_directories(reproducibility PUBLIC "${CMAKE_BINARY_DIR}") 
 target_include_directories(dump PUBLIC "${CMAKE_BINARY_DIR}") 
 
 
 ### --  Load header-only libraries ------------------------------- #
+find_package(Git)
+if(NOT Git_FOUND)
+  message("Git not found")
+endif()
+
 include(FetchContent)
 
 # spdlog -- simple logger
@@ -70,6 +78,7 @@ include_directories(${argparse_SOURCE_DIR}/include)
 
 
 install(TARGETS mcProcessing DESTINATION bin)
+install(TARGETS response DESTINATION bin)
 install(TARGETS basic_check DESTINATION bin)
 install(TARGETS reproducibility DESTINATION bin)
 install(TARGETS dump DESTINATION bin)
