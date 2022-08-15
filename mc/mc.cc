@@ -4,21 +4,26 @@
 // Author: Mizukoshi keita
 // ------------------------------------ //
 
+#include "G4PhysListFactory.hh"
+#include "G4ProcessTable.hh"
 #include "mcDetectorConstruction.hh"
-#include "mcPhysicsList.hh"
 #include "mcPrimaryGeneratorAction.hh"
 #include "mcRunAction.hh"
 #include "mcEventAction.hh"
 #include "mcParticleGun.hh"
-#include "mcParticleGunMessenger.hh"
 #include "mcAnalyzer.hh"
 #include "mcRunManager.hh"
 #include "macrofileEdit.hh"
-
 #include "G4UImanager.hh"
 #include "G4VisExecutive.hh"
 #include "G4UIExecutive.hh"
 #include "Randomize.hh"
+
+
+#include "G4MuonMinusCapture.hh"
+#include "G4EmCaptureCascade.hh"
+#include "CustomG4EmCaptureCascade.hh"
+
 
 #ifdef G4UI_USE_XM
 #include "G4UIXm.hh"
@@ -54,6 +59,9 @@ int main(int argc, char** argv) {
     program.add_argument("-p", "--path-to-macro")
         .default_value(std::string(".:bench:../bench"))
         .help("set macro search path with colon-separated list");
+    program.add_argument("-l", "--physlist")
+        .default_value(std::string("FTFP_BERT_HP"))
+        .help("Base physics list");
     program.add_argument("-a", "--ascii")
         .default_value(false).implicit_value(true)
         .help("Output with ascii file, not root");
@@ -63,6 +71,9 @@ int main(int argc, char** argv) {
     program.add_argument("-r", "--root-include-macro")
         .default_value(false).implicit_value(true)
         .help("Store command list to root file");
+    program.add_argument("-e", "--enable-exotic")
+        .default_value(false).implicit_value(true)
+        .help("Enable custom physics for GAPS. Set an environmental value G4XRAYCASCADE to mc/resource/X-Ray");
     try {
         program.parse_args(argc, argv);
     }
@@ -107,7 +118,13 @@ int main(int argc, char** argv) {
     runManager->SetUserInitialization(detector);
 
     // Physics list
-    G4VModularPhysicsList* physicsList = new QGSP_BERT;
+    G4String physListName = program.get<std::string>("--physlist");
+    auto factory = new G4PhysListFactory();
+    if (! factory->IsReferencePhysList(physListName)) {
+        spdlog::error("No such reference physics list {}", physListName);
+        exit(1);
+    }
+    auto physicsList = factory->GetReferencePhysList(physListName);
     physicsList->SetVerboseLevel(1);
     runManager->SetUserInitialization(physicsList);
 
@@ -124,7 +141,23 @@ int main(int argc, char** argv) {
     // auto* stepping_action = new mcSteppingAction();
     // runManager->SetUserAction(stepping_action);
 
-    // Initialize visualization
+    runManager->Initialize();
+    bool customMuMinusCapture = false;
+    if (program["--enable-exotic"] == true) {
+      G4ProcessTable* processTable = G4ProcessTable::GetProcessTable();
+      G4VProcess* muon_minus_process = nullptr;
+      muon_minus_process = processTable->FindProcess("muMinusCaptureAtRest", "mu-");
+      if (muon_minus_process){
+        G4MuonMinusCapture* mmcap_process = dynamic_cast<G4MuonMinusCapture*>(muon_minus_process);
+        CustomG4EmCaptureCascade* custom_em = new CustomG4EmCaptureCascade(); // custom process
+        mmcap_process->SetEmCascade(custom_em);
+        customMuMinusCapture = true;
+      }
+    }
+
+    runManager->Initialize();
+
+  // Initialize visualization
     G4VisManager* visManager = new G4VisExecutive;
     // G4VisExecutive can take a verbosity argument - see /vis/verbose guidance.
     // G4VisManager* visManager = new G4VisExecutive("Quiet");
