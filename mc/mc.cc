@@ -110,9 +110,6 @@ int main(int argc, char** argv) {
     auto* analyzer = new mcAnalyzer();
     analyzer->SetInit(program["--ascii"] == false, outFileName);
     analyzer->SetG4VersionString(runManager->GetVersionString());
-    G4String physListName = program.get<std::string>("--physlist");
-    analyzer->SetPhysListName(physListName);
-    analyzer->Init();
 
     // Set mandatory initialization classes
     auto* detector = new mcDetectorConstruction();
@@ -120,6 +117,8 @@ int main(int argc, char** argv) {
     runManager->SetUserInitialization(detector);
 
     // Physics list
+    G4String physListName = program.get<std::string>("--physlist");
+    analyzer->SetPhysListName(physListName);
     auto factory = new G4PhysListFactory();
     if (! factory->IsReferencePhysList(physListName)) {
         spdlog::error("No such reference physics list {}", physListName);
@@ -155,6 +154,8 @@ int main(int argc, char** argv) {
         customMuMinusCapture = true;
       }
     }
+    analyzer->SetGAPSCustomPhysics(customMuMinusCapture);
+    analyzer->Init();
 
     runManager->Initialize();
 

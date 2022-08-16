@@ -55,6 +55,8 @@ void mcAnalyzer::Init(){
 
         auto seed = new TParameter<Long_t>("seed", G4Random::getTheSeed());
         seed->Write();
+        auto gaps_custom_physics = new TParameter<bool>("gaps_custom_physics", GAPSCustomPhysics);
+        gaps_custom_physics->Write();
 
         tree = new TTree("tree","mc output");
         tree->Branch("nHit",&nHit,"nHit/I");
