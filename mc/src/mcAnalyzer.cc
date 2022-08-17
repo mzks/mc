@@ -45,14 +45,18 @@ void mcAnalyzer::Init(){
         auto git_subject = new TNamed("git_subject", gitinfo("GIT_COMMIT_SUBJECT"));
         auto G4Version = new TNamed("G4Version", G4VersionString);
         auto ROOTVersion = new TNamed("ROOTVersion", gROOT->GetVersion());
+        auto physList = new TNamed("physicslist_name", physListName);
         git_sha1->Write();
         git_date->Write();
         git_subject->Write();
         G4Version->Write();
         ROOTVersion->Write();
+        physList->Write();
 
         auto seed = new TParameter<Long_t>("seed", G4Random::getTheSeed());
         seed->Write();
+        auto gaps_custom_physics = new TParameter<bool>("gaps_custom_physics", GAPSCustomPhysics);
+        gaps_custom_physics->Write();
 
         tree = new TTree("tree","mc output");
         tree->Branch("nHit",&nHit,"nHit/I");

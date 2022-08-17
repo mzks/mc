@@ -48,6 +48,8 @@ public:
     void Terminate();
     void SetFileName(TString);
     void SetG4VersionString(G4String st) {G4VersionString = st;};
+    void SetPhysListName(G4String st) {physListName = st;};
+    void SetGAPSCustomPhysics(bool op) {GAPSCustomPhysics = op;};
 private:
 
     TFile* fout;
@@ -67,6 +69,9 @@ private:
     std::vector<G4int> copyNo;
     std::vector<G4int> particleID;
     G4String G4VersionString = "";
+    G4String physListName = "";
+    bool GAPSCustomPhysics;
+
     
 };
 

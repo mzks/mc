@@ -29,6 +29,5 @@ private:
     G4UIcmdWithADoubleAndUnit*  eneCmd;
     
 };
-
 #endif
 

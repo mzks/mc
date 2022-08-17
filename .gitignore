@@ -1,5 +1,6 @@
 build/*
 bin/*
+!bin/dump.sh
 bench/*.out
 bench/G4History.macro
 bench/*.root
@@ -28,6 +29,6 @@ Testing
 
 .idea
 cmake-build-debug
-include
-lib
+include/
+lib/
 common/common.hh
