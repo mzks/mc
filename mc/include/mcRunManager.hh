@@ -1,6 +1,6 @@
 
 #ifndef mcRunManager_h
-#define mcRunMa nager_h 1
+#define mcRunManager_h 1
 
 #include "G4RunManager.hh"
 
