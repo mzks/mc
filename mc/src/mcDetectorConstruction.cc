@@ -229,7 +229,7 @@ void mcDetectorConstruction::DefineMaterials()
     //define for detector
     // stailess SUS304
     
-    G4Material* sus304 = new G4Material(name="Sus304", density=8.03*g/cm3, ncomponents=5);
+    G4Material* sus304 = new G4Material(name="SUS304", density=8.03*g/cm3, ncomponents=5);
     sus304->AddElement(Ni, 0.09);
     sus304->AddElement(C, 0.005);
     sus304->AddElement(Mn, 0.01);
