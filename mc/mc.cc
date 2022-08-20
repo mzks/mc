@@ -33,13 +33,14 @@
 #include <iostream>
 #include <string>
 #include <filesystem>
+#include <chrono>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
 #include <argparse/argparse.hpp>
 
 #include <common.hh>
-
+#include <smart_loop_logger.hh>
 
 int main(int argc, char** argv) {
 
@@ -199,7 +200,7 @@ int main(int argc, char** argv) {
     delete analyzer;
     delete runManager;
 
-    spdlog::info("The Mc has been finished, it took {:.3} seconds.", stopwatch);
+    spdlog::info("The Mc has been finished, it took {}.", BestUnit(stopwatch.elapsed().count(), "second"));
     if (program["--root-include-macro"] == true && program["--ascii"] == false) {
       SaveMacroToRoot(outFileName, history_filename);
       spdlog::info("Executed commands saved in root file");
@@ -211,8 +212,8 @@ int main(int argc, char** argv) {
     if (program["--keep-history"] == false) std::filesystem::remove(history_filename);
 
     spdlog::info("Output file was generate as {}.", outFileName);
-    spdlog::info("Size of output root file is {:.0} MB.",
-                 std::filesystem::file_size(program.get<std::string>("--output")) * 1e-6);
+    spdlog::info("Size of output root file is {}.",
+                 BestUnit(std::filesystem::file_size(program.get<std::string>("--output")), "B"));
 
     return 0;
 }

@@ -109,8 +109,9 @@ int main(int argc, char** argv) {
     git_subject->Write();
     outFile->Close();
 
-    spdlog::info("The processing has been finished, it took {:.3} seconds.", stopwatch);
-    spdlog::info("Size of output root file is {:.1} MB.", std::filesystem::file_size(outFileName) * 1.e-6);
+    spdlog::info("The response has been finished, it took {}.", BestUnit(stopwatch.elapsed().count(), "second"));
+    spdlog::info("Size of output root file is {}.", BestUnit(std::filesystem::file_size(outFileName), "B"));
+
 
     return 0;
 }
