@@ -60,7 +60,6 @@ int main(int argc, char** argv) {
 
     assert(hist_TotalEnergyDeposit->GetEntries() > 0);
 
-    spdlog::info("The basic_check has been finished, it took {:.3} seconds.", stopwatch);
-
+    spdlog::info("The basic_check has been finished, it took {}.", BestUnit(stopwatch.elapsed().count(), "second"));
     return 0;
 }
