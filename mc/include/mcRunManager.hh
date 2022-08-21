@@ -4,11 +4,8 @@
 
 #include "G4RunManager.hh"
 
-
 class mcRunManager : public G4RunManager {
 public:
     mcRunManager();
-    
 };
-
 #endif

@@ -29,11 +29,9 @@
 #include "G4UIXm.hh"
 #endif
 
-#include "QGSP_BERT.hh"
 #include <iostream>
 #include <string>
 #include <filesystem>
-#include <chrono>
 
 #include <spdlog/spdlog.h>
 #include <spdlog/stopwatch.h>
