@@ -10,7 +10,7 @@
 #include <sstream>
 #include <iomanip>
 
-static void smart_loop_logger(long nTotal, long iLoop, int each_display_percent=10){
+static inline void smart_loop_logger(long nTotal, long iLoop, int each_display_percent=10){
     if (
            ((100 * iLoop / nTotal % each_display_percent == 0) && ((100 * iLoop / nTotal) != (100 * (iLoop-1) / nTotal))) ||
            ((int(std::log10(iLoop-1))) != (int(std::log10(iLoop))))
@@ -28,7 +28,7 @@ static void smart_loop_logger(long nTotal, long iLoop, int each_display_percent=
  * @detail This function finds the best units to show
  * the value as a message.
  */
-static std::string BestUnit(double value, std::string unit){
+static inline std::string BestUnit(double value, std::string unit){
 
   // time -- default unit : sec
   std::map<std::string, double> time_units {
