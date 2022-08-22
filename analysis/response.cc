@@ -1,7 +1,7 @@
 // ---------------------------------- //
 // response.cc
 // processes MC generated data
-// Require: "tree" TTree
+// Require: "mc" TTree
 // Output : root file including
 //          "response" TTree
 // ---------------------------------- //
@@ -51,10 +51,10 @@ int main(int argc, char** argv) {
     spdlog::stopwatch stopwatch;
     gitinfo();
 
-    // Load input tree (tree)
+    // Load input tree (mc)
     auto inFile = TFile::Open(TString(inFileName));
     if (inFile == nullptr) {spdlog::error("No such file, {}.", inFileName); std::exit(1);}
-    auto tree = dynamic_cast<TTree*>(inFile->Get("tree"));
+    auto tree = dynamic_cast<TTree*>(inFile->Get("mc"));
     if (tree == nullptr) {spdlog::error("No 'tree' in file"); std::exit(1);}
 
     ROOT::EnableImplicitMT();
@@ -93,7 +93,7 @@ int main(int argc, char** argv) {
                                [&n_entries](auto c) {smart_loop_logger(n_entries, c);});
 
     spdlog::info("Process start.");
-    df_new.Snapshot("response", "response.root",
+    df_new.Snapshot("response", outFileName,
                     {"total_energy", "r", "trigger_time", "real_energy"});
 
     df_new.Describe();

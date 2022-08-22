@@ -31,7 +31,7 @@ int main(int argc, char** argv) {
         .help("input mc filename including mc TTree with .root");
     program.add_argument("-j", "--input2").default_value(std::string("mc2.root"))
         .help("input mc filename 2 including mc TTree with .root");
-    program.add_argument("-t", "--tree").default_value(std::string("tree"))
+    program.add_argument("-t", "--tree").default_value(std::string("mc"))
         .help("TTree name");
     try {
         program.parse_args(argc, argv);

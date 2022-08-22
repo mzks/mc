@@ -58,7 +58,7 @@ void mcAnalyzer::Init(){
         auto gaps_custom_physics = new TParameter<bool>("gaps_custom_physics", GAPSCustomPhysics);
         gaps_custom_physics->Write();
 
-        tree = new TTree("tree","mc output");
+        tree = new TTree("mc","mc output");
         tree->Branch("nHit",&nHit,"nHit/I");
         tree->Branch("x",&x);
         tree->Branch("y",&y);

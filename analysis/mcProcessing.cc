@@ -53,7 +53,7 @@ int main(int argc, char** argv) {
     // Load input tree (tree)
     auto inFile = TFile::Open(TString(inFileName));
     if (inFile == nullptr) {spdlog::error("No such file, {}.", inFileName); std::exit(1);}
-    auto tree = dynamic_cast<TTree*>(inFile->Get("tree"));
+    auto tree = dynamic_cast<TTree*>(inFile->Get("mc"));
     if (tree == nullptr) {spdlog::error("No 'tree' in file"); std::exit(1);}
 
     #include "branches_tree.hh"

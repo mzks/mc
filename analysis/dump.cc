@@ -29,7 +29,7 @@ int main(int argc, char** argv) {
     argparse::ArgumentParser program("dump");
     program.add_argument("-i", "--input").default_value(std::string("mc.root"))
         .help("input mc filename including mc TTree with .root");
-    program.add_argument("-t", "--tree").default_value(std::string("tree"))
+    program.add_argument("-t", "--tree").default_value(std::string("mc"))
         .help("TTree name");
     try {
         program.parse_args(argc, argv);
