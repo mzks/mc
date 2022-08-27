@@ -67,6 +67,7 @@ jobs:
 
     - name: Install ROOT
       run: |
+        mkdir ~/.local
         cd ~/.local
         wget https://root.cern/download/$ROOT_VERSION.tar.gz --quiet
         tar xf $ROOT_VERSION.tar.gz
