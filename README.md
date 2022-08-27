@@ -1,6 +1,10 @@
 # mc - Geant4 example
 
 
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/mzks/mc)
+![GitHub last commit](https://img.shields.io/github/last-commit/mzks/mc)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/mzks/mc)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/mzks/mc)
 [![Ubuntu 22.04](https://github.com/mzks/mc/actions/workflows/ubuntu.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/ubuntu.yml)
 [![Mac with M1](https://github.com/mzks/mc/actions/workflows/macos.yml/badge.svg)](https://github.com/mzks/mc/actions/workflows/macos.yml)
 
@@ -38,6 +42,7 @@ Then, execute  `./make.sh` or step-by-step build.
 > cmake --install build --prefix .
 ```
 The `./make.sh` script will execute build, install, and full test automatically.
+
 
 ### Run MC
 
