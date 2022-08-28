@@ -12,9 +12,9 @@ A clear and concise description of what the bug is.
 
 **To Reproduce**
 Steps to reproduce the behavior:
-1. Want '....'
-2. Run '...' with your command '...'
-3. See error '...'
+ - Want '....'
+ - Run '...' with your command '...'
+ - See error '...'
 
 **Expected behavior**
 A clear and concise description of what you expected to happen.
