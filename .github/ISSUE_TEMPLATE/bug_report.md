@@ -19,8 +19,9 @@ Steps to reproduce the behavior:
 **Expected behavior**
 A clear and concise description of what you expected to happen.
 
-**Desktop :**
-- OS: [e.g. iOS]
+**Environments :**
+- Hardware: [e.g. Macbook Pro M1 Max]
+- OS: [e.g. macOS 12.5]
 - ROOT and Geant4: [6.26.6, 11.0.2]
 - mc git hash [e.g. 840ab310]
 
