@@ -98,6 +98,14 @@ G4VPhysicalVolume* mcDetectorConstruction::Construct()
     aSensorSD->SetAnalyzer(analyzer);
     
     logicSensor->SetSensitiveDetector(aSensorSD);
+
+    mcSensorSD* aShieldSD = (mcSensorSD*)SDman->FindSensitiveDetector("mc/aShieldSD");
+    if ( aShieldSD == 0){
+        aShieldSD = new mcSensorSD("mc/aShieldSD");
+        SDman->AddNewDetector( aShieldSD );
+    }
+    aShieldSD->SetAnalyzer(analyzer);
+    logicShield->SetSensitiveDetector(aShieldSD);
     
     // Set UserLimits
     G4double maxTrkLen = 10.0*WorldRadius;
