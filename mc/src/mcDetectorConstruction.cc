@@ -28,7 +28,7 @@
 
 mcDetectorConstruction::mcDetectorConstruction()
     : defaultMaterial(0), sensorMaterial(0), shieldMaterial(0),
-      WorldRadius(5.0 * m), sensorRadius(5.0 * cm), sensorHeight(2.5 * mm), shieldThickness(1 * cm),
+      WorldRadius(15.0 * m), sensorRadius(5.0 * cm), sensorHeight(2.5 * mm), shieldThickness(1 * cm),
       solidWorld(0), logicWorld(0), physWorld(0),
       solidSensor(0), logicSensor(0), physSensor(0),
       magField(0), pUserLimits(0), maxStep(100.0 * cm)

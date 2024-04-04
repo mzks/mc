@@ -3,12 +3,6 @@
 /run/verbose 1
 
 # change world parameter
-/usr/det/setMaterial NaI
-/usr/det/setShieldMaterial Water
-/usr/det/setSensorRadius 10 cm
-/usr/det/setSensorHeight 20 cm
-/usr/det/setShieldThickness 1 cm
-/usr/det/setField 0.0 tesla
 /usr/det/setMaxStep  1.0 cm
 
 #inactivate msc
