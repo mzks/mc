@@ -1,4 +1,4 @@
-# mc - Geant4 example
+# mc - GAPS simulation
 
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/mzks/mc)
