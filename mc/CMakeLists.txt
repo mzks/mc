@@ -50,7 +50,7 @@ include(FetchContent)
 FetchContent_Declare(
         spdlog
         GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG        v1.x # This tag is like main
+        GIT_TAG        v1.13.0 # v1.14 doesn't work
 )
 FetchContent_GetProperties(spdlog)
 if (NOT spdlog_POPULATED)
