@@ -21,6 +21,8 @@
 #include "G4Colour.hh"
 #include "G4SystemOfUnits.hh"
 #include "G4PhysicalConstants.hh"
+#include "G4NistManager.hh"
+
 
 #include <iostream>
 
@@ -135,80 +137,241 @@ void mcDetectorConstruction::DefineMaterials()
     // z =mean number of protons;
     // iz=number of protons in an isotope;
     // n =number of nucleons in an isotope;
-    
-    
-    //
-    // define Elements
-    //
-    G4Element* H  = new G4Element("Hydrogen",symbol="H" , z= 1., a= 1.01*g/mole);
-    G4Element* B  = new G4Element("Boron",symbol="B" , z= 5., a= 10.81*g/mole);
-    G4Element* C  = new G4Element("Carbon"  ,symbol="C" , z= 6., a= 12.01*g/mole);
-    G4Element* N  = new G4Element("Nitrogen",symbol="N" , z= 7., a= 14.01*g/mole);
-    G4Element* O  = new G4Element("Oxygen"  ,symbol="O" , z= 8., a= 16.00*g/mole);
-    G4Element* Na = new G4Element("Sodium",symbol="Na" , z= 11., a= 22.99*g/mole);
-    G4Element* Mg = new G4Element("Magnesium",symbol="Mg" , z= 12., a= 24.31*g/mole);
-    G4Element* Al = new G4Element("Aluminium",symbol="Al" , z= 13., a= 26.98*g/mole);
-    G4Element* Si = new G4Element("Silicon",symbol="Si" , z= 14., a= 28.09*g/mole);
-    G4Element* P = new G4Element("Phosphorus",symbol="P" , z= 15., a= 30.97*g/mole);
-    G4Element* K = new G4Element("Kalium",symbol="K" , z= 19., a= 39.10*g/mole);
-    G4Element* Ca = new G4Element("Calcium",symbol="Ca" , z= 20., a= 40.01*g/mole);
-    G4Element* Ti = new G4Element("Titan",symbol="Ti" , z= 22., a= 47.87*g/mole);
-    G4Element* Mn = new G4Element("Manganese",symbol="Mn" , z= 25., a= 54.94*g/mole);
-    G4Element* Fe = new G4Element("Iron",symbol="Fe" , z= 26., a= 55.85*g/mole);
-    G4Element* Ni = new G4Element( "Nickel", "Ni", 28., 58.69*g/mole);
-    //G4Element* Mn = new G4Element( "Manganese", "Mn", 25., 54.93*g/mole);
-    G4Element* Cr = new G4Element( "Chromium", "Cr", 24., 51.996*g/mole);
-    G4Element* I = new G4Element( "Iodine", "I", 53., 126.9*g/mole);
-    
-    //
+
+    auto nm = G4NistManager::Instance();
+
+    // All elements
+    G4Element* H  = nm->FindOrBuildElement("H");  G4Element* He = nm->FindOrBuildElement("He"); G4Element* Li = nm->FindOrBuildElement("Li");
+    G4Element* Be = nm->FindOrBuildElement("Be"); G4Element* B  = nm->FindOrBuildElement("B");  G4Element* C  = nm->FindOrBuildElement("C");
+    G4Element* N  = nm->FindOrBuildElement("N");  G4Element* O  = nm->FindOrBuildElement("O");  G4Element* F  = nm->FindOrBuildElement("F");
+    G4Element* Ne = nm->FindOrBuildElement("Ne"); G4Element* Na = nm->FindOrBuildElement("Na"); G4Element* Mg = nm->FindOrBuildElement("Mg");
+    G4Element* Al = nm->FindOrBuildElement("Al"); G4Element* Si = nm->FindOrBuildElement("Si"); G4Element* P  = nm->FindOrBuildElement("P");
+    G4Element* S  = nm->FindOrBuildElement("S");  G4Element* Cl = nm->FindOrBuildElement("Cl"); G4Element* Ar = nm->FindOrBuildElement("Ar");
+    G4Element* K  = nm->FindOrBuildElement("K");  G4Element* Ca = nm->FindOrBuildElement("Ca"); G4Element* Sc = nm->FindOrBuildElement("Sc");
+    G4Element* Ti = nm->FindOrBuildElement("Ti"); G4Element* V  = nm->FindOrBuildElement("V");  G4Element* Cr = nm->FindOrBuildElement("Cr");
+    G4Element* Mn = nm->FindOrBuildElement("Mn"); G4Element* Fe = nm->FindOrBuildElement("Fe"); G4Element* Co = nm->FindOrBuildElement("Co");
+    G4Element* Ni = nm->FindOrBuildElement("Ni"); G4Element* Cu = nm->FindOrBuildElement("Cu"); G4Element* Zn = nm->FindOrBuildElement("Zn");
+    G4Element* Ga = nm->FindOrBuildElement("Ga"); G4Element* Ge = nm->FindOrBuildElement("Ge"); G4Element* As = nm->FindOrBuildElement("As");
+    G4Element* Se = nm->FindOrBuildElement("Se"); G4Element* Br = nm->FindOrBuildElement("Br"); G4Element* Kr = nm->FindOrBuildElement("Kr");
+    G4Element* Rb = nm->FindOrBuildElement("Rb"); G4Element* Sr = nm->FindOrBuildElement("Sr"); G4Element* Y  = nm->FindOrBuildElement("Y");
+    G4Element* Zr = nm->FindOrBuildElement("Zr"); G4Element* Nb = nm->FindOrBuildElement("Nb"); G4Element* Mo = nm->FindOrBuildElement("Mo");
+    G4Element* Tc = nm->FindOrBuildElement("Tc"); G4Element* Ru = nm->FindOrBuildElement("Ru"); G4Element* Rh = nm->FindOrBuildElement("Rh");
+    G4Element* Pd = nm->FindOrBuildElement("Pd"); G4Element* Ag = nm->FindOrBuildElement("Ag"); G4Element* Cd = nm->FindOrBuildElement("Cd");
+    G4Element* In = nm->FindOrBuildElement("In"); G4Element* Sn = nm->FindOrBuildElement("Sn"); G4Element* Sb = nm->FindOrBuildElement("Sb");
+    G4Element* Te = nm->FindOrBuildElement("Te"); G4Element* I  = nm->FindOrBuildElement("I");  G4Element* Xe = nm->FindOrBuildElement("Xe");
+    G4Element* Cs = nm->FindOrBuildElement("Cs"); G4Element* Ba = nm->FindOrBuildElement("Ba"); G4Element* La = nm->FindOrBuildElement("La");
+    G4Element* Ce = nm->FindOrBuildElement("Ce"); G4Element* Pr = nm->FindOrBuildElement("Pr"); G4Element* Nd = nm->FindOrBuildElement("Nd");
+    G4Element* Pm = nm->FindOrBuildElement("Pm"); G4Element* Sm = nm->FindOrBuildElement("Sm"); G4Element* Eu = nm->FindOrBuildElement("Eu");
+    G4Element* Gd = nm->FindOrBuildElement("Gd"); G4Element* Tb = nm->FindOrBuildElement("Tb"); G4Element* Dy = nm->FindOrBuildElement("Dy");
+    G4Element* Ho = nm->FindOrBuildElement("Ho"); G4Element* Er = nm->FindOrBuildElement("Er"); G4Element* Tm = nm->FindOrBuildElement("Tm");
+    G4Element* Yb = nm->FindOrBuildElement("Yb"); G4Element* Lu = nm->FindOrBuildElement("Lu"); G4Element* Hf = nm->FindOrBuildElement("Hf");
+    G4Element* Ta = nm->FindOrBuildElement("Ta"); G4Element* W  = nm->FindOrBuildElement("W");  G4Element* Re = nm->FindOrBuildElement("Re");
+    G4Element* Os = nm->FindOrBuildElement("Os"); G4Element* Ir = nm->FindOrBuildElement("Ir"); G4Element* Pt = nm->FindOrBuildElement("Pt");
+    G4Element* Au = nm->FindOrBuildElement("Au"); G4Element* Hg = nm->FindOrBuildElement("Hg"); G4Element* Tl = nm->FindOrBuildElement("Tl");
+    G4Element* Pb = nm->FindOrBuildElement("Pb"); G4Element* Bi = nm->FindOrBuildElement("Bi"); G4Element* Po = nm->FindOrBuildElement("Po");
+    G4Element* At = nm->FindOrBuildElement("At"); G4Element* Rn = nm->FindOrBuildElement("Rn"); G4Element* Ac = nm->FindOrBuildElement("Ac");
+    G4Element* Th = nm->FindOrBuildElement("Th"); G4Element* Pa = nm->FindOrBuildElement("Pa"); G4Element* U  = nm->FindOrBuildElement("U");
+    G4Element* Np = nm->FindOrBuildElement("Np"); G4Element* Pu = nm->FindOrBuildElement("Pu"); G4Element* Am = nm->FindOrBuildElement("Am");
+    G4Element* Cm = nm->FindOrBuildElement("Cm"); G4Element* Bk = nm->FindOrBuildElement("Bk"); G4Element* Cf = nm->FindOrBuildElement("Cf");
+
     // define an Element from isotopes, by relative abundance
-    //
-    
-    
     G4Isotope* U5 = new G4Isotope("U235", iz=92, n=235, a=235.01*g/mole);
     G4Isotope* U8 = new G4Isotope("U238", iz=92, n=238, a=238.03*g/mole);
     
-    G4Element* U  = new G4Element("enriched Uranium",symbol="U",ncomponents=2);
-    U->AddIsotope(U5, abundance= 90.*perCent);
-    U->AddIsotope(U8, abundance= 10.*perCent);
+    G4Element* en_U  = new G4Element("enriched Uranium",symbol="en_U",ncomponents=2);
+    en_U->AddIsotope(U5, abundance= 90.*perCent);
+    en_U->AddIsotope(U8, abundance= 10.*perCent);
     
-    // define simple materials
-    
+    // Case 1 : define simple materials
     new G4Material("liquidArgon", z=18., a= 39.95*g/mole, density= 1.390*g/cm3);
     new G4Material("Lead"     , z=82., a= 207.19*g/mole, density= 11.35*g/cm3);
     new G4Material("Tungsten" , z=74., a= 183.84*g/mole, density= 19.25*g/cm3);
     
-    // define a material from elements.   case 1: chemical molecule
-    
+    // Case 2 : define a material from elements.   
+    // case 2-1: chemical molecule
     G4Material* H2O =
     new G4Material("Water", density= 1.000*g/cm3, ncomponents=2);
     H2O->AddElement(H, natoms=2);
     H2O->AddElement(O, natoms=1);
     // overwrite computed meanExcitationEnergy with ICRU recommended value
     H2O->GetIonisation()->SetMeanExcitationEnergy(75.0*eV);
+
+    G4Material* SiO2 = new G4Material("quartz",density= 2.200*g/cm3, ncomponents=2);
+    SiO2->AddElement(Si, natoms=1);
+    SiO2->AddElement(O , natoms=2);
+
+    // case 2-2: mixture by fractional mass
+    G4Material* Air = new G4Material("Air"  , density= 1.290*mg/cm3, ncomponents=2);
+    Air->AddElement(N, fractionmass=0.7);
+    Air->AddElement(O, fractionmass=0.3);
     
-    G4Material* Sci =
-    new G4Material("Scintillator", density= 1.032*g/cm3, ncomponents=2);
-    Sci->AddElement(C, natoms=9);
-    Sci->AddElement(H, natoms=10);
+    // case 3: define a material from elements and/or others materials (mixture of mixtures)
+    G4Material* Aerogel = new G4Material("Aerogel", density= 0.200*g/cm3, ncomponents=3);
+    Aerogel->AddMaterial(SiO2, fractionmass=62.5*perCent);
+    Aerogel->AddMaterial(H2O , fractionmass=37.4*perCent);
+    Aerogel->AddElement (C   , fractionmass= 0.1*perCent);
+
+    // case 4: define a material from isotope
+    G4Isotope* he3 = new G4Isotope(name="he3", iz=2, in=3, a=3.0160293191*g/mole);
+    G4Element* He3 = new G4Element(name="He3", symbol="He3", ncomponents=1);
+    He3->AddIsotope(he3, abundance=100.*perCent);
+    G4Material* Herium3 = new G4Material(name="Herium3",density=1.34644166*mg/cm3,ncomponents=1,kStateGas,temperature=300.15*kelvin,pressure=10.*atmosphere);
+    Herium3->AddElement(He3, 1);
     
-    G4Material* Myl =
-    new G4Material("Mylar", density= 1.397*g/cm3, ncomponents=3);
+    // case 5: Find material in NIST database
+    // https://geant4-userdoc.web.cern.ch/UsersGuides/ForApplicationDeveloper/html/Appendix/materialNames.html#nist-compounds
+
+    G4Material* G4_lXe = nm->FindOrBuildMaterial("G4_lXe");
+    G4Material* G4_lH2 = nm->FindOrBuildMaterial("G4_lH2");
+    G4Material* G4_lO2 = nm->FindOrBuildMaterial("G4_lO2");
+    G4Material* G4_lN2  = nm->FindOrBuildMaterial("G4_lN2");
+    G4Material* G4_lAr = nm->FindOrBuildMaterial("G4_lAr");
+    G4Material* G4_Galactic = nm->FindOrBuildMaterial("G4_Galactic");
+    G4Material* G4_ACETONE = nm->FindOrBuildMaterial("G4_ACETONE");
+    G4Material* G4_STAINLESS_STEEL = nm->FindOrBuildMaterial("G4_STAINLESS-STEEL");
+
+    // 
+    // Define materials for your experiment
+    //
+
+    // Plastic scintillator 
+    G4Material* Scintillator = new G4Material("Scintillator", density= 1.032*g/cm3, ncomponents=2);
+    Scintillator->AddElement(C, natoms=9);
+    Scintillator->AddElement(H, natoms=10);
+    
+    G4Material* Myl = new G4Material("Mylar", density= 1.397*g/cm3, ncomponents=3);
     Myl->AddElement(C, natoms=10);
     Myl->AddElement(H, natoms= 8);
     Myl->AddElement(O, natoms= 4);
     
-    G4Material* SiO2 =
-    new G4Material("quartz",density= 2.200*g/cm3, ncomponents=2);
-    SiO2->AddElement(Si, natoms=1);
-    SiO2->AddElement(O , natoms=2);
     
-    // define a material from elements.   case 2: mixture by fractional mass
+    // Stainless-Steel 304 
+    G4Material* sus304 = new G4Material(name="SUS304", density=8.03*g/cm3, ncomponents=5);
+    sus304->AddElement(Ni, 0.09);
+    sus304->AddElement(C, 0.005);
+    sus304->AddElement(Mn, 0.01);
+    sus304->AddElement(Cr, 0.18);
+    sus304->AddElement(Fe, 0.715);
+
+    G4Material* polyethylene=new G4Material(name="polyethylene",density=0.92*g/cm3,ncomponents=2);
+    polyethylene->AddElement(C,1);
+    polyethylene->AddElement(H,2);
+
     
-    G4Material* Air =
-    new G4Material("Air"  , density= 1.290*mg/cm3, ncomponents=2);
-    Air->AddElement(N, fractionmass=0.7);
-    Air->AddElement(O, fractionmass=0.3);
+    // examples of gas in non STP conditions
+    G4Material* CO2 = new G4Material("CarbonicGas", density= 27.*mg/cm3, ncomponents=2, kStateGas, 325.*kelvin, 2.*atmosphere);
+    CO2->AddElement(C, natoms=1);
+    CO2->AddElement(O, natoms=2);
+    
+    G4Material* NaI = new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2);
+    NaI->AddElement(Na, natoms=1);
+    NaI->AddElement(I, natoms=1);
+    
+    G4Material* steam = new G4Material("WaterSteam", density= 0.3*mg/cm3, ncomponents=1, kStateGas, 500.*kelvin, 2.*atmosphere);
+    steam->AddMaterial(H2O, fractionmass=1.);
+    
+    // examples of vacuum
+    G4Material* Vacuum =
+    new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
+                   kStateGas, 2.73*kelvin, 3.e-18*pascal);
+    
+    G4Material* beam = new G4Material("Beam", density= 1.e-5*g/cm3, ncomponents=1, kStateGas, STP_Temperature, 2.e-2*bar);
+    beam->AddMaterial(Air, fractionmass=1.);
+
+    //
+    // other materials
+    //
+
+    // NIST materials : These are not all materials included in the database
+    G4Material* G4_A_150_TISSUE = nm->FindOrBuildMaterial("G4_A-150_TISSUE");
+    G4Material* G4_ACETYLENE = nm->FindOrBuildMaterial("G4_ACETYLENE");
+    G4Material* G4_ADENINE = nm->FindOrBuildMaterial("G4_ADENINE");
+    G4Material* G4_AIR = nm->FindOrBuildMaterial("G4_AIR");
+    G4Material* G4_ALANINE = nm->FindOrBuildMaterial("G4_ALANINE");
+    G4Material* G4_ALUMINUM_OXIDE = nm->FindOrBuildMaterial("G4_ALUMINUM_OXIDE");
+    G4Material* G4_AMBER = nm->FindOrBuildMaterial("G4_AMBER");
+    G4Material* G4_AMMONIA = nm->FindOrBuildMaterial("G4_AMMONIA");
+    G4Material* G4_ANILINE = nm->FindOrBuildMaterial("G4_ANILINE");
+    G4Material* G4_ANTHRACENE = nm->FindOrBuildMaterial("G4_ANTHRACENE");
+    G4Material* G4_BAKELITE = nm->FindOrBuildMaterial("G4_BAKELITE");
+    G4Material* G4_BENZENE = nm->FindOrBuildMaterial("G4_BENZENE");
+    G4Material* G4_BERYLLIUM_OXIDE = nm->FindOrBuildMaterial("G4_BERYLLIUM_OXIDE");
+    G4Material* G4_BGO = nm->FindOrBuildMaterial("G4_BGO");
+    G4Material* G4_BORON_CARBIDE = nm->FindOrBuildMaterial("G4_BORON_CARBIDE");
+    G4Material* G4_BORON_OXIDE = nm->FindOrBuildMaterial("G4_BORON_OXIDE");
+    G4Material* G4_BUTANE = nm->FindOrBuildMaterial("G4_BUTANE");
+    G4Material* G4_N_BUTYL_ALCOHOL = nm->FindOrBuildMaterial("G4_N-BUTYL_ALCOHOL");
+    G4Material* G4_CADMIUM_TELLURIDE = nm->FindOrBuildMaterial("G4_CADMIUM_TELLURIDE");
+    G4Material* G4_CADMIUM_TUNGSTATE = nm->FindOrBuildMaterial("G4_CADMIUM_TUNGSTATE");
+    G4Material* G4_CALCIUM_CARBONATE = nm->FindOrBuildMaterial("G4_CALCIUM_CARBONATE");
+    G4Material* G4_CALCIUM_FLUORIDE = nm->FindOrBuildMaterial("G4_CALCIUM_FLUORIDE");
+    G4Material* G4_CALCIUM_OXIDE = nm->FindOrBuildMaterial("G4_CALCIUM_OXIDE");
+    G4Material* G4_CALCIUM_SULFATE = nm->FindOrBuildMaterial("G4_CALCIUM_SULFATE");
+    G4Material* G4_CALCIUM_TUNGSTATE = nm->FindOrBuildMaterial("G4_CALCIUM_TUNGSTATE");
+    G4Material* G4_CARBON_DIOXIDE = nm->FindOrBuildMaterial("G4_CARBON_DIOXIDE");
+    G4Material* G4_CARBON_TETRACHLORIDE = nm->FindOrBuildMaterial("G4_CARBON_TETRACHLORIDE");
+    G4Material* G4_CHLOROBENZENE = nm->FindOrBuildMaterial("G4_CHLOROBENZENE");
+    G4Material* G4_CHLOROFORM = nm->FindOrBuildMaterial("G4_CHLOROFORM");
+    G4Material* G4_ETHANE = nm->FindOrBuildMaterial("G4_ETHANE");
+    G4Material* G4_ETHYL_ALCOHOL = nm->FindOrBuildMaterial("G4_ETHYL_ALCOHOL");
+    G4Material* G4_KAPTO = nm->FindOrBuildMaterial("G4_KAPTO");
+    G4Material* G4_LEAD_OXIDE = nm->FindOrBuildMaterial("G4_LEAD_OXIDE");
+    G4Material* G4_METHANE = nm->FindOrBuildMaterial("G4_METHANE");
+    G4Material* G4_METHANOL = nm->FindOrBuildMaterial("G4_METHANOL");
+    G4Material* G4_POLYETHYLENE = nm->FindOrBuildMaterial("G4_POLYETHYLENE");
+    G4Material* G4_MYLAR = nm->FindOrBuildMaterial("G4_MYLAR");
+    G4Material* G4_POLYPROPYLENE = nm->FindOrBuildMaterial("G4_POLYPROPYLENE");
+    G4Material* G4_POLYSTYRENE = nm->FindOrBuildMaterial("G4_POLYSTYRENE");
+    G4Material* G4_TEFLON = nm->FindOrBuildMaterial("G4_TEFLON");
+    G4Material* G4_N_PROPYL_ALCOHOL = nm->FindOrBuildMaterial("G4_N-PROPYL_ALCOHOL");
+    G4Material* G4_SILICON_DIOXIDE = nm->FindOrBuildMaterial("G4_SILICON_DIOXIDE");
+    G4Material* G4_RUBBER_NATURAL = nm->FindOrBuildMaterial("G4_RUBBER_NATURAL");
+    G4Material* G4_PbWO4 = nm->FindOrBuildMaterial("G4_PbWO4");
+
+    G4Material* G4_H  = nm->FindOrBuildMaterial("G4_H");  G4Material* G4_He = nm->FindOrBuildMaterial("G4_He"); G4Material* G4_Li = nm->FindOrBuildMaterial("G4_Li");
+    G4Material* G4_Be = nm->FindOrBuildMaterial("G4_Be"); G4Material* G4_B  = nm->FindOrBuildMaterial("G4_B");  G4Material* G4_C  = nm->FindOrBuildMaterial("G4_C");
+    G4Material* G4_N  = nm->FindOrBuildMaterial("G4_N");  G4Material* G4_O  = nm->FindOrBuildMaterial("G4_O");  G4Material* G4_F  = nm->FindOrBuildMaterial("G4_F");
+    G4Material* G4_Ne = nm->FindOrBuildMaterial("G4_Ne"); G4Material* G4_Na = nm->FindOrBuildMaterial("G4_Na"); G4Material* G4_Mg = nm->FindOrBuildMaterial("G4_Mg");
+    G4Material* G4_Al = nm->FindOrBuildMaterial("G4_Al"); G4Material* G4_Si = nm->FindOrBuildMaterial("G4_Si"); G4Material* G4_P  = nm->FindOrBuildMaterial("G4_P");
+    G4Material* G4_S  = nm->FindOrBuildMaterial("G4_S");  G4Material* G4_Cl = nm->FindOrBuildMaterial("G4_Cl"); G4Material* G4_Ar = nm->FindOrBuildMaterial("G4_Ar");
+    G4Material* G4_K  = nm->FindOrBuildMaterial("G4_K");  G4Material* G4_Ca = nm->FindOrBuildMaterial("G4_Ca"); G4Material* G4_Sc = nm->FindOrBuildMaterial("G4_Sc");
+    G4Material* G4_Ti = nm->FindOrBuildMaterial("G4_Ti"); G4Material* G4_V  = nm->FindOrBuildMaterial("G4_V");  G4Material* G4_Cr = nm->FindOrBuildMaterial("G4_Cr");
+    G4Material* G4_Mn = nm->FindOrBuildMaterial("G4_Mn"); G4Material* G4_Fe = nm->FindOrBuildMaterial("G4_Fe"); G4Material* G4_Co = nm->FindOrBuildMaterial("G4_Co");
+    G4Material* G4_Ni = nm->FindOrBuildMaterial("G4_Ni"); G4Material* G4_Cu = nm->FindOrBuildMaterial("G4_Cu"); G4Material* G4_Zn = nm->FindOrBuildMaterial("G4_Zn");
+    G4Material* G4_Ga = nm->FindOrBuildMaterial("G4_Ga"); G4Material* G4_Ge = nm->FindOrBuildMaterial("G4_Ge"); G4Material* G4_As = nm->FindOrBuildMaterial("G4_As");
+    G4Material* G4_Se = nm->FindOrBuildMaterial("G4_Se"); G4Material* G4_Br = nm->FindOrBuildMaterial("G4_Br"); G4Material* G4_Kr = nm->FindOrBuildMaterial("G4_Kr");
+    G4Material* G4_Rb = nm->FindOrBuildMaterial("G4_Rb"); G4Material* G4_Sr = nm->FindOrBuildMaterial("G4_Sr"); G4Material* G4_Y  = nm->FindOrBuildMaterial("G4_Y");
+    G4Material* G4_Zr = nm->FindOrBuildMaterial("G4_Zr"); G4Material* G4_Nb = nm->FindOrBuildMaterial("G4_Nb"); G4Material* G4_Mo = nm->FindOrBuildMaterial("G4_Mo");
+    G4Material* G4_Tc = nm->FindOrBuildMaterial("G4_Tc"); G4Material* G4_Ru = nm->FindOrBuildMaterial("G4_Ru"); G4Material* G4_Rh = nm->FindOrBuildMaterial("G4_Rh");
+    G4Material* G4_Pd = nm->FindOrBuildMaterial("G4_Pd"); G4Material* G4_Ag = nm->FindOrBuildMaterial("G4_Ag"); G4Material* G4_Cd = nm->FindOrBuildMaterial("G4_Cd");
+    G4Material* G4_In = nm->FindOrBuildMaterial("G4_In"); G4Material* G4_Sn = nm->FindOrBuildMaterial("G4_Sn"); G4Material* G4_Sb = nm->FindOrBuildMaterial("G4_Sb");
+    G4Material* G4_Te = nm->FindOrBuildMaterial("G4_Te"); G4Material* G4_I  = nm->FindOrBuildMaterial("G4_I");  G4Material* G4_Xe = nm->FindOrBuildMaterial("G4_Xe");
+    G4Material* G4_Cs = nm->FindOrBuildMaterial("G4_Cs"); G4Material* G4_Ba = nm->FindOrBuildMaterial("G4_Ba"); G4Material* G4_La = nm->FindOrBuildMaterial("G4_La");
+    G4Material* G4_Ce = nm->FindOrBuildMaterial("G4_Ce"); G4Material* G4_Pr = nm->FindOrBuildMaterial("G4_Pr"); G4Material* G4_Nd = nm->FindOrBuildMaterial("G4_Nd");
+    G4Material* G4_Pm = nm->FindOrBuildMaterial("G4_Pm"); G4Material* G4_Sm = nm->FindOrBuildMaterial("G4_Sm"); G4Material* G4_Eu = nm->FindOrBuildMaterial("G4_Eu");
+    G4Material* G4_Gd = nm->FindOrBuildMaterial("G4_Gd"); G4Material* G4_Tb = nm->FindOrBuildMaterial("G4_Tb"); G4Material* G4_Dy = nm->FindOrBuildMaterial("G4_Dy");
+    G4Material* G4_Ho = nm->FindOrBuildMaterial("G4_Ho"); G4Material* G4_Er = nm->FindOrBuildMaterial("G4_Er"); G4Material* G4_Tm = nm->FindOrBuildMaterial("G4_Tm");
+    G4Material* G4_Yb = nm->FindOrBuildMaterial("G4_Yb"); G4Material* G4_Lu = nm->FindOrBuildMaterial("G4_Lu"); G4Material* G4_Hf = nm->FindOrBuildMaterial("G4_Hf");
+    G4Material* G4_Ta = nm->FindOrBuildMaterial("G4_Ta"); G4Material* G4_W  = nm->FindOrBuildMaterial("G4_W");  G4Material* G4_Re = nm->FindOrBuildMaterial("G4_Re");
+    G4Material* G4_Os = nm->FindOrBuildMaterial("G4_Os"); G4Material* G4_Ir = nm->FindOrBuildMaterial("G4_Ir"); G4Material* G4_Pt = nm->FindOrBuildMaterial("G4_Pt");
+    G4Material* G4_Au = nm->FindOrBuildMaterial("G4_Au"); G4Material* G4_Hg = nm->FindOrBuildMaterial("G4_Hg"); G4Material* G4_Tl = nm->FindOrBuildMaterial("G4_Tl");
+    G4Material* G4_Pb = nm->FindOrBuildMaterial("G4_Pb"); G4Material* G4_Bi = nm->FindOrBuildMaterial("G4_Bi"); G4Material* G4_Po = nm->FindOrBuildMaterial("G4_Po");
+    G4Material* G4_At = nm->FindOrBuildMaterial("G4_At"); G4Material* G4_Rn = nm->FindOrBuildMaterial("G4_Rn"); G4Material* G4_Ac = nm->FindOrBuildMaterial("G4_Ac");
+    G4Material* G4_Th = nm->FindOrBuildMaterial("G4_Th"); G4Material* G4_Pa = nm->FindOrBuildMaterial("G4_Pa"); G4Material* G4_U  = nm->FindOrBuildMaterial("G4_U");
+    G4Material* G4_Np = nm->FindOrBuildMaterial("G4_Np"); G4Material* G4_Pu = nm->FindOrBuildMaterial("G4_Pu"); G4Material* G4_Am = nm->FindOrBuildMaterial("G4_Am");
+    G4Material* G4_Cm = nm->FindOrBuildMaterial("G4_Cm"); G4Material* G4_Bk = nm->FindOrBuildMaterial("G4_Bk"); G4Material* G4_Cf = nm->FindOrBuildMaterial("G4_Cf");
+
+
+    // Ce:Gd3Al2Ga3O12  -- https://www.c-and-a.jp/assets/img/products/101210514_GAGG.pdf
+    G4Material* GAGG = new G4Material("GAGG", density= 6.63*g/cm3, ncomponents=4);
+    GAGG->AddElement(Gd, natoms=3);
+    GAGG->AddElement(Al, natoms=2);
+    GAGG->AddElement(Ga, natoms=3);
+    GAGG->AddElement(O, natoms=12);
+
+    G4Material* CeGAGG = new G4Material("CeGAGG", density= 6.63*g/cm3, ncomponents=2);
+    CeGAGG->AddMaterial(GAGG, fractionmass=99.*perCent);
+    CeGAGG->AddElement (Ce,   fractionmass=1.*perCent); // typical doped-Ce
     
     G4Material* RockKam =
     new G4Material("RockKam", density= 3.0*g/cm3, ncomponents=13);
@@ -225,88 +388,7 @@ void mcDetectorConstruction::DefineMaterials()
     RockKam->AddElement(Ti, fractionmass=0.001);
     RockKam->AddElement(Mn, fractionmass=0.000);
     RockKam->AddElement(Fe, fractionmass=0.010);
-    
-    //define for detector
-    // stailess SUS304
-    
-    G4Material* sus304 = new G4Material(name="SUS304", density=8.03*g/cm3, ncomponents=5);
-    sus304->AddElement(Ni, 0.09);
-    sus304->AddElement(C, 0.005);
-    sus304->AddElement(Mn, 0.01);
-    sus304->AddElement(Cr, 0.18);
-    sus304->AddElement(Fe, 0.715);
-    G4Material* polyethylene=new G4Material(name="polyethylene",density=0.92*g/cm3,ncomponents=2);
-    polyethylene->AddElement(C,1);
-    polyethylene->AddElement(H,2);
-    G4Isotope* he3 = new G4Isotope(name="he3", iz=2, in=3, a=3.0160293191*g/mole);
-    G4Element* He3 = new G4Element(name="He3", symbol="He3", ncomponents=1);
-    He3->AddIsotope(he3, abundance=100.*perCent);
-    G4Material* Herium3 = new G4Material(name="Herium3",density=1.34644166*mg/cm3,ncomponents=1,kStateGas,temperature=300.15*kelvin,pressure=10.*atmosphere);
-    Herium3->AddElement(He3, 1);
-    
-    
-    //the follow definition from CANDLES MC
-    // Sillion rubber + B4C 40%
-    // http://www.askcorp.co.jp/sanshin/work/engineering/pdf/material.pdf
-    const G4double R_B4C  = 40;    // target value, wt-%
-    const G4double R0_B4C = 20;    // original value, wt-%
-    const G4double W0_H   = 0.065; // fraction Mass
-    const G4double W0_O   = 0.173;
-    const G4double W0_Si  = 0.303;
-    const G4double W0_B   = 0.157;
-    const G4double W0_C   = 0.302;
-    
-    G4double totalMass = R_B4C / R0_B4C * (W0_B + W0_C) + (100.0 - R_B4C) / (100.0 - R0_B4C) * (W0_H + W0_O + W0_Si);
-    G4double W_H       = (100.0 - R_B4C) / (100.0 - R0_B4C) * W0_H  / totalMass;
-    G4double W_O       = (100.0 - R_B4C) / (100.0 - R0_B4C) * W0_O  / totalMass;
-    G4double W_Si      = (100.0 - R_B4C) / (100.0 - R0_B4C) * W0_Si / totalMass;
-    G4double W_B       = R_B4C / R0_B4C * W0_B / totalMass;
-    G4double W_C       = R_B4C / R0_B4C * W0_C / totalMass;
-    
-    // ref. density (2015/7/30 from T.Iida)
-    G4Material* RubberB4C = new G4Material("RubberB4C", density = 1.42 *g/cm3, ncomponents = 5);
-    RubberB4C -> AddElement(H,  fractionmass = W_H);
-    RubberB4C -> AddElement(O,  fractionmass = W_O);
-    RubberB4C -> AddElement(Si, fractionmass = W_Si);
-    RubberB4C -> AddElement(B,  fractionmass = W_B);
-    RubberB4C -> AddElement(C,  fractionmass = W_C);
-    
-    //define a material from elements and/or others materials (mixture of mixtures)
-    
-    G4Material* Aerog =
-    new G4Material("Aerogel", density= 0.200*g/cm3, ncomponents=3);
-    Aerog->AddMaterial(SiO2, fractionmass=62.5*perCent);
-    Aerog->AddMaterial(H2O , fractionmass=37.4*perCent);
-    Aerog->AddElement (C   , fractionmass= 0.1*perCent);
-    
-    // examples of gas in non STP conditions
-    
-    G4Material* CO2 =
-    new G4Material("CarbonicGas", density= 27.*mg/cm3, ncomponents=2,
-                   kStateGas, 325.*kelvin, 2.*atmosphere);
-    CO2->AddElement(C, natoms=1);
-    CO2->AddElement(O, natoms=2);
-    
-    G4Material* NaI =
-    new G4Material("NaI", density= 3.67*g/cm3, ncomponents=2);
-    NaI->AddElement(Na, natoms=1);
-    NaI->AddElement(I, natoms=1);
-    
-    G4Material* steam =
-    new G4Material("WaterSteam", density= 0.3*mg/cm3, ncomponents=1,
-                   kStateGas, 500.*kelvin, 2.*atmosphere);
-    steam->AddMaterial(H2O, fractionmass=1.);
-    
-    // examples of vacuum
-    
-    G4Material* Vacuum =
-    new G4Material("Galactic", z=1., a=1.01*g/mole,density= universe_mean_density,
-                   kStateGas, 2.73*kelvin, 3.e-18*pascal);
-    
-    G4Material* beam =
-    new G4Material("Beam", density= 1.e-5*g/cm3, ncomponents=1,
-                   kStateGas, STP_Temperature, 2.e-2*bar);
-    beam->AddMaterial(Air, fractionmass=1.);
+
     
     G4cout << *(G4Material::GetMaterialTable()) << G4endl;
     
